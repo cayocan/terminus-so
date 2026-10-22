@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Onboarding, idioma</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+.lang:hover{border-color:rgba(34,211,238,0.6)}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex">
+<dc-import name="OnbRail" current="{{ 1 }}" hint-size="420px,1080px"></dc-import>
+<main style="flex: 1; box-sizing: border-box; padding: 64px 120px; display: flex; flex-direction: column; align-items: center; gap: 26px">
+<div style="width: 260px; height: 260px">
+<dc-import name="Esfera" size="{{ 260 }}" estado="falando" uid="o1" hint-size="260px,260px"></dc-import>
+</div>
+<div style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 4px; color: #22D3EE">PASSO 1 DE 8</div>
+<h1 style="margin: 0; font-size: 42px; font-weight: 600; text-align: center">Olá · Hello · Hola · Bonjour</h1>
+<p style="margin: 0; font-size: 18px; color: #A9C7DA; text-align: center">Em que idioma vamos conversar? Pode falar o nome do idioma ou escolher abaixo.</p>
+
+<div role="radiogroup" aria-label="Idioma do sistema" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; width: 1040px; margin-top: 6px">
+<sc-for list="{{langs}}" as="l" hint-placeholder-count="8">
+<button class="lang" role="radio" aria-checked="{{l.on}}" style="height: 76px; box-sizing: border-box; padding: 0 20px; border-radius: 18px; border: {{l.border}}; background: {{l.bg}}; color: #EAF6FC; font-family: Inter, sans-serif; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; cursor: pointer">
+<span style="font-size: 17px; font-weight: 600">{{l.name}}</span>
+<span style="font-size: 13px; color: #8FB3CC">{{l.sub}}</span>
+</button>
+</sc-for>
+</div>
+
+<div style="display: flex; align-items: center; gap: 14px; width: 1040px; box-sizing: border-box; padding: 16px 20px; border-radius: 16px; background: rgba(10,22,38,0.6); border: 1px solid rgba(156,201,224,0.16)">
+<label for="vozIdioma" style="flex: 1; font-size: 15px; color: #CFE6F2">Idioma da minha voz</label>
+<select id="vozIdioma" style="height: 44px; min-width: 300px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1px solid rgba(34,211,238,0.4); background: rgba(10,22,38,0.8); color: #EAF6FC; font-family: Inter, sans-serif; font-size: 15px">
+<option>O mesmo do sistema</option>
+<option>English</option>
+<option>Español</option>
+</select>
+</div>
+
+<div style="display: flex; gap: 14px; margin-top: auto; align-self: flex-end">
+<a href="#" style="height: 52px; padding: 0 36px; border-radius: 26px; border: 1px solid #22D3EE; background: rgba(34,211,238,0.18); color: #EAFBFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px">Continuar
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [
+      ['Português', 'Brasil', true], ['Português', 'Portugal'], ['English', 'Inglês'], ['Español', 'Espanhol'],
+      ['Français', 'Francês'], ['Deutsch', 'Alemão'], ['Italiano', 'Italiano'], ['Outros idiomas', 'Ver lista completa']
+    ];
+    var langs = raw.map(function (l) {
+      var on = !!l[2];
+      return { name: l[0], sub: l[1], on: on ? 'true' : 'false',
+        border: on ? '2px solid #22D3EE' : '1px solid rgba(156,201,224,0.2)',
+        bg: on ? 'rgba(34,211,238,0.10)' : 'rgba(10,22,38,0.55)' };
+    });
+    return { langs: langs };
+  }
+}
+</script>
+</body>
+</html>

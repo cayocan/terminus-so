@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Central de notificações</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+.glass-btn:hover{background:rgba(255,255,255,0.08)}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB">
+
+<svg aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0">
+<defs>
+<pattern id="ntGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+<path d="M48 0H0V48" fill="none" stroke="#9CC9E0" stroke-opacity="0.045" stroke-width="1"></path>
+</pattern>
+<radialGradient id="ntGlow" cx="38%" cy="42%" r="40%">
+<stop offset="0%" stop-color="#1E6BFF" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#04070D" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<rect width="1920" height="1080" fill="url(#ntGrid)"></rect>
+<rect width="1920" height="1080" fill="url(#ntGlow)"></rect>
+</svg>
+
+<div style="position: absolute; left: 540px; top: 170px; width: 360px; height: 360px">
+<dc-import name="Esfera" size="{{ 360 }}" estado="falando" uid="nt" hint-size="360px,360px"></dc-import>
+</div>
+<section aria-label="Resumo falado" style="position: absolute; left: 320px; top: 560px; width: 800px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 18px; color: #A9C7DA">Você perguntou: “O que eu perdi?”</span>
+<p style="margin: 0; font-size: 24px; line-height: 1.5; text-align: center; color: #EAF6FC">Enquanto você jogava, chegaram <span style="color: #7FE3F3; font-weight: 600">4 e-mails</span>, um deles importante, e uma tarefa do Kanban mudou de prazo. A atualização da base está pronta para instalar.</p>
+</section>
+
+<div role="status" style="position: absolute; left: 950px; top: 40px; width: 440px; box-sizing: border-box; padding: 16px 18px; border-radius: 18px; background: rgba(12,28,46,0.95); border: 1px solid rgba(34,211,238,0.5); box-shadow: 0 0 30px rgba(34,211,238,0.18); display: flex; gap: 14px; align-items: flex-start">
+<div style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(34,211,238,0.14); display: flex; align-items: center; justify-content: center; color: #22D3EE">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 600">GitHub · terminus-so</span><span style="font-size: 12px; color: #8FB3CC">agora</span></div>
+<div style="font-size: 14px; color: #B8D2E2; line-height: 1.4">Novo pull request aguardando sua aprovação</div>
+</div>
+</div>
+
+<aside aria-label="Central de notificações" style="position: absolute; right: 0; top: 0; width: 480px; height: 1080px; box-sizing: border-box; padding: 32px 26px; background: rgba(8,16,28,0.94); border-left: 1px solid rgba(34,211,238,0.3); display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h1 style="margin: 0; font-family: Orbitron, sans-serif; font-size: 20px; font-weight: 600; letter-spacing: 2px">Notificações</h1>
+<button class="glass-btn" aria-label="Fechar painel" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: transparent; color: #CFE6F2; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<div style="display: flex; gap: 10px">
+<a href="#" style="flex: 1; height: 48px; border-radius: 14px; border: 1px solid rgba(34,211,238,0.5); background: rgba(34,211,238,0.14); color: #EAFBFF; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a4 4 0 0 1 0 6"></path></svg>
+O que eu perdi?
+</a>
+<label style="flex: 1; height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(156,201,224,0.22); display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #CFE6F2">Não perturbe<input type="checkbox" role="switch" style="width: 22px; height: 22px; accent-color: #22D3EE"></label>
+</div>
+
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #8FB3CC">{{g.title}}</h2>
+<a href="#" style="font-size: 13px; color: #7FD8EA; text-decoration: none">Limpar</a>
+</div>
+<sc-for list="{{g.items}}" as="n" hint-placeholder-count="3">
+<article style="box-sizing: border-box; padding: 14px 16px; border-radius: 16px; background: rgba(12,24,40,0.75); border: 1px solid {{n.border}}; display: flex; gap: 12px; align-items: flex-start">
+<span style="width: 36px; height: 36px; flex: none; border-radius: 10px; background: {{n.iconBg}}; color: {{n.tint}}; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{n.icon}}"></path></svg>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<span style="display: flex; justify-content: space-between"><span style="font-size: 14px; font-weight: 600">{{n.app}}</span><span style="font-size: 12px; color: #8FB3CC">{{n.time}}</span></span>
+<span style="font-size: 13px; line-height: 1.4; color: #B8D2E2">{{n.text}}</span>
+</span>
+</article>
+</sc-for>
+</section>
+</sc-for>
+</aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var I = {
+      mail: 'M3 5h18v14H3zM3 7l9 6 9-6',
+      kanban: 'M3 4h5v16H3zM10 4h5v10h-5zM17 4h4v13h-4z',
+      update: 'M21 12a9 9 0 1 1-3-6.7M21 4v5h-5',
+      code: 'M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14',
+      game: 'M6 11h4M8 9v4M7 5h10a5 5 0 0 1 5 5v1.5a4.5 4.5 0 0 1-8.2 2.6L13 13h-2l-.8 1.1A4.5 4.5 0 0 1 2 11.5V10a5 5 0 0 1 5-5z'
+    };
+    var mk = function (app, time, text, icon, kind) {
+      var warn = kind === 'warn';
+      return { app: app, time: time, text: text, icon: icon,
+        tint: warn ? '#F5A54A' : '#22D3EE',
+        iconBg: warn ? 'rgba(245,165,74,0.14)' : 'rgba(34,211,238,0.12)',
+        border: warn ? 'rgba(245,165,74,0.4)' : 'rgba(156,201,224,0.14)' };
+    };
+    var groups = [
+      { title: 'Hoje', items: [
+        mk('E-mail', '10 min', 'Financeiro: fechamento do mês precisa da sua aprovação', I.mail, 'warn'),
+        mk('Kanban do trabalho', '42 min', 'O prazo da tarefa “Revisar build” mudou para amanhã', I.kanban, 'warn'),
+        mk('Atualização do Terminus', '1 h', 'Versão nova da base pronta. Um snapshot será criado antes.', I.update),
+        mk('Claude Code', '2 h', 'Função “limpar downloads antigos” criada e pronta para ativar', I.code)
+      ]},
+      { title: 'Ontem', items: [
+        mk('Steam', '23:40', 'Rocket League atualizado e pronto para jogar', I.game),
+        mk('E-mail', '18:15', '3 mensagens novas da equipe', I.mail)
+      ]}
+    ];
+    return { groups: groups };
+  }
+}
+</script>
+</body>
+</html>

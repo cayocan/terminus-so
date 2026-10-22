@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Boot</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #000000; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px">
+<svg role="img" aria-label="Anel de energia se formando enquanto o sistema carrega" width="460" height="460" viewBox="0 0 460 460">
+<defs>
+<filter id="bootGlow" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
+<feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+</filter>
+<radialGradient id="bootHalo" cx="50%" cy="50%" r="50%">
+<stop offset="55%" stop-color="#1E6BFF" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#1E6BFF" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<circle cx="230" cy="230" r="220" fill="url(#bootHalo)"></circle>
+<circle cx="230" cy="230" r="160" fill="none" stroke="#1E6BFF" stroke-opacity="0.18" stroke-width="1"></circle>
+<g filter="url(#bootGlow)" transform="rotate(-90 230 230)">
+<circle cx="230" cy="230" r="160" fill="none" stroke="#22D3EE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1006" stroke-dashoffset="1006">
+<animate attributeName="stroke-dashoffset" values="1006;0;0" keyTimes="0;0.8;1" dur="4s" repeatCount="indefinite"></animate>
+</circle>
+<circle cx="230" cy="230" r="148" fill="none" stroke="#1E6BFF" stroke-opacity="0.7" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="930" stroke-dashoffset="930">
+<animate attributeName="stroke-dashoffset" values="930;930;0;0" keyTimes="0;0.25;0.9;1" dur="4s" repeatCount="indefinite"></animate>
+</circle>
+</g>
+<g filter="url(#bootGlow)">
+<sc-for list="{{sparks}}" as="p" hint-placeholder-count="24">
+<circle r="{{p.r}}" fill="{{p.fill}}">
+<animate attributeName="cx" values="{{p.xs}}" dur="4s" begin="{{p.begin}}" repeatCount="indefinite"></animate>
+<animate attributeName="cy" values="{{p.ys}}" dur="4s" begin="{{p.begin}}" repeatCount="indefinite"></animate>
+<animate attributeName="opacity" values="0;0.9;0" dur="4s" begin="{{p.begin}}" repeatCount="indefinite"></animate>
+</circle>
+</sc-for>
+</g>
+<circle cx="230" cy="230" r="4" fill="#FFFFFF" filter="url(#bootGlow)">
+<animate attributeName="fill-opacity" values="0;0;0.9" keyTimes="0;0.7;1" dur="4s" repeatCount="indefinite"></animate>
+</circle>
+</svg>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 18px">
+<div style="font-family: Orbitron, sans-serif; font-size: 40px; font-weight: 600; letter-spacing: 18px; padding-left: 18px; color: #EAF8FF">TERMINUS</div>
+<div style="font-size: 16px; letter-spacing: 1px; color: #8FB3CC">Iniciando o sistema</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var sparks = [];
+    for (var i = 0; i < 24; i++) {
+      var ang = i * 2.399;
+      var far = 225 - (i % 3) * 12;
+      var x0 = 230 + far * Math.cos(ang), y0 = 230 + far * Math.sin(ang);
+      var x1 = 230 + 160 * Math.cos(ang), y1 = 230 + 160 * Math.sin(ang);
+      sparks.push({
+        r: (0.9 + (i % 3) * 0.5).toFixed(1),
+        fill: i % 2 ? '#22D3EE' : '#EAF8FF',
+        xs: x0.toFixed(1) + ';' + x1.toFixed(1),
+        ys: y0.toFixed(1) + ';' + y1.toFixed(1),
+        begin: ((i % 8) * 0.45).toFixed(2) + 's'
+      });
+    }
+    return { sparks: sparks };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Onboarding, conectores</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex">
+<dc-import name="OnbRail" current="{{ 7 }}" hint-size="420px,1080px"></dc-import>
+<main style="flex: 1; box-sizing: border-box; padding: 64px 96px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 28px">
+<div style="width: 150px; height: 150px; flex: none">
+<dc-import name="Esfera" size="{{ 150 }}" estado="falando" uid="o7" hint-size="150px,150px"></dc-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 4px; color: #22D3EE">PASSO 7 DE 8</div>
+<h1 style="margin: 0; font-size: 38px; font-weight: 600">O que eu devo acompanhar para você?</h1>
+<p style="margin: 0; font-size: 17px; color: #A9C7DA">Conecte seus serviços e escolha o que entra no resumo do bom dia. O login de cada um é feito na própria tela do serviço.</p>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{cards}}" as="k" hint-placeholder-count="6">
+<article style="box-sizing: border-box; padding: 18px 20px; border-radius: 20px; background: {{k.bg}}; border: {{k.border}}; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 46px; height: 46px; flex: none; border-radius: 14px; background: rgba(34,211,238,0.12); color: #22D3EE; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{k.icon}}"></path></svg>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 17px; font-weight: 600">{{k.name}}</span>
+<span style="font-size: 13px; color: {{k.statusColor}}">{{k.status}}</span>
+</span>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #A9C7DA">{{k.desc}}</p>
+<div style="display: flex; flex-direction: column; gap: 2px; padding-top: 10px; border-top: 1px solid rgba(156,201,224,0.12)">
+<label style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #CFE6F2">Conectar<input type="checkbox" checked="{{k.on}}" style="width: 22px; height: 22px; accent-color: #22D3EE"></label>
+<label style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #CFE6F2">Entra no bom dia<input type="checkbox" checked="{{k.morning}}" style="width: 22px; height: 22px; accent-color: #22D3EE"></label>
+</div>
+</article>
+</sc-for>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<a href="#" style="box-sizing: border-box; padding: 18px 20px; border-radius: 18px; border: 1.5px dashed rgba(59,130,246,0.6); background: rgba(30,63,168,0.08); color: #EAF6FC; text-decoration: none; display: flex; gap: 14px; align-items: center">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9CC0FA" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 16px; font-weight: 600">Não achou o seu serviço?</span>
+<span style="font-size: 14px; color: #A9C7DA">Depois do onboarding, peça e a IA de programação cria o conector.</span>
+</span>
+</a>
+<label style="box-sizing: border-box; padding: 18px 20px; border-radius: 18px; border: 1px solid rgba(156,201,224,0.2); background: rgba(10,22,38,0.55); display: flex; gap: 14px; align-items: center; cursor: pointer">
+<input type="checkbox" style="width: 22px; height: 22px; accent-color: #22D3EE; flex: none">
+<span style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 16px; font-weight: 600">Nenhum conector agora</span>
+<span style="font-size: 14px; color: #A9C7DA">O bom dia mostra só hora, clima e o estado do PC.</span>
+</span>
+</label>
+</div>
+
+<div style="display: flex; gap: 14px; margin-top: auto; justify-content: flex-end">
+<a href="#" style="height: 52px; padding: 0 28px; border-radius: 26px; border: 1px solid rgba(156,201,224,0.3); color: #CFE6F2; font-size: 16px; text-decoration: none; display: flex; align-items: center">Voltar</a>
+<a href="#" style="height: 52px; padding: 0 36px; border-radius: 26px; border: 1px solid #22D3EE; background: rgba(34,211,238,0.18); color: #EAFBFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px">Continuar
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var I = {
+      mail: 'M3 5h18v14H3zM3 7l9 6 9-6',
+      kanban: 'M3 4h5v16H3zM10 4h5v10h-5zM17 4h4v13h-4z',
+      cal: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
+      git: 'M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9',
+      chat: 'M4 5h16v11H8l-4 4z',
+      cloud: 'M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1 0 8z'
+    };
+    var raw = [
+      { name: 'E-mail', icon: I.mail, on: true, morning: true, desc: 'Separa os e-mails importantes e avisa no bom dia.' },
+      { name: 'Kanban do trabalho', icon: I.kanban, on: true, morning: true, desc: 'Tarefas atribuídas a você e prazos que pedem atenção.' },
+      { name: 'Calendário', icon: I.cal, on: false, morning: false, desc: 'Compromissos do dia e lembretes antes das reuniões.' },
+      { name: 'GitHub', icon: I.git, on: false, morning: false, desc: 'Pull requests e avisos dos seus repositórios.' },
+      { name: 'Mensagens', icon: I.chat, on: false, morning: false, desc: 'Resumo das conversas que mencionam você.' },
+      { name: 'Armazenamento na nuvem', icon: I.cloud, on: false, morning: false, desc: 'Sincroniza pastas e avisa quando o espaço acabar.' }
+    ];
+    var cards = raw.map(function (r) {
+      return Object.assign({}, r, {
+        status: r.on ? 'Login feito' : 'Não conectado',
+        statusColor: r.on ? '#6EE7B7' : '#9FBACB',
+        bg: r.on ? 'rgba(34,211,238,0.07)' : 'rgba(10,22,38,0.55)',
+        border: r.on ? '1.5px solid rgba(34,211,238,0.55)' : '1px solid rgba(156,201,224,0.16)'
+      });
+    });
+    return { cards: cards };
+  }
+}
+</script>
+</body>
+</html>

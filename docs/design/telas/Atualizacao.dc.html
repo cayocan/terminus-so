@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Atualização com conflito</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB">
+
+<svg aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0">
+<defs>
+<pattern id="upGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+<path d="M48 0H0V48" fill="none" stroke="#9CC9E0" stroke-opacity="0.04" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect width="1920" height="1080" fill="url(#upGrid)"></rect>
+<rect width="1920" height="1080" fill="#02050A" fill-opacity="0.6"></rect>
+</svg>
+
+<section aria-label="Atualização do sistema" style="position: absolute; left: 330px; top: 80px; width: 1260px; height: 900px; box-sizing: border-box; border-radius: 22px; background: rgba(9,18,32,0.97); border: 1px solid rgba(34,211,238,0.35); box-shadow: 0 30px 80px rgba(0,0,0,0.55); display: flex; flex-direction: column; overflow: hidden">
+
+<header style="flex: none; box-sizing: border-box; padding: 26px 32px; display: flex; align-items: center; gap: 22px; border-bottom: 1px solid rgba(156,201,224,0.12)">
+<div style="width: 84px; height: 84px; flex: none">
+<dc-import name="Esfera" size="{{ 84 }}" estado="atencao" uid="up" hint-size="84px,84px"></dc-import>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: Orbitron, sans-serif; font-size: 24px; font-weight: 600; letter-spacing: 1.5px">Atualização da base do Terminus</h1>
+<p style="margin: 0; font-size: 15px; color: #A9C7DA">Do repositório terminus-so no GitHub · aplicada sem reinstalar o sistema</p>
+</div>
+</header>
+
+<ol aria-label="Etapas da atualização" style="flex: none; margin: 0; padding: 20px 32px; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; border-bottom: 1px solid rgba(156,201,224,0.12)">
+<sc-for list="{{stages}}" as="s" hint-placeholder-count="4">
+<li style="display: flex; align-items: center; gap: 12px">
+<span style="width: 30px; height: 30px; flex: none; border-radius: 50%; border: 1.5px solid {{s.ring}}; background: {{s.fill}}; color: {{s.ink}}; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{s.mark}}</span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 600; color: {{s.text}}">{{s.title}}</span>
+<span style="font-size: 12px; color: #8FB3CC">{{s.note}}</span>
+</span>
+</li>
+</sc-for>
+</ol>
+
+<div style="flex: 1; min-height: 0; box-sizing: border-box; padding: 26px 32px; display: flex; flex-direction: column; gap: 20px">
+<div style="box-sizing: border-box; padding: 16px 20px; border-radius: 16px; background: rgba(245,165,74,0.08); border: 1px solid rgba(245,165,74,0.4); display: flex; gap: 14px; align-items: center">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5A54A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 3 2 20h20zM12 10v4M12 17h.01"></path></svg>
+<span style="font-size: 15px; line-height: 1.45; color: #F4E3CC">Esta atualização mexe em <span style="font-weight: 600">2 coisas que você personalizou</span>. Nada é sobrescrito sem você escolher.</span>
+</div>
+
+<sc-for list="{{conflicts}}" as="c" hint-placeholder-count="2">
+<fieldset style="margin: 0; box-sizing: border-box; padding: 18px 20px 20px; border-radius: 18px; background: rgba(12,24,40,0.7); border: 1px solid rgba(156,201,224,0.16); display: flex; flex-direction: column; gap: 14px">
+<legend style="padding: 0 8px; font-size: 16px; font-weight: 600; color: #F2FAFF">{{c.title}}</legend>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<div style="box-sizing: border-box; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(34,211,238,0.35); background: rgba(34,211,238,0.06); display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #7FE3F3">Sua versão · camada pessoal</span>
+<span style="font-size: 14px; line-height: 1.45; color: #DCEBF4">{{c.mine}}</span>
+</div>
+<div style="box-sizing: border-box; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(156,201,224,0.22); background: rgba(255,255,255,0.03); display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #A9C7DA">Versão nova da base</span>
+<span style="font-size: 14px; line-height: 1.45; color: #DCEBF4">{{c.base}}</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<label style="min-height: 44px; box-sizing: border-box; padding: 0 16px; border-radius: 22px; border: 1.5px solid #22D3EE; background: rgba(34,211,238,0.12); display: flex; align-items: center; gap: 10px; font-size: 14px; color: #EAFBFF"><input type="radio" name="{{c.key}}" checked style="width: 18px; height: 18px; accent-color: #22D3EE">Manter a minha</label>
+<label style="min-height: 44px; box-sizing: border-box; padding: 0 16px; border-radius: 22px; border: 1px solid rgba(156,201,224,0.25); display: flex; align-items: center; gap: 10px; font-size: 14px; color: #CFE6F2"><input type="radio" name="{{c.key}}" style="width: 18px; height: 18px; accent-color: #22D3EE">Usar a nova</label>
+<label style="min-height: 44px; box-sizing: border-box; padding: 0 16px; border-radius: 22px; border: 1px solid rgba(156,201,224,0.25); display: flex; align-items: center; gap: 10px; font-size: 14px; color: #CFE6F2"><input type="radio" name="{{c.key}}" style="width: 18px; height: 18px; accent-color: #22D3EE">{{c.merge}}</label>
+</div>
+</fieldset>
+</sc-for>
+</div>
+
+<footer style="flex: none; box-sizing: border-box; padding: 20px 32px; border-top: 1px solid rgba(156,201,224,0.12); display: flex; align-items: center; gap: 14px">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
+<span style="flex: 1; font-size: 14px; color: #A9C7DA">Snapshot criado hoje às 08:12. Se algo der errado, diga “volta o sistema de hoje cedo”.</span>
+<a href="#" style="height: 48px; padding: 0 24px; border-radius: 24px; border: 1px solid rgba(156,201,224,0.3); color: #CFE6F2; font-size: 15px; text-decoration: none; display: flex; align-items: center">Agora não</a>
+<a href="#" style="height: 48px; padding: 0 28px; border-radius: 24px; border: 1px solid #22D3EE; background: rgba(34,211,238,0.18); color: #EAFBFF; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center">Aplicar atualização</a>
+</footer>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [
+      ['Snapshot', 'Criado às 08:12', 'done'],
+      ['Download', 'Base nova baixada', 'done'],
+      ['Conflitos', '2 para decidir', 'now'],
+      ['Aplicar', 'Sem reinstalar', 'next']
+    ];
+    var stages = raw.map(function (s, i) {
+      var done = s[2] === 'done', now = s[2] === 'now';
+      return {
+        title: s[0], note: s[1], mark: done ? '✓' : String(i + 1),
+        ring: done ? '#34D399' : (now ? '#F5A54A' : 'rgba(156,201,224,0.3)'),
+        fill: done ? 'rgba(52,211,153,0.14)' : (now ? 'rgba(245,165,74,0.14)' : 'transparent'),
+        ink: done ? '#6EE7B7' : (now ? '#F8C27F' : '#8FB3CC'),
+        text: now ? '#F2FAFF' : (done ? '#CFE6F2' : '#9FBACB')
+      };
+    });
+    var conflicts = [
+      { key: 'c1', title: 'Ordem dos ícones da dock', mine: 'Unity Hub e Steam logo depois da Busca, e o Terminal no fim.', base: 'A dock padrão ganhou um ícone novo de Notificações, entre Busca e Navegador web.', merge: 'Juntar: minha ordem + ícone novo' },
+      { key: 'c2', title: 'Conector de e-mail', mine: 'Você ajustou quais remetentes contam como importantes no bom dia.', base: 'O conector padrão passou a marcar como importantes os e-mails com prazo para hoje.', merge: 'Juntar: minhas regras + a regra nova' }
+    ];
+    return { stages: stages, conflicts: conflicts };
+  }
+}
+</script>
+</body>
+</html>

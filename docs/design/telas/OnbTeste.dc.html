@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Onboarding, teste final</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex">
+<dc-import name="OnbRail" current="{{ 8 }}" hint-size="420px,1080px"></dc-import>
+<main style="flex: 1; position: relative; box-sizing: border-box; padding: 56px 96px; display: flex; flex-direction: column; align-items: center; gap: 22px">
+<div style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 4px; color: #22D3EE">PASSO 8 DE 8</div>
+<h1 style="margin: 0; font-size: 42px; font-weight: 600; text-align: center">Tudo pronto. Agora diga “bom dia”.</h1>
+<p style="margin: 0; font-size: 18px; color: #A9C7DA; text-align: center">É o teste final: eu acordo com a sua palavra e mostro o seu primeiro resumo.</p>
+
+<div style="width: 380px; height: 380px">
+<dc-import name="Esfera" size="{{ 380 }}" estado="escutando" uid="o8" hint-size="380px,380px"></dc-import>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 22px; border-radius: 24px; border: 1px solid rgba(34,211,238,0.45); background: rgba(34,211,238,0.10)">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+<span style="font-size: 16px; color: #CFF5FB">Escutando… diga “Ei, Jarvis, bom dia”</span>
+</div>
+
+<section aria-label="Resumo da configuração" style="width: 1100px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #8FB3CC; text-align: center">O que você configurou</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+<sc-for list="{{done}}" as="d" hint-placeholder-count="7">
+<li style="height: 40px; box-sizing: border-box; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(156,201,224,0.22); background: rgba(10,22,38,0.6); display: flex; align-items: center; gap: 8px; font-size: 14px; color: #DCEBF4">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>
+<span style="color: #8FB3CC">{{d.k}}</span> {{d.v}}
+</li>
+</sc-for>
+</ul>
+</section>
+
+<div style="display: flex; gap: 14px; margin-top: auto; align-self: flex-end; align-items: center">
+<span style="font-size: 14px; color: #8FB3CC">Prefere digitar? Escreva “bom dia” e aperte Enter.</span>
+<a href="#" style="height: 52px; padding: 0 28px; border-radius: 26px; border: 1px solid rgba(156,201,224,0.3); color: #CFE6F2; font-size: 16px; text-decoration: none; display: flex; align-items: center">Voltar</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      done: [
+        { k: 'Idioma', v: 'Português (Brasil)' },
+        { k: 'IA', v: 'Jarvis · “Ei, Jarvis”' },
+        { k: 'Conta', v: 'criada, voz cadastrada' },
+        { k: 'Rede', v: 'Casa_5G' },
+        { k: 'Visual', v: 'Jarvis clássico' },
+        { k: 'Programação', v: 'Claude Code' },
+        { k: 'Conectores', v: 'E-mail e Kanban' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

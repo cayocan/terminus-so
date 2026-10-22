@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Etapas do onboarding</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+</style>
+</helmet>
+<nav aria-label="Etapas da configuração" style="width: 420px; height: 1080px; box-sizing: border-box; padding: 64px 48px; border-right: 1px solid rgba(156,201,224,0.12); background: #070E19; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex; flex-direction: column; gap: 40px">
+<div style="font-family: Orbitron, sans-serif; font-size: 20px; font-weight: 600; letter-spacing: 8px; color: #EAF8FF">TERMINUS</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="8">
+<li style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 14px; background: {{s.bg}}">
+<span style="width: 32px; height: 32px; flex: none; border-radius: 50%; border: 1.5px solid {{s.ring}}; background: {{s.dot}}; color: {{s.num}}; font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{s.mark}}</span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 15px; font-weight: 600; color: {{s.text}}">{{s.title}}</span>
+<span style="font-size: 12px; color: #8FB3CC">{{s.note}}</span>
+</span>
+</li>
+</sc-for>
+</ol>
+<p style="margin: 0; margin-top: auto; font-size: 13px; line-height: 1.5; color: #8FB3CC">Todas as etapas são obrigatórias. Você pode mudar tudo depois nas Configurações ou por voz.</p>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"current":{"editor":"int","default":1,"min":1,"max":8},"$preview":{"width":420,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var titles = [
+      ['Idioma', 'Português (Brasil)'],
+      ['Nome e ativação', 'Jarvis · “Ei, Jarvis”'],
+      ['Conta e senha', 'E cadastro da sua voz'],
+      ['Rede', 'Wi-Fi ou cabo'],
+      ['Visual', 'Cores e esfera'],
+      ['IA de programação', 'Ou nenhuma por enquanto'],
+      ['Conectores', 'Ou nenhum agora'],
+      ['Teste final', 'Diga “bom dia”']
+    ];
+    var current = (this.props.current ?? 1) - 1;
+    var steps = titles.map(function (t, i) {
+      var done = i < current, now = i === current;
+      return {
+        title: t[0], note: t[1],
+        mark: done ? '✓' : String(i + 1),
+        bg: now ? 'rgba(34,211,238,0.10)' : 'transparent',
+        ring: now ? '#22D3EE' : (done ? 'rgba(34,211,238,0.5)' : 'rgba(156,201,224,0.3)'),
+        dot: done ? 'rgba(34,211,238,0.18)' : 'transparent',
+        num: now || done ? '#7FE3F3' : '#8FB3CC',
+        text: now ? '#F2FAFF' : (done ? '#CFE6F2' : '#9FBACB')
+      };
+    });
+    return { steps: steps };
+  }
+}
+</script>
+</body>
+</html>

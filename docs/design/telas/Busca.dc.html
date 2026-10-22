@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Busca global</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+.res:hover{background:rgba(255,255,255,0.05)}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB">
+
+<svg aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0">
+<defs>
+<pattern id="bsGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+<path d="M48 0H0V48" fill="none" stroke="#9CC9E0" stroke-opacity="0.04" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect width="1920" height="1080" fill="url(#bsGrid)"></rect>
+<rect x="64" y="56" width="300" height="90" rx="12" fill="#0A1626" fill-opacity="0.5"></rect>
+<rect x="64" y="304" width="380" height="330" rx="20" fill="#0A1626" fill-opacity="0.5"></rect>
+<rect x="1436" y="56" width="420" height="320" rx="18" fill="#0A1626" fill-opacity="0.5"></rect>
+<rect x="1436" y="600" width="420" height="200" rx="22" fill="#0A1626" fill-opacity="0.5"></rect>
+<rect x="640" y="970" width="640" height="84" rx="26" fill="#0C1828" fill-opacity="0.6"></rect>
+<rect width="1920" height="1080" fill="#02050A" fill-opacity="0.72"></rect>
+</svg>
+
+<section aria-label="Busca global" style="position: absolute; left: 50%; top: 110px; transform: translateX(-50%); width: 880px; display: flex; flex-direction: column; align-items: center; gap: 20px">
+<div style="width: 150px; height: 150px">
+<dc-import name="Esfera" size="{{ 150 }}" estado="escutando" uid="bs" hint-size="150px,150px"></dc-import>
+</div>
+
+<div style="width: 880px; box-sizing: border-box; border-radius: 26px; background: rgba(9,18,32,0.95); border: 1px solid rgba(34,211,238,0.45); box-shadow: 0 0 60px rgba(34,211,238,0.12); overflow: hidden">
+<label style="height: 76px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid rgba(156,201,224,0.14)">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Buscar apps, arquivos, configurações e ações</span>
+<input type="search" value="projeto da Unity de ontem" style="flex: 1; height: 56px; border: none; background: transparent; color: #F2FAFF; font-family: Inter, sans-serif; font-size: 24px; outline: none">
+<span style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: rgba(34,211,238,0.14); color: #7FE3F3; font-size: 13px; font-weight: 600">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+ouvindo
+</span>
+</label>
+
+<div style="max-height: 560px; padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="padding: 10px 14px 6px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #8FB3CC">{{g.title}}</span>
+<sc-for list="{{g.items}}" as="r" hint-placeholder-count="2">
+<a class="res" href="#" style="min-height: 60px; box-sizing: border-box; padding: 10px 14px; border-radius: 14px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #EAF6FC; background: {{r.bg}}; border: 1px solid {{r.border}}">
+<span style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: {{r.iconBg}}; color: {{r.tint}}; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{r.icon}}"></path></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px; font-weight: 600">{{r.name}}</span>
+<span style="font-size: 13px; color: #9FBACB">{{r.meta}}</span>
+</span>
+<span style="font-size: 12px; color: #8FB3CC">{{r.hint}}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</div>
+
+<div style="height: 48px; box-sizing: border-box; padding: 0 24px; border-top: 1px solid rgba(156,201,224,0.14); display: flex; align-items: center; gap: 22px; font-size: 13px; color: #8FB3CC">
+<span><span style="color: #CFE6F2; font-weight: 600">Enter</span> abrir</span>
+<span><span style="color: #CFE6F2; font-weight: 600">↑ ↓</span> navegar</span>
+<span><span style="color: #CFE6F2; font-weight: 600">Esc</span> fechar</span>
+<span style="margin-left: auto">Atalho: <span style="color: #CFE6F2; font-weight: 600">Super + Espaço</span></span>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var CUBE = 'M12 2 21 7v10l-9 5-9-5V7zM12 22V12M21 7l-9 5-9-5';
+    var FOLDER = 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z';
+    var GEAR = 'M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1';
+    var SPARK = 'M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6';
+    var PLAY = 'M7 4l12 8-12 8z';
+    var raw = [
+      { title: 'Arquivos', items: [
+        { name: 'Meu jogo', meta: 'Projeto Unity · Projetos › Unity · modificado ontem, 23:14', icon: CUBE, hint: 'Abrir', kind: 'file', first: true },
+        { name: 'Protótipo VR', meta: 'Projeto Unity · Projetos › Unity · modificado ontem, 18:02', icon: CUBE, kind: 'file' }
+      ]},
+      { title: 'Apps', items: [
+        { name: 'Unity Hub', meta: 'Aplicativo nativo para Linux', icon: CUBE, kind: 'app' }
+      ]},
+      { title: 'Configurações', items: [
+        { name: 'Jogos e compatibilidade', meta: 'Proton, Bottles e VM Windows', icon: GEAR, kind: 'set' }
+      ]},
+      { title: 'Ações', items: [
+        { name: 'Abrir “Meu jogo” na Unity', meta: 'Abre o Unity Hub direto no projeto', icon: PLAY, kind: 'act' },
+        { name: 'Pedir à IA de programação', meta: 'Enviar uma tarefa sobre este projeto ao Claude Code', icon: SPARK, kind: 'act' },
+        { name: 'Mostrar na pasta', meta: 'Abrir Projetos › Unity no navegador de pastas', icon: FOLDER, kind: 'act' }
+      ]}
+    ];
+    var tints = { file: '#22D3EE', app: '#5B9BFF', set: '#A9C7DA', act: '#7FE3F3' };
+    var groups = raw.map(function (g) {
+      return { title: g.title, items: g.items.map(function (r) {
+        return Object.assign({}, r, {
+          hint: r.hint || '',
+          tint: tints[r.kind],
+          iconBg: r.kind === 'set' ? 'rgba(255,255,255,0.06)' : 'rgba(34,211,238,0.10)',
+          bg: r.first ? 'rgba(34,211,238,0.12)' : 'transparent',
+          border: r.first ? 'rgba(34,211,238,0.45)' : 'transparent'
+        });
+      }) };
+    });
+    return { groups: groups };
+  }
+}
+</script>
+</body>
+</html>

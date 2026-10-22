@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Tela principal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+.dock-item{transition:transform .18s ease}
+.dock-item:hover{transform:scale(1.32) translateY(-10px)}
+.glass-btn:hover{background:rgba(255,255,255,0.08)}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB">
+
+<svg aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0">
+<defs>
+<radialGradient id="bgGlow" cx="50%" cy="42%" r="45%">
+<stop offset="0%" stop-color="{{c.deep}}" stop-opacity="0.22"></stop>
+<stop offset="60%" stop-color="{{c.deep}}" stop-opacity="0.05"></stop>
+<stop offset="100%" stop-color="#04070D" stop-opacity="0"></stop>
+</radialGradient>
+<pattern id="hudGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+<path d="M48 0H0V48" fill="none" stroke="#9CC9E0" stroke-opacity="0.045" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect width="1920" height="1080" fill="url(#hudGrid)"></rect>
+<rect width="1920" height="1080" fill="url(#bgGlow)"></rect>
+<circle cx="960" cy="440" r="330" fill="none" stroke="{{c.accent}}" stroke-opacity="0.08" stroke-width="1"></circle>
+<circle cx="960" cy="440" r="420" fill="none" stroke="{{c.accent}}" stroke-opacity="0.05" stroke-width="1" stroke-dasharray="2 14"></circle>
+</svg>
+
+<section aria-label="Hora e data" style="position: absolute; left: 64px; top: 56px; width: 420px; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: Orbitron, sans-serif; font-size: 84px; font-weight: 600; letter-spacing: 2px; line-height: 1; color: #F2FAFF">08:37</div>
+<div style="font-size: 20px; color: #A9C7DA">quinta-feira, 22 de outubro de 2026</div>
+<div style="display: flex; gap: 10px; align-items: center; margin-top: 10px">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: {{c.accent}}"></span>
+<span style="font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: #8FB3CC">Rio de Janeiro · 24 °C</span>
+</div>
+</section>
+
+<section aria-label="Hardware" style="position: absolute; left: 64px; top: 304px; width: 380px; box-sizing: border-box; padding: 24px; border-radius: 20px; background: rgba(10,22,38,0.62); border: 1px solid {{c.line}}; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2.5px; color: {{c.accent}}">HARDWARE</span>
+<span style="font-size: 13px; color: #8FB3CC">ao vivo</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span style="font-size: 15px; font-weight: 600">CPU <span style="font-weight: 400; color: #8FB3CC">Ryzen 7 1800X</span></span>
+<span style="font-family: Orbitron, sans-serif; font-size: 18px">23%</span>
+</div>
+<div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08)"><div style="width: 23%; height: 6px; border-radius: 3px; background: {{c.accent}}"></div></div>
+<div style="font-size: 13px; color: #8FB3CC">54 °C · 8 núcleos</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span style="font-size: 15px; font-weight: 600">GPU <span style="font-weight: 400; color: #8FB3CC">RX 5500 XT</span></span>
+<span style="font-family: Orbitron, sans-serif; font-size: 18px">12%</span>
+</div>
+<div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08)"><div style="width: 12%; height: 6px; border-radius: 3px; background: {{c.accent}}"></div></div>
+<div style="font-size: 13px; color: #8FB3CC">48 °C · VRAM 1,9 / 8 GB</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span style="font-size: 15px; font-weight: 600">Memória</span>
+<span style="font-family: Orbitron, sans-serif; font-size: 18px">6,1 GB</span>
+</div>
+<div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08)"><div style="width: 38%; height: 6px; border-radius: 3px; background: {{c.deep}}"></div></div>
+<div style="font-size: 13px; color: #8FB3CC">de 16 GB</div>
+</div>
+</section>
+
+<section aria-label="Notificações" style="position: absolute; right: 64px; top: 56px; width: 420px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px">
+<span style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2.5px; color: {{c.accent}}">NOTIFICAÇÕES</span>
+<button class="glass-btn" aria-label="Ativar Não perturbe" style="height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid {{c.line}}; background: transparent; color: #CFE6F2; font-family: Inter, sans-serif; font-size: 13px; display: flex; align-items: center; gap: 8px; cursor: pointer">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+Não perturbe
+</button>
+</div>
+<div style="box-sizing: border-box; padding: 16px 18px; border-radius: 18px; background: rgba(10,22,38,0.62); border: 1px solid {{c.line}}; display: flex; gap: 14px; align-items: flex-start">
+<div style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: {{c.soft}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 600">E-mail</span><span style="font-size: 12px; color: #8FB3CC">agora</span></div>
+<div style="font-size: 14px; color: #B8D2E2; line-height: 1.4">3 mensagens novas marcadas como importantes</div>
+</div>
+</div>
+<div style="box-sizing: border-box; padding: 16px 18px; border-radius: 18px; background: rgba(10,22,38,0.62); border: 1px solid {{c.line}}; display: flex; gap: 14px; align-items: flex-start">
+<div style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(245,158,66,0.14); display: flex; align-items: center; justify-content: center; color: #F5A54A">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"></rect><rect x="10" y="4" width="5" height="10" rx="1.5"></rect><rect x="17" y="4" width="4" height="13" rx="1.5"></rect></svg>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 600">Kanban do trabalho</span><span style="font-size: 12px; color: #8FB3CC">12 min</span></div>
+<div style="font-size: 14px; color: #B8D2E2; line-height: 1.4">Uma tarefa sua vence hoje e precisa de atenção</div>
+</div>
+</div>
+<div style="box-sizing: border-box; padding: 16px 18px; border-radius: 18px; background: rgba(10,22,38,0.62); border: 1px solid {{c.line}}; display: flex; gap: 14px; align-items: flex-start">
+<div style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: {{c.soft}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 600">Atualização do Terminus</span><span style="font-size: 12px; color: #8FB3CC">1 h</span></div>
+<div style="font-size: 14px; color: #B8D2E2; line-height: 1.4">Nova versão da base disponível. Snapshot será criado antes de aplicar.</div>
+</div>
+</div>
+</section>
+
+<section aria-label="Assistente" style="position: absolute; left: 660px; top: 150px; width: 600px; display: flex; flex-direction: column; align-items: center; gap: 18px">
+<svg role="img" aria-label="Esfera de energia do assistente, em repouso" width="520" height="520" viewBox="0 0 520 520">
+<defs>
+<filter id="glowLines" x="-20%" y="-20%" width="140%" height="140%">
+<feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur>
+<feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+</filter>
+<filter id="softBlur" x="-60%" y="-60%" width="220%" height="220%">
+<feGaussianBlur stdDeviation="16"></feGaussianBlur>
+</filter>
+<filter id="sparkBlur" x="-200%" y="-200%" width="500%" height="500%">
+<feGaussianBlur stdDeviation="3"></feGaussianBlur>
+</filter>
+<radialGradient id="haloFill" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="{{c.accent}}" stop-opacity="0.16"></stop>
+<stop offset="45%" stop-color="{{c.deep}}" stop-opacity="0.07"></stop>
+<stop offset="100%" stop-color="{{c.deep}}" stop-opacity="0"></stop>
+</radialGradient>
+<radialGradient id="heartFill" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="{{c.accent}}" stop-opacity="0.55"></stop>
+<stop offset="60%" stop-color="{{c.deep}}" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="{{c.deep}}" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<circle cx="260" cy="260" r="250" fill="url(#haloFill)"></circle>
+<circle cx="260" cy="260" r="150" fill="none" stroke="{{c.accent}}" stroke-width="1">
+<animate attributeName="r" values="150;245" dur="5.2s" repeatCount="indefinite"></animate>
+<animate attributeName="stroke-opacity" values="0.4;0" dur="5.2s" repeatCount="indefinite"></animate>
+</circle>
+<circle cx="260" cy="260" r="150" fill="none" stroke="{{c.accent}}" stroke-width="1">
+<animate attributeName="r" values="150;245" dur="5.2s" begin="2.6s" repeatCount="indefinite"></animate>
+<animate attributeName="stroke-opacity" values="0.4;0" dur="5.2s" begin="2.6s" repeatCount="indefinite"></animate>
+</circle>
+<circle cx="260" cy="260" r="80" fill="url(#heartFill)" filter="url(#softBlur)">
+<animate attributeName="r" values="66;90;66" dur="5s" repeatCount="indefinite"></animate>
+</circle>
+<g filter="url(#glowLines)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<sc-for list="{{filaments}}" as="f" hint-placeholder-count="9">
+<g>
+<path d="{{f.dA}}" stroke="{{f.stroke}}" stroke-opacity="{{f.o}}" stroke-width="{{f.w}}">
+<animate attributeName="d" values="{{f.morph}}" dur="{{f.morphDur}}" repeatCount="indefinite"></animate>
+</path>
+<animateTransform attributeName="transform" type="rotate" from="{{f.from}}" to="{{f.to}}" dur="{{f.rotDur}}" repeatCount="indefinite"></animateTransform>
+</g>
+</sc-for>
+</g>
+<g filter="url(#glowLines)">
+<sc-for list="{{particles}}" as="p" hint-placeholder-count="34">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="{{p.r}}" fill="{{p.fill}}">
+<animate attributeName="opacity" values="{{p.flicker}}" dur="{{p.dur}}" repeatCount="indefinite"></animate>
+</circle>
+</sc-for>
+<animateTransform attributeName="transform" type="rotate" from="0 260 260" to="360 260 260" dur="90s" repeatCount="indefinite"></animateTransform>
+</g>
+<g filter="url(#glowLines)">
+<sc-for list="{{particles2}}" as="p" hint-placeholder-count="22">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="{{p.r}}" fill="{{p.fill}}">
+<animate attributeName="opacity" values="{{p.flicker}}" dur="{{p.dur}}" repeatCount="indefinite"></animate>
+</circle>
+</sc-for>
+<animateTransform attributeName="transform" type="rotate" from="360 260 260" to="0 260 260" dur="48s" repeatCount="indefinite"></animateTransform>
+</g>
+<circle cx="260" cy="260" r="7" fill="#FFFFFF" filter="url(#sparkBlur)">
+<animate attributeName="fill-opacity" values="0.5;0.9;0.5" dur="5s" repeatCount="indefinite"></animate>
+</circle>
+</svg>
+<div style="font-family: Orbitron, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 6px; color: {{c.accent}}">[NOME DA IA]</div>
+<div style="font-size: 18px; color: #B8D2E2">Em repouso · diga “[palavra de ativação]” para falar comigo</div>
+</section>
+
+<section aria-label="Área de atalhos Jogos" style="position: absolute; right: 64px; top: 600px; width: 420px; box-sizing: border-box; padding: 20px 22px 22px; border-radius: 22px; background: rgba(10,22,38,0.5); border: 1px solid {{c.line}}; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2.5px; color: {{c.accent}}">JOGOS</span>
+<div style="display: flex; gap: 4px">
+<button class="glass-btn" aria-label="Redimensionar área" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: transparent; color: #8FB3CC; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+</button>
+<button class="glass-btn" aria-label="Minimizar área" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: transparent; color: #8FB3CC; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"></path></svg>
+</button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<a href="#" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #CFE6F2">
+<span style="width: 64px; height: 64px; border-radius: 18px; background: {{c.soft}}; border: 1px solid {{c.line}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4"></path><circle cx="15.5" cy="10.5" r="0.8"></circle><circle cx="17.5" cy="12.5" r="0.8"></circle><path d="M7 5h10a5 5 0 0 1 5 5v1.5a4.5 4.5 0 0 1-8.2 2.6L13 13h-2l-.8 1.1A4.5 4.5 0 0 1 2 11.5V10a5 5 0 0 1 5-5z"></path></svg>
+</span>
+<span style="font-size: 13px">Steam</span>
+</a>
+<a href="#" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #CFE6F2">
+<span style="width: 64px; height: 64px; border-radius: 18px; background: {{c.soft}}; border: 1px solid {{c.line}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18M3 12h18"></path><path d="M5.6 5.6c3.6 3.6 9.2 3.6 12.8 0M5.6 18.4c3.6-3.6 9.2-3.6 12.8 0"></path></svg>
+</span>
+<span style="font-size: 13px; text-align: center">Rocket League</span>
+</a>
+<a href="#" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #CFE6F2">
+<span style="width: 64px; height: 64px; border-radius: 18px; background: {{c.soft}}; border: 1px solid {{c.line}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4M11 2v5L6 17a3 3 0 0 0 2.7 4.3h6.6A3 3 0 0 0 18 17l-5-10V2"></path><path d="M7.5 14h9"></path></svg>
+</span>
+<span style="font-size: 13px">Bottles</span>
+</a>
+<a href="#" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #CFE6F2">
+<span style="width: 64px; height: 64px; border-radius: 18px; background: {{c.soft}}; border: 1px solid {{c.line}}; display: flex; align-items: center; justify-content: center; color: {{c.accent}}">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+</span>
+<span style="font-size: 13px">Pasta Jogos</span>
+</a>
+</div>
+</section>
+
+<section aria-label="Área de atalhos Trabalho, minimizada" style="position: absolute; left: 64px; top: 760px; display: flex; align-items: center; gap: 14px">
+<button aria-label="Abrir área Trabalho" style="width: 72px; height: 72px; border-radius: 50%; border: 1px solid {{c.line}}; background: rgba(10,22,38,0.62); color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 0 18px {{c.soft}}">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><path d="M3 13h18"></path></svg>
+</button>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 15px; font-weight: 600">Trabalho</span>
+<span style="font-size: 13px; color: #8FB3CC">área minimizada · 6 atalhos</span>
+</div>
+</section>
+
+<nav aria-label="Dock" style="position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); height: 92px; box-sizing: border-box; padding: 0 18px; border-radius: 28px; background: rgba(12,24,40,0.72); border: 1px solid {{c.line}}; display: flex; align-items: flex-end; gap: 14px; padding-bottom: 12px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Pastas" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+</button>
+<span style="width: 5px; height: 5px; border-radius: 50%; background: {{c.accent}}"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Busca" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Navegador web" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"></path></svg>
+</button>
+<span style="width: 5px; height: 5px; border-radius: 50%; background: {{c.accent}}"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Terminal" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="m7 9 3 3-3 3M13 15h4"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Unity Hub" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"></path><path d="M12 22V12M21 7l-9 5-9-5"></path></svg>
+</button>
+<span style="width: 5px; height: 5px; border-radius: 50%; background: {{c.accent}}"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Steam" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4"></path><circle cx="15.5" cy="10.5" r="0.8"></circle><circle cx="17.5" cy="12.5" r="0.8"></circle><path d="M7 5h10a5 5 0 0 1 5 5v1.5a4.5 4.5 0 0 1-8.2 2.6L13 13h-2l-.8 1.1A4.5 4.5 0 0 1 2 11.5V10a5 5 0 0 1 5-5z"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Configurações" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: {{c.soft}}; color: {{c.accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+<div aria-hidden="true" style="width: 1px; height: 56px; align-self: center; margin-bottom: 10px; background: {{c.line}}"></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Pasta Downloads" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: rgba(255,255,255,0.04); color: #CFE6F2; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5"></path><path d="M4 19h16"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button class="dock-item" aria-label="Lixeira" style="width: 60px; height: 60px; border-radius: 16px; border: 1px solid {{c.line}}; background: rgba(255,255,255,0.04); color: #CFE6F2; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6"></path><path d="M6 7l1 13h10l1-13M9 7V4h6v3"></path></svg>
+</button>
+<span style="width: 5px; height: 5px"></span>
+</div>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"preset":{"editor":"enum","options":["Jarvis clássico","Mark","Stealth"],"default":"Jarvis clássico","section":"Cores"},"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var presets = {
+      'Jarvis clássico': { accent: '#22D3EE', deep: '#1E6BFF', soft: 'rgba(34,211,238,0.12)', line: 'rgba(34,211,238,0.28)' },
+      'Mark': { accent: '#F5B83D', deep: '#E5484D', soft: 'rgba(245,184,61,0.12)', line: 'rgba(245,184,61,0.30)' },
+      'Stealth': { accent: '#D6DEE6', deep: '#6B7A8C', soft: 'rgba(214,222,230,0.10)', line: 'rgba(214,222,230,0.24)' }
+    };
+    var c = presets[this.props.preset] || presets['Jarvis clássico'];
+    var cx = 260;
+    // [raio, amplitude, lobos, fase, cor, opacidade, espessura, giro (s), ondulação (s), sentido]
+    var specs = [
+      [150, 10, 5, 0, 'a', 0.9, 1.6, 40, 6, 1],
+      [146, 14, 3, 1, 'd', 0.85, 2.2, 55, 8, -1],
+      [156, 8, 7, 2, 'w', 0.45, 1, 30, 5, 1],
+      [138, 12, 4, 3, 'a', 0.6, 1.2, 70, 9, -1],
+      [162, 6, 6, 4, 'd', 0.55, 1, 45, 7, 1],
+      [130, 16, 5, 5, 'a', 0.4, 1, 35, 10, -1],
+      [120, 10, 3, 0.5, 'w', 0.3, 0.8, 80, 6.5, 1],
+      [105, 12, 6, 2.5, 'a', 0.35, 1, 25, 5.5, -1],
+      [90, 14, 4, 1.5, 'd', 0.3, 1, 50, 8.5, 1]
+    ];
+    var self = this;
+    var filaments = specs.map(function (s) { return self.filament(cx, s, c); });
+    var makeParticles = function (count, seed, rMin, rSpan) {
+      var list = [];
+      for (var i = 0; i < count; i++) {
+        var j = i + seed;
+        var ang = j * 2.399;
+        var rad = rMin + (j * 53) % rSpan;
+        list.push({
+          x: (cx + rad * Math.cos(ang)).toFixed(1),
+          y: (cx + rad * Math.sin(ang)).toFixed(1),
+          r: (0.8 + (j % 4) * 0.5).toFixed(1),
+          fill: j % 3 === 0 ? '#EAF8FF' : (j % 3 === 1 ? c.accent : c.deep),
+          flicker: j % 2 ? '0.85;0.1;0.85' : '0.1;0.9;0.1',
+          dur: (1.8 + (j % 6) * 0.6).toFixed(1) + 's'
+        });
+      }
+      return list;
+    };
+    var particles = makeParticles(34, 0, 70, 170);
+    var particles2 = makeParticles(22, 7, 40, 200);
+    return { c: c, filaments: filaments, particles: particles, particles2: particles2 };
+  }
+  wave(cx, R, amp, k, ph) {
+    var n = 96, d = '';
+    for (var i = 0; i <= n; i++) {
+      var t = i / n * Math.PI * 2;
+      var r = R + amp * Math.sin(k * t + ph) + amp * 0.4 * Math.sin((k + 2) * t - ph * 1.3);
+      d += (i ? 'L' : 'M') + (cx + r * Math.cos(t)).toFixed(1) + ' ' + (cx + r * Math.sin(t)).toFixed(1);
+    }
+    return d + 'Z';
+  }
+  filament(cx, s, c) {
+    var stroke = s[4] === 'a' ? c.accent : (s[4] === 'd' ? c.deep : '#EAF8FF');
+    var dA = this.wave(cx, s[0], s[1], s[2], s[3]);
+    var dB = this.wave(cx, s[0], s[1] * 0.55, s[2], s[3] + Math.PI);
+    var fwd = s[9] > 0;
+    return {
+      dA: dA,
+      morph: dA + ';' + dB + ';' + dA,
+      stroke: stroke,
+      o: s[5],
+      w: s[6],
+      rotDur: s[7] + 's',
+      morphDur: s[8] + 's',
+      from: (fwd ? '0 ' : '360 ') + cx + ' ' + cx,
+      to: (fwd ? '360 ' : '0 ') + cx + ' ' + cx
+    };
+  }
+}
+</script>
+</body>
+</html>

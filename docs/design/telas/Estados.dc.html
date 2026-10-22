@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Estados da esfera</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+</style>
+</helmet>
+<div style="width: 1920px; height: 620px; box-sizing: border-box; padding: 56px 64px; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-family: Orbitron, sans-serif; font-size: 30px; font-weight: 600; letter-spacing: 3px">Estados da esfera</h1>
+<p style="margin: 0; font-size: 17px; color: #A9C7DA">Uma esfera de energia, sem núcleo sólido: os filamentos mudam de cor, ritmo e intensidade conforme o que o assistente está fazendo.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 20px">
+<sc-for list="{{states}}" as="item" hint-placeholder-count="7">
+<div style="box-sizing: border-box; padding: 20px 18px 22px; border-radius: 20px; background: rgba(10,22,38,0.6); border: 1px solid rgba(156,201,224,0.16); display: flex; flex-direction: column; align-items: center; gap: 14px">
+<svg role="img" aria-label="{{item.name}}" width="200" height="200" viewBox="0 0 200 200">
+<defs>
+<filter id="{{item.fid}}" x="-20%" y="-20%" width="140%" height="140%">
+<feGaussianBlur stdDeviation="1.6" result="b"></feGaussianBlur>
+<feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+</filter>
+<filter id="{{item.sid}}" x="-60%" y="-60%" width="220%" height="220%">
+<feGaussianBlur stdDeviation="8"></feGaussianBlur>
+</filter>
+<radialGradient id="{{item.hid}}" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="{{item.accent}}" stop-opacity="{{item.heartOpacity}}"></stop>
+<stop offset="60%" stop-color="{{item.deep}}" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="{{item.deep}}" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<circle cx="100" cy="100" r="62" fill="none" stroke="{{item.accent}}" stroke-width="1">
+<animate attributeName="r" values="62;97" dur="{{item.waveDur}}" repeatCount="indefinite"></animate>
+<animate attributeName="stroke-opacity" values="{{item.waveOpacity}};0" dur="{{item.waveDur}}" repeatCount="indefinite"></animate>
+</circle>
+<circle cx="100" cy="100" r="62" fill="none" stroke="{{item.accent}}" stroke-width="1">
+<animate attributeName="r" values="62;97" dur="{{item.waveDur}}" begin="{{item.waveBegin}}" repeatCount="indefinite"></animate>
+<animate attributeName="stroke-opacity" values="{{item.waveOpacity}};0" dur="{{item.waveDur}}" begin="{{item.waveBegin}}" repeatCount="indefinite"></animate>
+</circle>
+<circle cx="100" cy="100" r="34" fill="url(#{{item.hid}})" filter="url(#{{item.sid}})">
+<animate attributeName="r" values="{{item.breath}}" dur="{{item.breathDur}}" repeatCount="indefinite"></animate>
+</circle>
+<g filter="url(#{{item.fid}})" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<sc-for list="{{item.filaments}}" as="f" hint-placeholder-count="7">
+<g>
+<path d="{{f.dA}}" stroke="{{f.stroke}}" stroke-opacity="{{f.o}}" stroke-width="{{f.w}}">
+<animate attributeName="d" values="{{f.morph}}" dur="{{f.morphDur}}" repeatCount="indefinite"></animate>
+</path>
+<animateTransform attributeName="transform" type="rotate" from="{{f.from}}" to="{{f.to}}" dur="{{f.rotDur}}" repeatCount="indefinite"></animateTransform>
+</g>
+</sc-for>
+</g>
+<sc-if value="{{item.extraRing}}" hint-placeholder-val="{{ false }}">
+<g filter="url(#{{item.fid}})">
+<circle cx="100" cy="100" r="88" fill="none" stroke="#22D3EE" stroke-opacity="0.85" stroke-width="1.4" stroke-dasharray="3 7"></circle>
+<animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="6s" repeatCount="indefinite"></animateTransform>
+</g>
+</sc-if>
+<g filter="url(#{{item.fid}})">
+<sc-for list="{{item.dots}}" as="p" hint-placeholder-count="20">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="{{p.r}}" fill="{{p.fill}}">
+<animate attributeName="opacity" values="{{p.flicker}}" dur="{{p.dur}}" repeatCount="indefinite"></animate>
+</circle>
+</sc-for>
+<animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="{{item.dotSpin}}" repeatCount="indefinite"></animateTransform>
+</g>
+<circle cx="100" cy="100" r="3.5" fill="#FFFFFF" fill-opacity="{{item.spark}}" filter="url(#{{item.fid}})"></circle>
+</svg>
+<div style="font-family: Orbitron, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1.5px; color: {{item.label}}">{{item.name}}</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: {{item.accent}}"></span>
+<span style="font-size: 13px; color: #A9C7DA">{{item.color}}</span>
+</div>
+<div style="font-size: 14px; line-height: 1.45; color: #CFE2EE; text-align: center">{{item.behavior}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":620}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // ampK: intensidade das ondas · morphK: ritmo da ondulação (menor = mais rápido) · rotK: velocidade do giro (menor = mais rápido) · opK: brilho
+    var base = [
+      { name: 'Parada', color: 'Azul escuro', behavior: 'Filamentos lentos e suaves, quase em silêncio', accent: '#3B6FD8', deep: '#1D3F8F', label: '#9DBBF0', ampK: 0.55, morphK: 1.8, rotK: 1.6, opK: 0.65, heartOpacity: '0.3', spark: '0.4', waveDur: '7s', waveBegin: '3.5s', waveOpacity: '0.2', breath: '30;36;30', breathDur: '6s', extraRing: false, particles: false },
+      { name: 'Escutando', color: 'Ciano', behavior: 'Ondas rápidas que se agitam com a sua voz', accent: '#22D3EE', deep: '#1E6BFF', label: '#7FE3F3', ampK: 1.5, morphK: 0.3, rotK: 0.8, opK: 1, heartOpacity: '0.6', spark: '0.9', waveDur: '1.6s', waveBegin: '0.8s', waveOpacity: '0.7', breath: '30;42;30', breathDur: '1.2s', extraRing: false, particles: false },
+      { name: 'Pensando', color: 'Azul e ciano', behavior: 'Os filamentos giram depressa, com partículas em órbita', accent: '#38BDF8', deep: '#1E6BFF', label: '#8FD6FA', ampK: 1, morphK: 0.8, rotK: 0.15, opK: 0.9, heartOpacity: '0.45', spark: '0.8', waveDur: '5s', waveBegin: '2.5s', waveOpacity: '0.3', breath: '32;36;32', breathDur: '2s', extraRing: false, particles: true },
+      { name: 'Falando', color: 'Ciano', behavior: 'A energia pulsa e ondula no ritmo da fala', accent: '#22D3EE', deep: '#1E6BFF', label: '#7FE3F3', ampK: 1.8, morphK: 0.18, rotK: 0.6, opK: 1, heartOpacity: '0.7', spark: '1', waveDur: '2.4s', waveBegin: '1.2s', waveOpacity: '0.6', breath: '30;44;30', breathDur: '0.7s', extraRing: false, particles: false },
+      { name: 'Programando', color: 'Azul + anel extra', behavior: 'Um anel tracejado indica a IA de programação trabalhando', accent: '#3B82F6', deep: '#1E3FA8', label: '#9CC0FA', ampK: 0.9, morphK: 0.9, rotK: 0.4, opK: 0.85, heartOpacity: '0.4', spark: '0.7', waveDur: '6s', waveBegin: '3s', waveOpacity: '0.25', breath: '32;36;32', breathDur: '3s', extraRing: true, particles: false },
+      { name: 'Atenção', color: 'Laranja', behavior: 'Pulsa em laranja para avisos que pedem sua atenção', accent: '#F5A54A', deep: '#C2611F', label: '#F8C27F', ampK: 1.2, morphK: 0.5, rotK: 1, opK: 0.95, heartOpacity: '0.55', spark: '0.85', waveDur: '2.2s', waveBegin: '1.1s', waveOpacity: '0.55', breath: '30;40;30', breathDur: '2.2s', extraRing: false, particles: false },
+      { name: 'Erro / alerta', color: 'Vermelho', behavior: 'Pulso forte e agitado quando algo deu errado', accent: '#F05252', deep: '#A42828', label: '#F7A0A0', ampK: 1.6, morphK: 0.25, rotK: 0.9, opK: 1, heartOpacity: '0.6', spark: '0.9', waveDur: '1.2s', waveBegin: '0.6s', waveOpacity: '0.8', breath: '28;42;28', breathDur: '1.2s', extraRing: false, particles: false }
+    ];
+    // [raio, amplitude, lobos, fase, cor, opacidade, espessura, giro (s), ondulação (s), sentido]
+    var specs = [
+      [150, 10, 5, 0, 'a', 0.9, 1.6, 40, 6, 1],
+      [146, 14, 3, 1, 'd', 0.85, 2.2, 55, 8, -1],
+      [156, 8, 7, 2, 'w', 0.45, 1, 30, 5, 1],
+      [138, 12, 4, 3, 'a', 0.6, 1.2, 70, 9, -1],
+      [130, 16, 5, 5, 'a', 0.4, 1, 35, 10, -1],
+      [112, 12, 6, 2.5, 'w', 0.3, 0.8, 25, 5.5, -1],
+      [95, 14, 4, 1.5, 'd', 0.35, 1, 50, 8.5, 1]
+    ];
+    var self = this;
+    var states = base.map(function (st, i) {
+      var filaments = specs.map(function (s) { return self.filament(100, s, st, 0.42); });
+      var count = st.name === 'Parada' ? 10 : (st.particles ? 30 : 20);
+      var dots = [];
+      for (var j = 0; j < count; j++) {
+        var ang = j * 2.399 + i;
+        var rad = 22 + (j * 29) % 72;
+        dots.push({
+          x: (100 + rad * Math.cos(ang)).toFixed(1),
+          y: (100 + rad * Math.sin(ang)).toFixed(1),
+          r: (0.6 + (j % 4) * 0.35).toFixed(2),
+          fill: j % 3 === 0 ? '#EAF8FF' : (j % 3 === 1 ? st.accent : st.deep),
+          flicker: j % 2 ? '0.85;0.1;0.85' : '0.1;0.9;0.1',
+          dur: ((1.6 + (j % 6) * 0.5) * (st.name === 'Parada' ? 1.8 : 1)).toFixed(1) + 's'
+        });
+      }
+      var dotSpin = st.particles ? '3s' : (st.name === 'Parada' ? '120s' : '40s');
+      return Object.assign({}, st, { fid: 'glow' + i, sid: 'soft' + i, hid: 'heart' + i, filaments: filaments, dots: dots, dotSpin: dotSpin });
+    });
+    return { states: states };
+  }
+  wave(cx, R, amp, k, ph) {
+    var n = 84, d = '';
+    for (var i = 0; i <= n; i++) {
+      var t = i / n * Math.PI * 2;
+      var r = R + amp * Math.sin(k * t + ph) + amp * 0.4 * Math.sin((k + 2) * t - ph * 1.3);
+      d += (i ? 'L' : 'M') + (cx + r * Math.cos(t)).toFixed(1) + ' ' + (cx + r * Math.sin(t)).toFixed(1);
+    }
+    return d + 'Z';
+  }
+  filament(cx, s, st, scale) {
+    var stroke = s[4] === 'a' ? st.accent : (s[4] === 'd' ? st.deep : '#EAF8FF');
+    var R = s[0] * scale, amp = s[1] * scale * st.ampK;
+    var dA = this.wave(cx, R, amp, s[2], s[3]);
+    var dB = this.wave(cx, R, amp * 0.55, s[2], s[3] + Math.PI);
+    var fwd = s[9] > 0;
+    return {
+      dA: dA,
+      morph: dA + ';' + dB + ';' + dA,
+      stroke: stroke,
+      o: Math.min(1, s[5] * st.opK).toFixed(2),
+      w: (s[6] * 0.75).toFixed(2),
+      rotDur: (s[7] * st.rotK).toFixed(1) + 's',
+      morphDur: (s[8] * st.morphK).toFixed(2) + 's',
+      from: (fwd ? '0 ' : '360 ') + cx + ' ' + cx,
+      to: (fwd ? '360 ' : '0 ') + cx + ' ' + cx
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminus SO — Onboarding, rede</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#04070D}
+a{color:#7FD8EA}a:hover{color:#B9EEF7}
+input::placeholder{color:#7E9DB3}
+.net:hover{background:rgba(255,255,255,0.04)}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; overflow: hidden; background: #04070D; font-family: Inter, system-ui, sans-serif; color: #E6F4FB; display: flex">
+<dc-import name="OnbRail" current="{{ 4 }}" hint-size="420px,1080px"></dc-import>
+<main style="flex: 1; box-sizing: border-box; padding: 64px 96px; display: flex; flex-direction: column; gap: 30px">
+<div style="display: flex; align-items: center; gap: 28px">
+<div style="width: 150px; height: 150px; flex: none">
+<dc-import name="Esfera" size="{{ 150 }}" estado="pensando" uid="o4" hint-size="150px,150px"></dc-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: Orbitron, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 4px; color: #22D3EE">PASSO 4 DE 8</div>
+<h1 style="margin: 0; font-size: 38px; font-weight: 600">Vamos nos conectar à internet</h1>
+<p style="margin: 0; font-size: 17px; color: #A9C7DA">Escolha uma rede Wi-Fi ou diga “uso cabo”.</p>
+</div>
+</div>
+
+<div style="display: flex; gap: 32px; align-items: flex-start">
+<section aria-label="Redes Wi-Fi" style="width: 760px; flex: none; box-sizing: border-box; padding: 10px; border-radius: 22px; background: rgba(10,22,38,0.6); border: 1px solid rgba(156,201,224,0.16); display: flex; flex-direction: column; gap: 4px">
+<div style="box-sizing: border-box; padding: 16px 18px; border-radius: 16px; background: rgba(34,211,238,0.08); border: 1.5px solid #22D3EE; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01"></path></svg>
+<span style="flex: 1; font-size: 17px; font-weight: 600">Casa_5G</span>
+<span style="font-size: 13px; color: #8FB3CC">Protegida</span>
+</div>
+<div style="display: flex; gap: 12px; align-items: center">
+<label for="wifiSenha" style="position: absolute; width: 1px; height: 1px; overflow: hidden">Senha da rede Casa_5G</label>
+<input id="wifiSenha" type="password" placeholder="Senha da rede" style="flex: 1; height: 50px; box-sizing: border-box; padding: 0 18px; border-radius: 14px; border: 1px solid rgba(34,211,238,0.4); background: rgba(6,12,22,0.8); color: #EAF6FC; font-family: Inter, sans-serif; font-size: 16px; outline: none">
+<a href="#" style="height: 50px; padding: 0 24px; border-radius: 14px; border: 1px solid #22D3EE; background: rgba(34,211,238,0.18); color: #EAFBFF; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center">Conectar</a>
+</div>
+</div>
+<sc-for list="{{nets}}" as="n" hint-placeholder-count="4">
+<a class="net" href="#" style="min-height: 56px; box-sizing: border-box; padding: 0 18px; border-radius: 14px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #DCEBF4">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9FBACB" stroke-width="2" stroke-linecap="round"><path d="{{n.icon}}"></path></svg>
+<span style="flex: 1; font-size: 16px">{{n.name}}</span>
+<span style="font-size: 13px; color: #8FB3CC">{{n.note}}</span>
+</a>
+</sc-for>
+</section>
+
+<div style="flex: 1; display: flex; flex-direction: column; gap: 16px">
+<a href="#" style="box-sizing: border-box; padding: 20px 22px; border-radius: 20px; background: rgba(10,22,38,0.6); border: 1px solid rgba(156,201,224,0.2); text-decoration: none; color: #EAF6FC; display: flex; gap: 16px; align-items: flex-start">
+<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M7 3h10v6H7zM10 9v4M14 9v4M6 13h12v4H6zM12 17v4"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 17px; font-weight: 600">Uso cabo</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9C7DA">Nenhum cabo detectado agora. Ligue o cabo e a conexão é feita na hora.</span>
+</span>
+</a>
+<div style="box-sizing: border-box; padding: 20px 22px; border-radius: 20px; background: rgba(245,165,74,0.07); border: 1px solid rgba(245,165,74,0.35); display: flex; gap: 16px; align-items: flex-start">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5A54A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 4v11M7 10l5 5 5-5M4 19h16"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 16px; font-weight: 600">Por que preciso de internet agora</span>
+<span style="font-size: 14px; line-height: 1.45; color: #DCC9B0">Meu modelo de IA tem alguns GB e é baixado uma vez. Depois disso eu funciono sem internet.</span>
+</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 14px; margin-top: auto; justify-content: flex-end">
+<a href="#" style="height: 52px; padding: 0 28px; border-radius: 26px; border: 1px solid rgba(156,201,224,0.3); color: #CFE6F2; font-size: 16px; text-decoration: none; display: flex; align-items: center">Voltar</a>
+<a href="#" style="height: 52px; padding: 0 36px; border-radius: 26px; border: 1px solid rgba(156,201,224,0.3); background: rgba(255,255,255,0.04); color: #8FB3CC; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px" aria-disabled="true">Continuar
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var full = 'M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01';
+    var mid = 'M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01';
+    var low = 'M8.5 16a5 5 0 0 1 7 0M12 19.5h.01';
+    return {
+      nets: [
+        { name: 'Casa_2.4G', note: 'Protegida', icon: full },
+        { name: 'Vizinho_301', note: 'Protegida', icon: mid },
+        { name: 'Rede_Convidados', note: 'Aberta', icon: mid },
+        { name: 'Outra rede…', note: 'Digitar nome', icon: low }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
