@@ -1,0 +1,8 @@
+#!/bin/sh
+# Abre a interface do Terminus (esfera e tela principal) no Quickshell.
+# Em VM, o buffer de GPU do Qt Quick é recusado pelo compositor (erro em wl_surface.attach no
+# vmwgfx do VirtualBox) e o Quickshell cai; lá a renderização do Qt Quick vai por software.
+if systemd-detect-virt --vm --quiet; then
+	export QT_QUICK_BACKEND=software
+fi
+exec quickshell -p /usr/share/terminus/shell "$@"
