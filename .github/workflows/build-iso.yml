@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "iso/**"
+      - "!iso/testar-vm.ps1"
       - "shell/**"
       - ".github/workflows/build-iso.yml"
   workflow_dispatch:

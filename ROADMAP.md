@@ -7,7 +7,10 @@
 - [x] Quickshell compilado na build
 - [x] Fontes Orbitron e Inter
 - [x] Build automática no GitHub Actions
-- [ ] Primeira build bem-sucedida e teste em VM
+- [x] Primeira build bem-sucedida
+- [x] Boot em VM (VirtualBox, UEFI): login automático, pt_BR e teclado ABNT2, Quickshell, Hyprland e fontes presentes
+- [ ] Hyprland em VM: precisa de aceleração 3D, que o VirtualBox não tem com o Hyper-V/WSL2 ativo no Windows
+- [ ] Abrir o Hyprland e a esfera automaticamente após o login (hoje cai no terminal)
 - [ ] Teste no PC de referência (Ryzen 7 1800X, RX 5500 XT)
 - [ ] Conferir a sintaxe de regras de janela da versão do Hyprland instalada
 
