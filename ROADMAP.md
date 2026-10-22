@@ -10,9 +10,9 @@
 - [x] Primeira build bem-sucedida
 - [x] Boot em VM (VirtualBox, UEFI): login automático, pt_BR e teclado ABNT2, Quickshell, Hyprland e fontes presentes
 - [ ] Hyprland em VM: precisa de aceleração 3D, que o VirtualBox não tem com o Hyper-V/WSL2 ativo no Windows
-- [ ] Abrir o Hyprland e a esfera automaticamente após o login (hoje cai no terminal)
+- [x] Abrir o Hyprland e a esfera automaticamente após o login, com volta ao terminal se o Hyprland falhar
 - [ ] Teste no PC de referência (Ryzen 7 1800X, RX 5500 XT)
-- [ ] Conferir a sintaxe de regras de janela da versão do Hyprland instalada
+- [x] Conferir a sintaxe de regras de janela da versão do Hyprland instalada (0.55, `--verify-config`)
 
 ## Fase 2 — Interface (Quickshell)
 - [x] Esfera de energia com os 7 estados
