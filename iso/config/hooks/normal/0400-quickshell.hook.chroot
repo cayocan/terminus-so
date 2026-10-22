@@ -6,12 +6,13 @@ set -e
 DEPS_BUILD="build-essential cmake ninja-build pkg-config spirv-tools \
 	qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev \
 	qt6-shadertools-dev qt6-wayland-dev qt6-wayland-private-dev \
-	libwayland-dev wayland-protocols libdrm-dev libgbm-dev \
-	libpipewire-0.3-dev libpam0g-dev libjemalloc-dev libcli11-dev libxcb1-dev"
+	libwayland-dev wayland-protocols libdrm-dev libgbm-dev libegl-dev libvulkan-dev \
+	libpipewire-0.3-dev libpam0g-dev libjemalloc-dev libcli11-dev libxcb1-dev \
+	libpolkit-agent-1-dev libglib2.0-dev"
 
 DEPS_RUNTIME="qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts \
 	qml6-module-qtquick-shapes qml6-module-qtquick-particles qml6-module-qtquick-effects \
-	qml6-module-qtquick-window libjemalloc2"
+	qml6-module-qtquick-window libqt6svg6 libjemalloc2"
 
 # O Hyprland dos backports atualiza o libxkbcommon; os -dev precisam vir da mesma versão,
 # senão o apt tenta rebaixar a biblioteca e a instalação falha.
@@ -21,14 +22,23 @@ apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y $DEPS_BUILD $DEPS_RUNTIME \
 	$(for p in $DEPS_BUILD_BACKPORTS; do echo "$p/trixie-backports"; done)
 
+# Versão fixa para a build não quebrar com mudanças no master; atualizar testando.
+QUICKSHELL_VERSAO=v0.3.2
+
 cd /tmp
-git clone --depth 1 https://github.com/quickshell-mirror/quickshell.git
+git clone --depth 1 --branch "$QUICKSHELL_VERSAO" https://github.com/quickshell-mirror/quickshell.git
 cd quickshell
+# O crash handler precisa do cpptrace, que não está no Debian.
 cmake -GNinja -B build \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DCRASH_REPORTER=OFF
-cmake --build build
+	-DINSTALL_QML_PREFIX=lib/x86_64-linux-gnu/qt6/qml \
+	-DDISTRIBUTOR="Terminus SO" \
+	-DCRASH_HANDLER=OFF
+# Cada compilação paralela pode passar de 1,5 GB de RAM; usa uma a cada 2 GB para não estourar a memória.
+JOBS=$(awk '/MemTotal/ {print int($2 / 2097152)}' /proc/meminfo)
+[ "$JOBS" -ge 1 ] || JOBS=1
+cmake --build build -j "$JOBS"
 cmake --install build
 
 cd /
