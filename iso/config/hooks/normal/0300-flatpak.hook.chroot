@@ -1,0 +1,5 @@
+#!/bin/sh
+# Flathub fica configurado; Bottles e ProtonUp-Qt são instalados no primeiro uso, com internet.
+set -e
+
+flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

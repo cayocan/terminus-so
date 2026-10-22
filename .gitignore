@@ -1,0 +1,20 @@
+# Saídas do live-build
+iso/.build/
+iso/cache/
+iso/chroot/
+iso/binary/
+iso/config/includes.chroot/usr/share/terminus/shell/
+iso/*.iso
+iso/*.log
+iso/*.contents
+iso/*.files
+iso/*.packages
+iso/chroot.*
+iso/binary.*
+
+# Modelos de IA (baixados no primeiro uso)
+*.gguf
+*.onnx
+
+# Camada pessoal nunca vai para o repositório base
+pessoal/

@@ -1,0 +1,8 @@
+wine
+wine64
+winetricks
+qemu-system-x86
+qemu-utils
+libvirt-daemon-system
+virt-manager
+ovmf

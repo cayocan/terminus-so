@@ -1,0 +1,11 @@
+#!/bin/sh
+# Orbitron (títulos) vem do repositório oficial do Google Fonts; Inter vem do pacote fonts-inter.
+set -e
+
+DESTINO=/usr/share/fonts/truetype/orbitron
+mkdir -p "$DESTINO"
+curl -fsSL -o "$DESTINO/Orbitron.ttf" \
+	"https://github.com/google/fonts/raw/main/ofl/orbitron/Orbitron%5Bwght%5D.ttf"
+curl -fsSL -o "$DESTINO/OFL.txt" \
+	"https://github.com/google/fonts/raw/main/ofl/orbitron/OFL.txt"
+fc-cache -f

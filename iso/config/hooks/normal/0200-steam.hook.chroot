@@ -1,0 +1,10 @@
+#!/bin/sh
+# Steam precisa da arquitetura i386 e dos drivers de vídeo de 32 bits.
+set -e
+
+dpkg --add-architecture i386
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	steam-installer \
+	mesa-vulkan-drivers:i386 \
+	libgl1-mesa-dri:i386

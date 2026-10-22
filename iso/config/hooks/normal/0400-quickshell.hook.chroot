@@ -1,0 +1,44 @@
+#!/bin/sh
+# Quickshell não está nos repositórios do Debian: compila a partir do código-fonte
+# e remove as dependências de compilação no final.
+set -e
+
+DEPS_BUILD="build-essential cmake ninja-build pkg-config spirv-tools \
+	qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev \
+	qt6-shadertools-dev qt6-wayland-dev qt6-wayland-private-dev \
+	libwayland-dev wayland-protocols libdrm-dev libgbm-dev \
+	libpipewire-0.3-dev libpam0g-dev libjemalloc-dev libcli11-dev libxcb1-dev"
+
+DEPS_RUNTIME="qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts \
+	qml6-module-qtquick-shapes qml6-module-qtquick-particles qml6-module-qtquick-effects \
+	qml6-module-qtquick-window libjemalloc2"
+
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y $DEPS_BUILD $DEPS_RUNTIME
+
+cd /tmp
+git clone --depth 1 https://github.com/quickshell-mirror/quickshell.git
+cd quickshell
+cmake -GNinja -B build \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCRASH_REPORTER=OFF
+cmake --build build
+cmake --install build
+
+cd /
+rm -rf /tmp/quickshell
+apt-mark manual $DEPS_RUNTIME
+
+# Marca como manuais as bibliotecas usadas pelo Quickshell compilado,
+# para o autoremove não apagar nada que ele precise.
+{ echo /usr/bin/quickshell; find /usr/lib -path '*qml/Quickshell*' -name '*.so'; } \
+	| xargs -r ldd 2>/dev/null \
+	| awk '/=> \// {print $3}' \
+	| sort -u \
+	| xargs -r dpkg -S 2>/dev/null \
+	| cut -d: -f1 \
+	| sort -u \
+	| xargs -r apt-mark manual
+DEBIAN_FRONTEND=noninteractive apt-get purge -y $DEPS_BUILD
+apt-get autoremove -y

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Hyprland vem dos backports do Debian 13.
+set -e
+
+apt-get update
+apt-get install -y -t trixie-backports \
+	hyprland \
+	hyprland-guiutils \
+	xdg-desktop-portal-hyprland \
+	hypridle \
+	hyprlock \
+	hyprpolkitagent

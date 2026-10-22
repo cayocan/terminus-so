@@ -1,0 +1,13 @@
+mesa-vulkan-drivers
+mesa-va-drivers
+libgl1-mesa-dri
+vulkan-tools
+xwayland
+qt6-wayland
+pipewire
+pipewire-pulse
+wireplumber
+foot
+fonts-inter
+fonts-noto-core
+fontconfig
