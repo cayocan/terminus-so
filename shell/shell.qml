@@ -3,6 +3,10 @@ import Quickshell
 import Quickshell.Wayland
 
 ShellRoot {
+    Notificacoes {
+        id: centralNotificacoes
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -18,7 +22,17 @@ ShellRoot {
 
             TelaPrincipal {
                 anchors.fill: parent
+                notificacoes: centralNotificacoes
             }
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+
+        Dock {
+            required property var modelData
+            screen: modelData
         }
     }
 }

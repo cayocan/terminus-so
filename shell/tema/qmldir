@@ -1,1 +1,2 @@
 singleton Tema Tema.qml
+singleton Icones Icones.qml

@@ -18,3 +18,5 @@ zstd
 firmware-linux-free
 firmware-amd-graphics
 amd64-microcode
+firefox-esr
+firefox-esr-l10n-pt-br

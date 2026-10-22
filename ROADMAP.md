@@ -16,8 +16,10 @@
 
 ## Fase 2 — Interface (Quickshell)
 - [x] Esfera de energia com os 7 estados
-- [ ] Widgets: hora e data, hardware, notificações
-- [ ] Dock estilo macOS com pastas em leque
+- [x] Widgets: hora e data, hardware (CPU, GPU AMD, memória), notificações (servidor do sistema, Não perturbe)
+- [ ] Linha de cidade e clima embaixo da data (precisa de um conector de clima)
+- [x] Dock estilo macOS: lupa, indicador de app aberto, foca o app se já estiver aberto
+- [ ] Dock: pastas em leque, atalhos de Pastas/Busca/Configurações/Downloads/Lixeira (dependem dessas telas)
 - [ ] Áreas de atalho (criar, mover, redimensionar, minimizar)
 - [ ] Busca global
 - [ ] Navegador de pastas
