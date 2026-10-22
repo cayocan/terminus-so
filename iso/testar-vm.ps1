@@ -26,8 +26,23 @@ $ErrorActionPreference = "Stop"
 $vbox = Join-Path $env:ProgramFiles "Oracle\VirtualBox\VBoxManage.exe"
 if (-not (Test-Path $vbox)) { throw "VirtualBox não encontrado. Instale com: winget install Oracle.VirtualBox" }
 function VBox { & $vbox @args; if ($LASTEXITCODE -ne 0) { throw "VBoxManage $($args -join ' ') falhou" } }
+# Sem saída e sem parar em erro: no PowerShell 5.1, redirecionar o stderr de um programa com
+# ErrorActionPreference=Stop vira erro fatal, e o VBoxManage escreve o progresso no stderr.
+function VBoxSilencioso {
+	$anterior = $ErrorActionPreference
+	$ErrorActionPreference = "Continue"
+	& $vbox @args 2>&1 | Out-Null
+	$ErrorActionPreference = $anterior
+}
 
 $pastaIso = $PSScriptRoot
+
+# A VM ligada prende a ISO antiga; desliga antes de baixar ou trocar a imagem.
+if ((& $vbox list runningvms) -match "^`"$Nome`" ") {
+	Write-Host "Desligando a VM que estava ligada..."
+	VBoxSilencioso controlvm $Nome poweroff
+	Start-Sleep -Seconds 3
+}
 
 if ($Baixar) {
 	$destino = Join-Path $pastaIso "baixada"
@@ -48,11 +63,6 @@ $Iso = (Resolve-Path $Iso).Path
 Write-Host "ISO: $Iso"
 
 $existe = (& $vbox list vms) -match "^`"$Nome`" "
-if ((& $vbox list runningvms) -match "^`"$Nome`" ") {
-	Write-Host "Desligando a VM que estava ligada..."
-	& $vbox controlvm $Nome poweroff 2>$null | Out-Null
-	Start-Sleep -Seconds 3
-}
 if ($existe -and $Recriar) {
 	VBox unregistervm $Nome --delete
 	$existe = $false
