@@ -6,6 +6,7 @@ iso/binary/
 iso/config/includes.chroot/usr/share/terminus/shell/
 iso/*.iso
 iso/*.log
+iso/build.status
 iso/*.contents
 iso/*.files
 iso/*.packages

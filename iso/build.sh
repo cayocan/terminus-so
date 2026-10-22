@@ -15,6 +15,8 @@ mkdir -p config/includes.chroot/usr/share/terminus
 cp -r ../shell config/includes.chroot/usr/share/terminus/shell
 
 lb config
-lb build 2>&1 | tee build.log
+# O tee esconde o código de saída do lb build; guarda-o num arquivo para o set -e não deixar passar falha.
+{ lb build 2>&1; echo $? > build.status; } | tee build.log
+[ "$(cat build.status)" -eq 0 ] || { echo "lb build falhou; veja iso/build.log" >&2; exit 1; }
 
 ls -lh ./*.iso

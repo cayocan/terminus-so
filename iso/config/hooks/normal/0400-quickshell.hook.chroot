@@ -13,8 +13,13 @@ DEPS_RUNTIME="qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtqui
 	qml6-module-qtquick-shapes qml6-module-qtquick-particles qml6-module-qtquick-effects \
 	qml6-module-qtquick-window libjemalloc2"
 
+# O Hyprland dos backports atualiza o libxkbcommon; os -dev precisam vir da mesma versão,
+# senão o apt tenta rebaixar a biblioteca e a instalação falha.
+DEPS_BUILD_BACKPORTS="libxkbcommon-dev libxkbcommon-x11-dev"
+
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y $DEPS_BUILD $DEPS_RUNTIME
+DEBIAN_FRONTEND=noninteractive apt-get install -y $DEPS_BUILD $DEPS_RUNTIME \
+	$(for p in $DEPS_BUILD_BACKPORTS; do echo "$p/trixie-backports"; done)
 
 cd /tmp
 git clone --depth 1 https://github.com/quickshell-mirror/quickshell.git
@@ -40,5 +45,5 @@ apt-mark manual $DEPS_RUNTIME
 	| cut -d: -f1 \
 	| sort -u \
 	| xargs -r apt-mark manual
-DEBIAN_FRONTEND=noninteractive apt-get purge -y $DEPS_BUILD
+DEBIAN_FRONTEND=noninteractive apt-get purge -y $DEPS_BUILD $DEPS_BUILD_BACKPORTS
 apt-get autoremove -y
