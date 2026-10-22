@@ -2,13 +2,14 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Particles
 import QtQuick.Effects
+import "tema"
 
 Item {
     id: esfera
 
     property string estado: "repouso"
-    property color corPrincipal: "#22D3EE"
-    property color corProfunda: "#1E6BFF"
+    property color corPrincipal: Tema.principal
+    property color corProfunda: Tema.profunda
     property bool animando: visible
 
     implicitWidth: 520

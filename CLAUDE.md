@@ -25,6 +25,7 @@ Ryzen 7 1800X, 16 GB de RAM, Radeon RX 5500 XT 8 GB, Meta Quest 3 para testes de
 - `iso/` build da ISO (live-build). `iso/build.sh` gera a ISO; o workflow `.github/workflows/build-iso.yml` gera no GitHub Actions.
 - `shell/` interface em Quickshell. `preview/Preview.qml` mostra a esfera em qualquer PC com Qt 6 (`qml preview/Preview.qml`).
 - `ROADMAP.md` fases e o que falta.
+- `shell/tema/Tema.qml` singleton com todas as cores, fontes, raios e medidas do design (importar com `import "tema"`). Toda tela nova usa o Tema; nada de cores ou medidas soltas no código. Se faltar um valor, adicione-o ao Tema seguindo `docs/design/README.md`.
 - `docs/design/` referências visuais: `README.md` tem cores, presets, tipografia, medidas e o índice das telas; `telas/*.dc.html` é o código-fonte de cada tela desenhada no Claude Design. Ao implementar uma tela em QML, abra o arquivo correspondente e use os valores dos estilos inline como fonte da verdade.
 
 ## Próximo passo

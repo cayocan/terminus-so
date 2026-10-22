@@ -1,11 +1,12 @@
 import QtQuick
+import "tema"
 
 Rectangle {
     id: tela
 
     property string estadoAssistente: "repouso"
 
-    color: "#04070D"
+    color: Tema.fundo
 
     Esfera {
         id: esfera
@@ -18,11 +19,11 @@ Rectangle {
 
     Text {
         anchors.top: esfera.bottom
-        anchors.topMargin: 16
+        anchors.topMargin: Tema.espaco
         anchors.horizontalCenter: parent.horizontalCenter
         text: qsTr("Em repouso")
-        color: "#B8D2E2"
-        font.family: "Inter"
-        font.pixelSize: 18
+        color: Tema.textoSecundario
+        font.family: Tema.fonteTexto
+        font.pixelSize: Tema.tamanhoTextoGrande
     }
 }
