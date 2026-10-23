@@ -40,7 +40,7 @@ PanelWindow {
         if (entrada.tela === "busca") return busca.abrir()
         if (entrada.tela === "configuracoes") return configuracoes.abrir("")
         if (entrada.tela === "pastas") return pastas.abrir("")
-        if (entrada.tela === "downloads") return pastas.abrir(pastas.pastasUsuario.DOWNLOAD)
+        if (entrada.tela === "downloads") return leque.alternar()
         if (entrada.tela === "lixeira") return pastas.abrir(pastas.lixeira)
         const janela = janelaDo(entrada.appId)
         if (janela !== null) janela.activate()
@@ -101,14 +101,23 @@ PanelWindow {
             Repeater {
                 model: dock.atalhos
                 delegate: ItemDock {
+                    id: atalhoDock
                     required property var modelData
                     nome: modelData.nome
                     icone: modelData.icone
                     neutro: true
+                    destacado: modelData.tela === "downloads" && leque.aberto
+                    Component.onCompleted: if (modelData.tela === "downloads") leque.ancora = atalhoDock
                     disponivel: dock.disponivel(modelData)
                     onAcionado: dock.acionar(modelData)
                 }
             }
         }
+    }
+
+    LequeDock {
+        id: leque
+        pastas: dock.pastas
+        pasta: dock.pastas ? dock.pastas.pastasUsuario.DOWNLOAD : ""
     }
 }

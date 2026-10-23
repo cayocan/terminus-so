@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Wayland
 import "tema"
 
-// Diálogos das áreas de atalho (renomear e escolher app), numa camada acima de tudo e com o
+// Diálogos das áreas de atalho (renomear, escolher app, trocar ícone e confirmar exclusão), numa camada acima de tudo e com o
 // teclado só para eles enquanto abertos. Abrem quando areas.dialogo recebe um pedido.
 PanelWindow {
     id: janela
@@ -13,6 +13,7 @@ PanelWindow {
     required property Areas areas
     readonly property var pedido: areas.dialogo
     readonly property var area: pedido ? areas.buscar(pedido.areaId) : null
+    readonly property string tipo: pedido ? pedido.tipo : ""
 
     function fechar() { areas.dialogo = null }
 
@@ -52,16 +53,70 @@ PanelWindow {
 
             Text {
                 Layout.fillWidth: true
-                text: !janela.pedido ? "" : janela.pedido.tipo === "renomear" ? qsTr("RENOMEAR ÁREA") : qsTr("ADICIONAR ATALHO")
-                color: Tema.principal
+                text: janela.tipo === "renomear" ? qsTr("RENOMEAR ÁREA")
+                    : janela.tipo === "excluir" ? qsTr("EXCLUIR ÁREA")
+                    : janela.tipo === "icone" ? qsTr("ÍCONE DA ÁREA") : qsTr("ADICIONAR ATALHO")
+                color: janela.tipo === "excluir" ? Tema.erroTexto : Tema.principal
                 font.family: Tema.fonteTitulo
                 font.weight: Font.DemiBold
                 font.pixelSize: Tema.tamanhoSecao
                 font.letterSpacing: Tema.espacamentoSecao
             }
 
+            Text {
+                Layout.fillWidth: true
+                visible: janela.tipo === "excluir"
+                text: !janela.area ? "" : janela.area.atalhos.length === 0
+                    ? qsTr("A área “%1” vai ser apagada.").arg(janela.area.nome)
+                    : qsTr("A área “%1” e os atalhos dela (%2) vão ser apagados. Os apps continuam instalados.")
+                        .arg(janela.area.nome).arg(janela.area.atalhos.length)
+                wrapMode: Text.Wrap
+                color: Tema.textoSecundario
+                font.family: Tema.fonteTexto
+                font.pixelSize: Tema.tamanhoTexto
+            }
+
+            // Ícones para a área (no pedido de ícone).
+            Flow {
+                Layout.fillWidth: true
+                visible: janela.tipo === "icone"
+                spacing: 10
+                Repeater {
+                    model: janela.tipo === "icone" ? janela.areas.iconesDisponiveis : []
+                    delegate: Rectangle {
+                        required property string modelData
+                        readonly property bool escolhido: janela.area !== null && (janela.area.icone ?? "maleta") === modelData
+                        width: Tema.areaMinimizada - 8
+                        height: width
+                        radius: width / 2
+                        color: escolhido ? Tema.selecaoFundo : (toqueIcone.containsMouse ? Tema.hover : Tema.vidroPainel)
+                        border.color: escolhido ? Tema.principal : Tema.bordaDestaque
+                        Accessible.role: Accessible.RadioButton
+                        Accessible.name: modelData
+                        Accessible.checked: escolhido
+                        Icone {
+                            anchors.centerIn: parent
+                            caminhos: Icones[modelData]
+                            tamanho: 26
+                            cor: Tema.principal
+                        }
+                        MouseArea {
+                            id: toqueIcone
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                janela.areas.atualizar(janela.area.id, { icone: modelData })
+                                janela.fechar()
+                            }
+                        }
+                    }
+                }
+            }
+
             TextField {
                 id: campo
+                visible: janela.tipo === "renomear" || janela.tipo === "atalho"
                 Layout.fillWidth: true
                 Layout.preferredHeight: Tema.alvoMinimo + 4
                 placeholderText: janela.pedido && janela.pedido.tipo === "atalho" ? qsTr("Buscar app") : qsTr("Nome da área")
@@ -165,14 +220,26 @@ PanelWindow {
                 Item { Layout.fillWidth: true }
 
                 BotaoTexto {
+                    id: botaoCancelar
                     texto: qsTr("Cancelar")
                     onAcionado: janela.fechar()
+                    Keys.onEscapePressed: janela.fechar()
                 }
                 BotaoTexto {
-                    visible: janela.pedido !== null && janela.pedido.tipo === "renomear"
+                    visible: janela.tipo === "renomear"
                     texto: qsTr("Salvar")
                     principal: true
                     onAcionado: campo.accepted()
+                }
+                BotaoTexto {
+                    visible: janela.tipo === "excluir"
+                    texto: qsTr("Excluir")
+                    principal: true
+                    perigo: true
+                    onAcionado: {
+                        janela.areas.excluir(janela.area.id)
+                        janela.fechar()
+                    }
                 }
             }
         }
@@ -180,8 +247,11 @@ PanelWindow {
 
     onVisibleChanged: {
         if (!visible) return
-        campo.text = pedido.tipo === "renomear" ? area.nome : ""
+        campo.text = tipo === "renomear" ? area.nome : ""
         campo.selectAll()
-        campo.forceActiveFocus()
+        // Na exclusão o foco vai para Cancelar: Enter não apaga nada sem querer.
+        if (tipo === "excluir") botaoCancelar.forceActiveFocus()
+        else if (tipo === "icone") caixa.forceActiveFocus()
+        else campo.forceActiveFocus()
     }
 }

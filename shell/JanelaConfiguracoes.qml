@@ -22,7 +22,7 @@ FloatingWindow {
         ia: [qsTr("fase 5"), [qsTr("Escolher a IA de programação padrão (Claude Code) e ligar outras por conectores"),
                               qsTr("Sempre pela sua conta, nunca por API paga"),
                               qsTr("Pedir senha para ativar funções criadas pela IA")]],
-        areas: [qsTr("fase 2"), [qsTr("Ícone de cada área minimizada"), qsTr("Itens fixos e pastas em leque na dock"),
+        areas: [qsTr("fase 2"), [qsTr("Fixar e tirar apps da dock"), qsTr("Escolher outras pastas para abrir em leque"),
                                  qsTr("Organizar as áreas sozinho")]],
         rede: [qsTr("fase 2"), [qsTr("Wi-Fi e cabo"), qsTr("Bluetooth")]],
         som: [qsTr("fase 2"), [qsTr("Saída e entrada de áudio"), qsTr("Volume por app"), qsTr("Microfone para o assistente")]],

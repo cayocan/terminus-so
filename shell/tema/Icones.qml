@@ -75,5 +75,6 @@ QtObject {
         "M6 3v12", "M21 6a3 3 0 1 1-6 0a3 3 0 1 1 6 0z", "M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0z", "M18 9a9 9 0 0 1-9 9"
     ]
     readonly property var nuvem: ["M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1 0 8z"]
+    readonly property var livro: ["M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4z", "M20 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"]
     readonly property var sino: ["M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9", "M10.3 21a1.94 1.94 0 0 0 3.4 0"]
 }

@@ -1,2 +1,3 @@
 singleton Tema Tema.qml
 singleton Icones Icones.qml
+singleton Arquivos Arquivos.qml

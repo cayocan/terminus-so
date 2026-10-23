@@ -184,18 +184,6 @@ FloatingWindow {
         return (i === 0 ? bytes : bytes.toLocaleString(localidade, "f", 1)) + " " + unidades[i]
     }
 
-    function tipo(sufixo, pasta) {
-        if (pasta) return { icone: Icones.pasta, cor: Tema.corPasta, fundo: Tema.pastaSuave }
-        const s = sufixo.toLowerCase()
-        const arquivo = icone => ({ icone: icone, cor: Tema.textoTerciario, fundo: Tema.superficieNeutra })
-        if (["png", "jpg", "jpeg", "gif", "webp", "svg", "bmp"].includes(s)) return { icone: Icones.imagem, cor: Tema.principal, fundo: Tema.destaqueSuave }
-        if (["ogg", "mp3", "flac", "wav", "opus", "m4a"].includes(s)) return { icone: Icones.audio, cor: Tema.principal, fundo: Tema.destaqueSuave }
-        if (["mp4", "mkv", "webm", "avi", "mov"].includes(s)) return { icone: Icones.video, cor: Tema.principal, fundo: Tema.destaqueSuave }
-        if (["zip", "tar", "gz", "xz", "zst", "7z", "rar"].includes(s)) return arquivo(Icones.compactado)
-        if (["deb", "appimage", "flatpakref"].includes(s)) return { icone: Icones.pacote, cor: Tema.corPasta, fundo: Tema.pastaSuave }
-        return arquivo(Icones.documento)
-    }
-
     function montarItens() {
         if (modelo.status !== FolderListModel.Ready) return
         const filtro = busca.trim().toLowerCase()
@@ -204,7 +192,7 @@ FloatingWindow {
             const nome = modelo.get(i, "fileName")
             if (filtro !== "" && !nome.toLowerCase().includes(filtro)) continue
             const pasta = modelo.get(i, "fileIsDir")
-            const t = tipo(modelo.get(i, "fileSuffix"), pasta)
+            const t = Arquivos.tipo(modelo.get(i, "fileSuffix"), pasta)
             lista.push({
                 nome: nome, caminho: modelo.get(i, "filePath"), pasta: pasta,
                 icone: t.icone, cor: t.cor, fundoIcone: t.fundo,

@@ -19,10 +19,11 @@
 - [x] Widgets: hora e data, hardware (CPU, GPU AMD, memória), notificações (servidor do sistema, Não perturbe)
 - [ ] Linha de cidade e clima embaixo da data (precisa de um conector de clima)
 - [x] Dock estilo macOS: lupa, indicador de app aberto, foca o app se já estiver aberto
-- [ ] Dock: pastas em leque, atalhos de Pastas/Busca/Configurações/Downloads/Lixeira (dependem dessas telas)
+- [x] Dock: atalhos de Pastas, Busca, Configurações, Downloads e Lixeira; Downloads abre em leque com os arquivos mais recentes
+- [ ] Dock: fixar e tirar apps, escolher outras pastas em leque
 - [x] Áreas de atalho: criar (clique direito no fundo), mover, redimensionar com alças, minimizar, renomear, excluir, adicionar e remover atalhos; salvas na camada pessoal
 - [ ] Áreas de atalho por voz ("cria uma área de estudos", "minimiza a área de trabalho", "organiza as áreas"), depende do MCP (fase 3)
-- [ ] Ícone escolhido por área (hoje todas minimizadas usam a maleta)
+- [x] Ícone escolhido por área (Trocar ícone) e confirmação antes de excluir uma área
 - [x] Busca global: apps e arquivos da pasta pessoal, ação "Mostrar na pasta", teclado (↑ ↓ Enter Esc), pela dock ou Super + Espaço
 - [ ] Busca global: configurações e ações do assistente (dependem das telas de configuração e do MCP), busca por voz, nomes de arquivo sem acento casando com acentuados
 - [x] Navegador de pastas: janela com barra de título própria (mover, redimensionar, minimizar, maximizar, fechar), histórico, caminho clicável, busca, modos ícones e lista, Favoritos/Locais/Áreas, espaço livre; abre pela dock (Pastas e Downloads)

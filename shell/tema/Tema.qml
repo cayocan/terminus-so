@@ -220,6 +220,20 @@ QtObject {
     readonly property int larguraInterruptor: 40
     readonly property int alturaInterruptor: 22
 
+    // Pasta em leque na dock (AreasDock.dc.html)
+    readonly property int itensLeque: 5
+    readonly property int tamanhoItemLeque: 52
+    readonly property int raioItemLeque: 14
+    readonly property int passoLeque: 62
+    readonly property int alturaEtiquetaLeque: 30
+    readonly property int raioEtiquetaLeque: 10
+    readonly property color fundoEtiquetaLeque: Qt.rgba(9 / 255, 18 / 255, 32 / 255, 0.92)
+    readonly property color bordaEtiquetaLeque: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.2)
+    readonly property color fundoItemLeque: Qt.rgba(12 / 255, 28 / 255, 46 / 255, 0.95)
+    readonly property color bordaItemLeque: Qt.alpha(principal, 0.35)
+    readonly property color fundoItemDockAtivo: Qt.alpha(principal, 0.2)
+    readonly property color textoItemDockAtivo: "#EAFBFF"
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

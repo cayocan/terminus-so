@@ -4,15 +4,19 @@ import Quickshell.Io
 import "tema"
 
 // Áreas de atalho do usuário, salvas na camada pessoal (nunca sobrescrita por atualizações da base).
-// Cada área: { id, nome, x, y, largura, altura, minimizada, atalhos: [ids de .desktop] }
+// Cada área: { id, nome, icone, x, y, largura, altura, minimizada, atalhos: [ids de .desktop] }
 Item {
     id: areas
 
     property var lista: []
     // Arquivo ainda não existe: a tela principal chama semear() com o tamanho da tela.
     property bool precisaSemear: false
-    // Pedido de diálogo para a janela de diálogos: { tipo: "renomear" | "atalho", areaId }
+    // Pedido de diálogo para a janela de diálogos: { tipo: "renomear" | "atalho" | "icone" | "excluir", areaId }
     property var dialogo: null
+
+    // Ícones que o usuário pode escolher para uma área (nomes em tema/Icones.qml).
+    readonly property var iconesDisponiveis: ["maleta", "controle", "livro", "audio", "codigo", "imagem",
+                                              "video", "navegador", "pasta", "casa", "grade", "nuvem"]
 
     readonly property string caminho: Quickshell.env("HOME") + "/.config/terminus/pessoal/areas.json"
 
@@ -64,13 +68,13 @@ Item {
         precisaSemear = false
         lista = [
             {
-                id: "area-jogos", nome: qsTr("Jogos"),
+                id: "area-jogos", nome: qsTr("Jogos"), icone: "controle",
                 x: largura - Tema.margemTela - Tema.larguraArea, y: Math.round(altura * 600 / 1080),
                 largura: Tema.larguraArea, altura: Tema.alturaArea, minimizada: false,
                 atalhos: ["steam"]
             },
             {
-                id: "area-trabalho", nome: qsTr("Trabalho"),
+                id: "area-trabalho", nome: qsTr("Trabalho"), icone: "maleta",
                 x: Tema.margemTela, y: Math.round(altura * 760 / 1080),
                 largura: Tema.larguraArea, altura: Tema.alturaArea, minimizada: true,
                 atalhos: ["firefox-esr", "foot"]

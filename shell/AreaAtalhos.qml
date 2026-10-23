@@ -42,12 +42,14 @@ Item {
         const itens = dados.minimizada ? [
             { texto: qsTr("Abrir área"), acao: () => areas.atualizar(dados.id, { minimizada: false }) },
             { texto: qsTr("Renomear"), acao: () => areas.dialogo = { tipo: "renomear", areaId: dados.id } },
-            { texto: qsTr("Excluir área"), perigo: true, acao: () => areas.excluir(dados.id) }
+            { texto: qsTr("Trocar ícone"), acao: () => areas.dialogo = { tipo: "icone", areaId: dados.id } },
+            { texto: qsTr("Excluir área"), perigo: true, acao: () => areas.dialogo = { tipo: "excluir", areaId: dados.id } }
         ] : [
             { texto: qsTr("Adicionar atalho"), acao: () => areas.dialogo = { tipo: "atalho", areaId: dados.id } },
             { texto: qsTr("Renomear"), acao: () => areas.dialogo = { tipo: "renomear", areaId: dados.id } },
             { texto: qsTr("Minimizar"), acao: () => areas.atualizar(dados.id, { minimizada: true }) },
-            { texto: qsTr("Excluir área"), perigo: true, acao: () => areas.excluir(dados.id) }
+            { texto: qsTr("Trocar ícone"), acao: () => areas.dialogo = { tipo: "icone", areaId: dados.id } },
+            { texto: qsTr("Excluir área"), perigo: true, acao: () => areas.dialogo = { tipo: "excluir", areaId: dados.id } }
         ]
         menu.abrir(p.x, p.y, itens)
     }
@@ -288,7 +290,7 @@ Item {
             }
             Icone {
                 anchors.centerIn: parent
-                caminhos: Icones.maleta
+                caminhos: Icones[area.dados.icone] ?? Icones.maleta
                 tamanho: 28
                 cor: Tema.principal
             }

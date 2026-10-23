@@ -11,6 +11,8 @@ Column {
     property bool disponivel: true
     // Atalhos de pastas e lixeira têm fundo neutro em vez do destaque.
     property bool neutro: false
+    // Aberto em leque (pasta da dock): destaque forte, como no AreasDock.dc.html.
+    property bool destacado: false
 
     signal acionado()
 
@@ -22,8 +24,9 @@ Column {
         width: Tema.dockIcone
         height: Tema.dockIcone
         radius: Tema.raioItemDock
-        color: item.neutro ? Tema.superficieNeutra : Tema.destaqueSuave
-        border.color: item.activeFocus ? Tema.principal : Tema.bordaDestaque
+        color: item.destacado ? Tema.fundoItemDockAtivo : item.neutro ? Tema.superficieNeutra : Tema.destaqueSuave
+        border.color: item.activeFocus || item.destacado ? Tema.principal : Tema.bordaDestaque
+        border.width: item.destacado ? 1.5 : 1
         opacity: item.disponivel ? 1 : 0.45
         scale: toque.containsMouse && item.disponivel ? Tema.dockLupa : 1
         transformOrigin: Item.Bottom
@@ -35,7 +38,7 @@ Column {
             anchors.centerIn: parent
             caminhos: item.icone
             tamanho: 28
-            cor: item.neutro ? Tema.textoSecundario : Tema.principal
+            cor: item.destacado ? Tema.textoItemDockAtivo : item.neutro ? Tema.textoSecundario : Tema.principal
         }
 
         MouseArea {
