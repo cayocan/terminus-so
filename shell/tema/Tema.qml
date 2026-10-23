@@ -234,6 +234,11 @@ QtObject {
     readonly property color fundoItemDockAtivo: Qt.alpha(principal, 0.2)
     readonly property color textoItemDockAtivo: "#EAFBFF"
 
+    // Confirmação de ações do sistema (servidor MCP)
+    readonly property int esferaConfirmacao: 120
+    readonly property int larguraConfirmacao: 520
+    readonly property color bordaConfirmacao: Qt.alpha(atencao, 0.5)
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

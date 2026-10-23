@@ -27,9 +27,6 @@ FloatingWindow {
         rede: [qsTr("fase 2"), [qsTr("Wi-Fi e cabo"), qsTr("Bluetooth")]],
         som: [qsTr("fase 2"), [qsTr("Saída e entrada de áudio"), qsTr("Volume por app"), qsTr("Microfone para o assistente")]],
         telas: [qsTr("fase 2"), [qsTr("Resolução, taxa de atualização e escala"), qsTr("Vários monitores")]],
-        usuarios: [qsTr("fases 3 e 8"), [qsTr("Senha no boot e voz na tela de bloqueio"),
-                                         qsTr("Nível de permissão de cada ação do sistema: livre, confirmação por voz ou senha"),
-                                         qsTr("Histórico de tudo que o sistema fez")]],
         atualizacoes: [qsTr("fase 7"), [qsTr("Atualizar a base pelo GitHub, com snapshot antes"),
                                         qsTr("Conflitos com a camada pessoal perguntados a você"),
                                         qsTr("Exportar o sistema para um Git seu ou gerar uma ISO pessoal")]],
@@ -180,6 +177,7 @@ FloatingWindow {
                         sourceComponent: janela.categoriaAtual.id === "aparencia" ? aparencia
                                        : janela.categoriaAtual.id === "assistente" ? assistente
                                        : janela.categoriaAtual.id === "conectores" ? conectores
+                                       : janela.categoriaAtual.id === "usuarios" ? seguranca
                                        : emBreve
                         onSourceComponentChanged: rolagem.contentY = 0
                     }
@@ -191,6 +189,7 @@ FloatingWindow {
     Component { id: aparencia; PaginaAparencia { configuracoes: janela.configuracoes } }
     Component { id: assistente; PaginaAssistente { configuracoes: janela.configuracoes } }
     Component { id: conectores; PaginaConectores { configuracoes: janela.configuracoes } }
+    Component { id: seguranca; PaginaSeguranca { servidor: janela.configuracoes.servidor } }
     Component {
         id: emBreve
         PaginaEmBreve {

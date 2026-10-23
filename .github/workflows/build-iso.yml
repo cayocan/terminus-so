@@ -7,6 +7,7 @@ on:
       - "iso/**"
       - "!iso/testar-vm.ps1"
       - "shell/**"
+      - "mcp/**"
       - ".github/workflows/build-iso.yml"
   workflow_dispatch:
 
@@ -20,9 +21,17 @@ jobs:
       - name: Instalar ferramentas
         run: |
           apt-get update
-          apt-get install -y live-build git ca-certificates
+          apt-get install -y live-build git ca-certificates python3 libpam-modules-bin
 
       - uses: actions/checkout@v4
+
+      - name: Testar o servidor MCP
+        # Os testes rodam como usuário comum: o unix_chkpwd só confere a senha do próprio usuário.
+        run: |
+          useradd -m testes
+          echo "testes:senha-de-teste" | chpasswd
+          cp -r mcp /tmp/mcp && chown -R testes /tmp/mcp
+          su testes -c "cd /tmp/mcp && SENHA_TESTE=senha-de-teste PATH=/usr/bin:/bin python3 -W ignore -m unittest discover -s testes -v"
 
       - name: Gerar ISO
         run: |

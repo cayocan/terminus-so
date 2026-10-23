@@ -1,0 +1,6 @@
+#!/bin/sh
+# Servidor MCP do Terminus (código em /usr/lib/terminus/mcp, vindo de mcp/ no repositório).
+#   terminus-mcp servidor      o serviço (systemctl --user start terminus-mcp)
+#   terminus-mcp stdio         ponte para clientes MCP por stdio (ex.: claude mcp add terminus -- terminus-mcp stdio)
+#   terminus-mcp ferramentas   lista as ferramentas e o nível de cada uma
+exec env PYTHONPATH=/usr/lib/terminus/mcp python3 -m terminus_mcp "$@"

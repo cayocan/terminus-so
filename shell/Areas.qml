@@ -47,6 +47,18 @@ Item {
         dialogo = { tipo: "renomear", areaId: id }
     }
 
+    // Criada por outro caminho que não o clique (ex.: pelo assistente): sem diálogo de nome, num canto livre.
+    function criarCom(nome, apps) {
+        const id = "area-" + Date.now()
+        const deslocamento = lista.length * 24
+        lista = lista.concat([{
+            id: id, nome: nome, icone: "maleta", x: Tema.margemTela + 460 + deslocamento, y: 140 + deslocamento,
+            largura: Tema.larguraArea, altura: Tema.alturaArea, minimizada: false, atalhos: apps
+        }])
+        salvar()
+        return nome
+    }
+
     function excluir(id) {
         lista = lista.filter(a => a.id !== id)
         salvar()

@@ -42,9 +42,11 @@
 - [ ] Páginas de Rede, Som, Telas, Áreas e dock e Jogos
 
 ## Fase 3 — MCP do sistema
-- [ ] Servidor MCP local com os grupos de ferramentas da especificação
-- [ ] Níveis de permissão (livre, confirmação por voz, senha)
-- [ ] Histórico de ações
+- [x] Servidor MCP local (Python, sem dependências) com 24 ferramentas em 9 grupos (lista em `mcp/README.md`)
+- [x] Níveis de permissão (livre, confirmação, senha conferida pelo PAM), ajustáveis em Configurações → Usuários e segurança
+- [x] Histórico de ações, na mesma página
+- [ ] Confirmação por voz (depende do assistente, fase 4)
+- [ ] Ferramentas de rede, telas, apps (instalar/remover), atualizações e jogos, junto com as páginas de cada um
 
 ## Fase 4 — Assistente local
 - [ ] llama.cpp com Vulkan e escolha do modelo (testar 2–3 de 7–8B em português)

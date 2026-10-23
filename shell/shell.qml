@@ -13,6 +13,17 @@ ShellRoot {
 
     Configuracoes {
         id: preferencias
+        servidor: servidorSistema
+    }
+
+    // Ligação com o servidor MCP do sistema (confirmações, comandos de tela, histórico).
+    ServidorSistema {
+        id: servidorSistema
+        busca: buscaGlobal
+        pastas: navegadorPastas
+        configuracoes: preferencias
+        painelNotificacoes: centralPainel
+        areas: areasAtalho
     }
 
     Pastas {
@@ -39,6 +50,7 @@ ShellRoot {
                 areas: areasAtalho
                 painelNotificacoes: centralPainel
                 nomeAssistente: preferencias.nomeAssistente
+                estadoAssistente: servidorSistema.estadoEsfera
                 mostrarAreas: modelData === Quickshell.screens[0]
                 tamanhoTela: Qt.size(modelData.width, modelData.height)
             }
@@ -73,6 +85,11 @@ ShellRoot {
         id: buscaGlobal
         pastas: navegadorPastas
         configuracoes: preferencias
+        screen: Quickshell.screens[0]
+    }
+
+    ConfirmacaoAcao {
+        servidor: servidorSistema
         screen: Quickshell.screens[0]
     }
 

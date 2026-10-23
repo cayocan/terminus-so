@@ -11,6 +11,7 @@ Item {
     id: controleConfig
 
     property string nomeAssistente: "Terminus"
+    property var servidor
     // Conectores: { id: { bomDia: bool } }. Ligar e conectar de verdade chega com o servidor MCP.
     property var conectores: ({})
     readonly property bool aberta: carregador.active
@@ -27,7 +28,7 @@ Item {
         { id: "rede", nome: qsTr("Rede"), icone: Icones.wifi, pronta: false },
         { id: "som", nome: qsTr("Som"), icone: Icones.altoFalante, pronta: false },
         { id: "telas", nome: qsTr("Telas"), icone: Icones.tela, pronta: false },
-        { id: "usuarios", nome: qsTr("Usuários e segurança"), icone: Icones.usuario, pronta: false },
+        { id: "usuarios", nome: qsTr("Usuários e segurança"), icone: Icones.usuario, pronta: true },
         { id: "atualizacoes", nome: qsTr("Atualizações e camada pessoal"), icone: Icones.atualizar, pronta: false },
         { id: "jogos", nome: qsTr("Jogos e compatibilidade"), icone: Icones.controle, pronta: false }
     ]

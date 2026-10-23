@@ -1,0 +1,10 @@
+[Unit]
+Description=Servidor MCP do Terminus SO (ferramentas do sistema com permissões e histórico)
+# Sobe junto com a sessão gráfica: o hyprland.conf importa o ambiente (WAYLAND_DISPLAY,
+# HYPRLAND_INSTANCE_SIGNATURE) e inicia este serviço.
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/terminus-mcp servidor
+Restart=on-failure
+RestartSec=2
