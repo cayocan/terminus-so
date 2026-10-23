@@ -34,8 +34,11 @@
 - [x] "O que eu perdi?": resumo em texto das não lidas sob a esfera, que fica em "falando"
 - [ ] "O que eu perdi?" falado (Piper) e por voz; resumo escrito pelo modelo local em vez do texto fixo
 - [ ] Ações das notificações (botões), lembrar o Não perturbe entre reinícios
-- [ ] Configurações e painel de conectores
-- [ ] Presets de cor (Jarvis clássico, Mark, Stealth) e cores livres
+- [x] Configurações: janela com as 11 categorias e busca; Aparência, Esfera e assistente (nome) e Conectores funcionam; as outras dizem o que vão ter
+- [x] Painel de conectores (visual): estado, "Entra no bom dia" salvo; conectar e criar conector chegam nas fases 6 e 5
+- [x] Presets de cor (Jarvis clássico, Mark, Stealth), salvos na camada pessoal e aplicados na hora
+- [ ] Cores livres; borda das janelas do Hyprland seguir o preset (hoje fica ciano)
+- [ ] Páginas de Rede, Som, Telas, Áreas e dock e Jogos
 
 ## Fase 3 — MCP do sistema
 - [ ] Servidor MCP local com os grupos de ferramentas da especificação

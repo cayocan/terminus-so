@@ -298,49 +298,13 @@ FloatingWindow {
             anchors.margins: 1
             spacing: 0
 
-            // ---------- Barra de título ----------
-            Item {
+            BarraTitulo {
                 Layout.fillWidth: true
-                Layout.preferredHeight: Tema.alturaTitulo
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: janela.startSystemMove()
-                    onDoubleClicked: janela.maximized = !janela.maximized
-                }
-                Row {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 10
-                    Icone {
-                        anchors.verticalCenter: parent.verticalCenter
-                        caminhos: Icones.pasta
-                        tamanho: 18
-                        espessura: 1.8
-                        cor: Tema.principal
-                    }
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("Pastas")
-                        color: Tema.texto
-                        font.family: Tema.fonteTexto
-                        font.weight: Font.DemiBold
-                        font.pixelSize: Tema.tamanhoTextoMenor
-                    }
-                }
-                Row {
-                    anchors.right: parent.right
-                    BotaoJanela { nome: qsTr("Minimizar janela"); icone: Icones.minimizar; onAcionado: janela.visible = false }
-                    BotaoJanela {
-                        nome: janela.maximized ? qsTr("Restaurar janela") : qsTr("Maximizar janela")
-                        icone: Icones.maximizar
-                        onAcionado: janela.maximized = !janela.maximized
-                    }
-                    BotaoJanela { nome: qsTr("Fechar janela"); icone: Icones.fechar; fechar: true; onAcionado: janela.pastas.fechar() }
-                }
+                janelaAlvo: janela
+                titulo: qsTr("Pastas")
+                icone: Icones.pasta
+                onFecharPedido: janela.pastas.fechar()
             }
-            Rectangle { Layout.fillWidth: true; Layout.preferredHeight: 1; color: Tema.linhaDivisoria }
 
             // ---------- Barra de ferramentas ----------
             RowLayout {
@@ -645,30 +609,8 @@ FloatingWindow {
         }
     }
 
-    // Bordas e cantos para redimensionar (a janela não tem decoração do compositor).
-    // Os cantos vêm depois das bordas para ficarem por cima delas.
-    Repeater {
-        model: janela.maximized ? [] : [
-            { bordas: Qt.LeftEdge, cursor: Qt.SizeHorCursor },
-            { bordas: Qt.RightEdge, cursor: Qt.SizeHorCursor },
-            { bordas: Qt.TopEdge, cursor: Qt.SizeVerCursor },
-            { bordas: Qt.BottomEdge, cursor: Qt.SizeVerCursor },
-            { bordas: Qt.TopEdge | Qt.LeftEdge, cursor: Qt.SizeFDiagCursor },
-            { bordas: Qt.BottomEdge | Qt.RightEdge, cursor: Qt.SizeFDiagCursor },
-            { bordas: Qt.TopEdge | Qt.RightEdge, cursor: Qt.SizeBDiagCursor },
-            { bordas: Qt.BottomEdge | Qt.LeftEdge, cursor: Qt.SizeBDiagCursor }
-        ]
-        delegate: MouseArea {
-            required property var modelData
-            readonly property int b: Tema.bordaRedimensionar
-            readonly property bool horizontal: modelData.bordas & (Qt.LeftEdge | Qt.RightEdge)
-            readonly property bool vertical: modelData.bordas & (Qt.TopEdge | Qt.BottomEdge)
-            x: modelData.bordas & Qt.RightEdge ? janela.width - b : 0
-            y: modelData.bordas & Qt.BottomEdge ? janela.height - b : 0
-            width: horizontal ? b : janela.width
-            height: vertical ? b : janela.height
-            cursorShape: modelData.cursor
-            onPressed: janela.startSystemResize(modelData.bordas)
-        }
+    BordasRedimensionar {
+        anchors.fill: parent
+        janelaAlvo: janela
     }
 }

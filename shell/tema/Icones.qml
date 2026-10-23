@@ -59,5 +59,21 @@ QtObject {
     readonly property var fechar: ["M6 6l12 12M18 6L6 18"]
     readonly property var abrirPasta: ["M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z", "M10 13h6M13 10l3 3-3 3"]
     readonly property var altoFalante: ["M4 9h4l5-4v14l-5-4H4z", "M17 9a4 4 0 0 1 0 6"]
+    // Configurações e conectores (Config.dc.html)
+    readonly property var aparencia: ["M20 12a8 8 0 1 1-16 0a8 8 0 1 1 16 0z", "M12 4v16M4 12h16"]
+    readonly property var esfera: ["M20 12a8 8 0 1 1-16 0a8 8 0 1 1 16 0z", "M8 12c1.5-2 2.5 2 4 0s2.5 2 4 0"]
+    readonly property var codigo: ["M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"]
+    readonly property var tomada: ["M9 2v6M15 2v6", "M6 8h12v3a6 6 0 0 1-12 0z", "M12 17v5"]
+    readonly property var wifi: ["M2 9a15 15 0 0 1 20 0", "M5 12.5a10 10 0 0 1 14 0", "M8.5 16a5 5 0 0 1 7 0", "M12 19.5h.01"]
+    readonly property var tela: ["M3 5h18v12H3z", "M8 21h8M12 17v4"]
+    readonly property var usuario: ["M16 8a4 4 0 1 1-8 0a4 4 0 1 1 8 0z", "M4 21a8 8 0 0 1 16 0"]
+    readonly property var atualizar: ["M21 12a9 9 0 1 1-3-6.7", "M21 4v5h-5"]
+    readonly property var email: ["M3 5h18v14H3z", "M3 7l9 6 9-6"]
+    readonly property var kanban: ["M3 4h5v16H3z", "M10 4h5v10h-5z", "M17 4h4v13h-4z"]
+    readonly property var calendario: ["M4 6h16v14H4z", "M4 10h16M8 3v4M16 3v4"]
+    readonly property var git: [
+        "M6 3v12", "M21 6a3 3 0 1 1-6 0a3 3 0 1 1 6 0z", "M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0z", "M18 9a9 9 0 0 1-9 9"
+    ]
+    readonly property var nuvem: ["M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1 0 8z"]
     readonly property var sino: ["M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9", "M10.3 21a1.94 1.94 0 0 0 3.4 0"]
 }

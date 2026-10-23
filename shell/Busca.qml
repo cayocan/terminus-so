@@ -14,6 +14,7 @@ PanelWindow {
 
     // var (e não Pastas) para não criar dependência entre os tipos.
     property var pastas
+    property var configuracoes
     property bool aberta: false
     property string consulta: ""
     property var apps: []
@@ -80,7 +81,12 @@ PanelWindow {
             meta: qsTr("Abrir %1 no navegador de pastas").arg(arquivos[0].meta.split(" · ")[1]),
             icone: Icones.abrirPasta, cor: Tema.principalClaro, pastaPai: arquivos[0].pastaPai
         }] : []
-        const grupos = [[qsTr("Arquivos"), arquivos], [qsTr("Apps"), apps], [qsTr("Ações"), acoes]]
+        const q = normalizar(consulta.trim())
+        const ajustes = q === "" || !configuracoes ? [] : configuracoes.categorias
+            .filter(c => normalizar(c.nome).includes(q))
+            .map(c => ({ tipo: "configuracao", categoria: c.id, nome: c.nome, icone: c.icone, cor: Tema.textoTerciario,
+                         meta: c.pronta ? qsTr("Configurações") : qsTr("Configurações · em construção") }))
+        const grupos = [[qsTr("Arquivos"), arquivos], [qsTr("Apps"), apps], [qsTr("Configurações"), ajustes], [qsTr("Ações"), acoes]]
         const saida = []
         for (const [titulo, itens] of grupos) {
             if (itens.length === 0) continue
@@ -107,7 +113,8 @@ PanelWindow {
         else if (item.tipo === "arquivo") {
             if (item.pasta) pastas.abrir(item.caminho)
             else Quickshell.execDetached(["xdg-open", item.caminho])
-        } else if (item.tipo === "acao") pastas.abrir(item.pastaPai)
+        } else if (item.tipo === "configuracao") configuracoes.abrir(item.categoria)
+        else if (item.tipo === "acao") pastas.abrir(item.pastaPai)
         fechar()
     }
 

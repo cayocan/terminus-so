@@ -195,20 +195,10 @@ PanelWindow {
                             font.family: Tema.fonteTexto
                             font.pixelSize: Tema.tamanhoTextoMenor
                         }
-                        Rectangle {
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 22
-                            radius: height / 2
-                            color: painel.central.naoPerturbe ? Tema.principal : Tema.trilhoBarra
-                            Rectangle {
-                                width: 16
-                                height: 16
-                                radius: 8
-                                anchors.verticalCenter: parent.verticalCenter
-                                x: painel.central.naoPerturbe ? parent.width - width - 3 : 3
-                                color: painel.central.naoPerturbe ? Tema.fundo : Tema.textoSecundario
-                                Behavior on x { NumberAnimation { duration: 150 } }
-                            }
+                        Interruptor {
+                            ligado: painel.central.naoPerturbe
+                            Accessible.name: qsTr("Não perturbe")
+                            onAlternado: painel.central.naoPerturbe = !painel.central.naoPerturbe
                         }
                     }
                     MouseArea {

@@ -9,6 +9,7 @@ PanelWindow {
 
     property Pastas pastas
     property var busca
+    property var configuracoes
 
     // "tela" abre uma tela do próprio Terminus; itens sem comando nem tela ainda não existem (Busca, Configurações...).
     readonly property var itens: [
@@ -17,7 +18,7 @@ PanelWindow {
         { nome: qsTr("Navegador web"), icone: Icones.navegador, comando: ["firefox-esr"], appId: "firefox-esr" },
         { nome: qsTr("Terminal"), icone: Icones.terminal, comando: ["foot"], appId: "foot" },
         { nome: qsTr("Steam"), icone: Icones.controle, comando: ["steam"], appId: "steam" },
-        { nome: qsTr("Configurações"), icone: Icones.configuracoes, comando: [], appId: "" }
+        { nome: qsTr("Configurações"), icone: Icones.configuracoes, comando: [], appId: "", tela: "configuracoes" }
     ]
     readonly property var atalhos: [
         { nome: qsTr("Pasta Downloads"), icone: Icones.downloads, comando: [], appId: "", tela: "downloads" },
@@ -37,6 +38,7 @@ PanelWindow {
 
     function acionar(entrada) {
         if (entrada.tela === "busca") return busca.abrir()
+        if (entrada.tela === "configuracoes") return configuracoes.abrir("")
         if (entrada.tela === "pastas") return pastas.abrir("")
         if (entrada.tela === "downloads") return pastas.abrir(pastas.pastasUsuario.DOWNLOAD)
         if (entrada.tela === "lixeira") return pastas.abrir(pastas.lixeira)
@@ -82,6 +84,7 @@ PanelWindow {
                     icone: modelData.icone
                     disponivel: dock.disponivel(modelData)
                     aberto: modelData.tela === "pastas" ? dock.pastas !== null && dock.pastas.aberta
+                          : modelData.tela === "configuracoes" ? dock.configuracoes !== null && dock.configuracoes.aberta
                           : ToplevelManager.toplevels.values.some(t => t.appId.toLowerCase() === modelData.appId)
                     onAcionado: dock.acionar(modelData)
                 }

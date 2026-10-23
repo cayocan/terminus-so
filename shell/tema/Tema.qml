@@ -199,6 +199,27 @@ QtObject {
     readonly property int tamanhoResumo: 24
     readonly property int larguraResumo: 800
 
+    // Configurações e conectores (Config.dc.html)
+    readonly property int larguraConfig: 1520
+    readonly property int alturaConfig: 900
+    readonly property int larguraCategorias: 300
+    readonly property int alturaCategoria: 44
+    readonly property int raioCategoria: 12
+    readonly property int tamanhoCategoria: 15
+    readonly property int preenchimentoConfigV: 32
+    readonly property int preenchimentoConfigH: 36
+    readonly property int tamanhoTituloConfig: 28
+    readonly property color fundoCartaoConector: Qt.rgba(12 / 255, 24 / 255, 40 / 255, 0.7)
+    readonly property int raioCartaoConector: 20
+    readonly property int iconeConector: 48
+    readonly property int raioIconeConector: 14
+    readonly property int tamanhoNomeConector: 17
+    readonly property int larguraMinimaCartao: 300
+    readonly property color bordaBotaoCartao: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.25)
+    readonly property color fundoNeutroIcone: Qt.rgba(1, 1, 1, 0.06)
+    readonly property int larguraInterruptor: 40
+    readonly property int alturaInterruptor: 22
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

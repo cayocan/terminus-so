@@ -11,6 +11,10 @@ ShellRoot {
         id: areasAtalho
     }
 
+    Configuracoes {
+        id: preferencias
+    }
+
     Pastas {
         id: navegadorPastas
         areas: areasAtalho
@@ -34,6 +38,7 @@ ShellRoot {
                 notificacoes: centralNotificacoes
                 areas: areasAtalho
                 painelNotificacoes: centralPainel
+                nomeAssistente: preferencias.nomeAssistente
                 mostrarAreas: modelData === Quickshell.screens[0]
                 tamanhoTela: Qt.size(modelData.width, modelData.height)
             }
@@ -48,6 +53,7 @@ ShellRoot {
             screen: modelData
             pastas: navegadorPastas
             busca: buscaGlobal
+            configuracoes: preferencias
         }
     }
 
@@ -66,6 +72,7 @@ ShellRoot {
     Busca {
         id: buscaGlobal
         pastas: navegadorPastas
+        configuracoes: preferencias
         screen: Quickshell.screens[0]
     }
 
