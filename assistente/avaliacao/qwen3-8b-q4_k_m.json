@@ -1,0 +1,160 @@
+{
+ "rotulo": "qwen3-8b-q4_k_m",
+ "pensar": false,
+ "ferramentas": [
+  {
+   "pedido": "abre o firefox pra mim",
+   "ok": true,
+   "chamadas": [
+    [
+     "apps_listar",
+     {
+      "busca": "firefox"
+     }
+    ]
+   ],
+   "segundos": 2.14,
+   "texto": ""
+  },
+  {
+   "pedido": "quanto de memória livre eu tenho?",
+   "ok": true,
+   "chamadas": [
+    [
+     "sistema_info",
+     {}
+    ]
+   ],
+   "segundos": 1.88,
+   "texto": ""
+  },
+  {
+   "pedido": "minimiza a área de trabalho",
+   "ok": true,
+   "chamadas": [
+    [
+     "area_minimizar",
+     {
+      "area": "área de trabalho",
+      "minimizada": true
+     }
+    ]
+   ],
+   "segundos": 2.43,
+   "texto": ""
+  },
+  {
+   "pedido": "cria uma área chamada Estudos",
+   "ok": true,
+   "chamadas": [
+    [
+     "area_criar",
+     {
+      "nome": "Estudos"
+     }
+    ]
+   ],
+   "segundos": 2.18,
+   "texto": ""
+  },
+  {
+   "pedido": "baixa o volume pra trinta por cento",
+   "ok": true,
+   "chamadas": [
+    [
+     "volume_definir",
+     {
+      "volume": 30
+     }
+    ]
+   ],
+   "segundos": 2.07,
+   "texto": ""
+  },
+  {
+   "pedido": "muda as cores pro modo stealth",
+   "ok": true,
+   "chamadas": [
+    [
+     "cores_definir",
+     {
+      "preset": "Stealth"
+     }
+    ]
+   ],
+   "segundos": 1.88,
+   "texto": ""
+  },
+  {
+   "pedido": "desliga o computador",
+   "ok": true,
+   "chamadas": [
+    [
+     "energia_desligar",
+     {}
+    ]
+   ],
+   "segundos": 1.72,
+   "texto": ""
+  },
+  {
+   "pedido": "manda o arquivo ~/Downloads/velho.zip pra lixeira",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivo_lixeira",
+     {
+      "caminho": "~/Downloads/velho.zip"
+     }
+    ]
+   ],
+   "segundos": 2.58,
+   "texto": ""
+  },
+  {
+   "pedido": "o que tem na minha pasta Documentos?",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivos_listar",
+     {
+      "pasta": "~/Documentos"
+     }
+    ]
+   ],
+   "segundos": 2.27,
+   "texto": ""
+  },
+  {
+   "pedido": "me conta uma curiosidade sobre o espaço",
+   "ok": true,
+   "chamadas": [],
+   "segundos": 4.1,
+   "texto": "Você sabia que a Lua está a aproximadamente 384.400 km da Terra? Esse é o seu maior distância média, e nesse espaço, poderia caber mais de 50 vezes o volume da Terra! 🌕"
+  }
+ ],
+ "texto": [
+  {
+   "pedido": "Resuma em duas frases faladas estas notificações não lidas: 3 e-mails do banco sobre a fatura, 1 mensagem da Ana perguntando do almoço de sábado, atualização do Steam concluída.",
+   "resposta": "Tem 3 e-mails do banco sobre a fatura e um da Ana perguntando sobre o almoço de sábado. A atualização do Steam já foi concluída.",
+   "segundos": 1.69,
+   "tok_s": 25.9,
+   "prompt_tok_s": 18.4
+  },
+  {
+   "pedido": "Explique em poucas frases, para alguém leigo, o que é uma partição de disco.",
+   "resposta": "Uma partição de disco é como um pedaço separado de um disco rígido, onde você pode instalar o sistema operacional, programas e arquivos. É como dividir um caderno em folhas diferentes para usar cada uma para algo específico.",
+   "segundos": 2.5,
+   "tok_s": 22.8,
+   "prompt_tok_s": 26.8
+  },
+  {
+   "pedido": "Bom dia! Como você pode me ajudar hoje?",
+   "resposta": "Bom dia! Estou aqui para ajudar com qualquer coisa que você precise no sistema. Só me diga o que quer fazer!",
+   "segundos": 1.33,
+   "tok_s": 23.3,
+   "prompt_tok_s": 23.7
+  }
+ ],
+ "acertos": 10
+}

@@ -49,7 +49,9 @@
 - [ ] Ferramentas de rede, telas, apps (instalar/remover), atualizações e jogos, junto com as páginas de cada um
 
 ## Fase 4 — Assistente local
-- [ ] llama.cpp com Vulkan e escolha do modelo (testar 2–3 de 7–8B em português)
+- [x] Escolha do modelo: Qwen3 8B Q4_K_M, testado na RX 5500 XT com llama.cpp Vulkan (24 tokens/s, 10/10 nas ferramentas do MCP; detalhes em `assistente/README.md`)
+- [ ] llama.cpp com Vulkan na ISO e download do modelo no primeiro uso
+- [ ] Laço do assistente: modelo ↔ ferramentas do MCP, com aquecimento do cache ao subir
 - [ ] Whisper (whisper.cpp) para ouvir
 - [ ] Piper para falar; XTTS v2 / F5-TTS opcional
 - [ ] openWakeWord com palavra escolhida pelo usuário

@@ -77,8 +77,11 @@ Item {
         }
         if (acao === "area_criar") return "área criada: " + areas.criarCom(args.nome, args.apps ?? [])
         if (acao === "area_minimizar") {
-            const alvo = String(args.area).toLowerCase()
-            const area = areas.lista.find(a => a.id === args.area || a.nome.toLowerCase() === alvo)
+            // O modelo costuma mandar "área de trabalho" para a área "Trabalho": compara sem esse prefixo e sem acento.
+            const normalizar = t => String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+                                             .replace(/^area( de| do| da| dos| das)? /, "").trim()
+            const alvo = normalizar(args.area)
+            const area = areas.lista.find(a => a.id === args.area || normalizar(a.nome) === alvo)
             if (!area) throw new Error("área não encontrada: " + args.area)
             areas.atualizar(area.id, { minimizada: args.minimizada !== false })
             return args.minimizada !== false ? "área minimizada" : "área aberta"
