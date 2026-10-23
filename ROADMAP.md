@@ -24,7 +24,9 @@
 - [ ] Áreas de atalho por voz ("cria uma área de estudos", "minimiza a área de trabalho", "organiza as áreas"), depende do MCP (fase 3)
 - [ ] Ícone escolhido por área (hoje todas minimizadas usam a maleta)
 - [ ] Busca global
-- [ ] Navegador de pastas
+- [x] Navegador de pastas: janela com barra de título própria (mover, redimensionar, minimizar, maximizar, fechar), histórico, caminho clicável, busca, modos ícones e lista, Favoritos/Locais/Áreas, espaço livre; abre pela dock (Pastas e Downloads)
+- [ ] Navegador de pastas: copiar, mover, renomear, excluir (Lixeira), nova pasta, arrastar e soltar, modo colunas
+- [ ] Minimizar janelas de outros apps (o Hyprland não tem minimizar; hoje só as janelas do Terminus escondem)
 - [ ] Central de notificações
 - [ ] Configurações e painel de conectores
 - [ ] Presets de cor (Jarvis clássico, Mark, Stealth) e cores livres

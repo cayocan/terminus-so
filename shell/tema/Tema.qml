@@ -129,6 +129,34 @@ QtObject {
     readonly property color brilhoSelecao: Qt.alpha(principal, 0.18)
     readonly property color etiquetaMedida: Qt.alpha(principal, 0.16)
 
+    // Janelas e navegador de pastas (Pastas.dc.html)
+    readonly property int larguraJanela: 1440
+    readonly property int alturaJanela: 820
+    readonly property int alturaTitulo: 52
+    readonly property int larguraBotaoJanela: 56
+    readonly property color fecharHover: "#C4314B"
+    readonly property int alturaFerramentas: 64
+    readonly property int larguraLateral: 260
+    readonly property int alturaItemLateral: 40
+    readonly property int raioItemLateral: 10
+    readonly property int alturaRodape: 40
+    readonly property int larguraBuscaPasta: 260
+    readonly property int alturaItemPasta: 150
+    readonly property int larguraMinimaItemPasta: 180
+    readonly property int raioItemPasta: 16
+    readonly property int raioIconeItemPasta: 14
+    readonly property int alturaLinhaPasta: 44
+    readonly property int bordaRedimensionar: 6
+    readonly property color linhaDivisoria: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.12)
+    readonly property color bordaCampo: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.2)
+    readonly property color textoDesativado: "#6F8BA0"
+    readonly property color textoMarcador: "#7E9DB3"
+    readonly property color corPasta: "#5B9BFF"
+    readonly property color pastaSuave: Qt.rgba(91 / 255, 155 / 255, 1, 0.12)
+    readonly property color itemSelecionado: Qt.alpha(principal, 0.10)
+    readonly property color bordaSelecionado: Qt.alpha(principal, 0.6)
+    readonly property color modoAtivo: Qt.alpha(principal, 0.18)
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

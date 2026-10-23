@@ -11,6 +11,11 @@ ShellRoot {
         id: areasAtalho
     }
 
+    Pastas {
+        id: navegadorPastas
+        areas: areasAtalho
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -40,6 +45,7 @@ ShellRoot {
         Dock {
             required property var modelData
             screen: modelData
+            pastas: navegadorPastas
         }
     }
 

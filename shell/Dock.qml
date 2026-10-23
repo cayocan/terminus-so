@@ -7,9 +7,11 @@ import "tema"
 PanelWindow {
     id: dock
 
-    // Itens sem comando são telas do Terminus que ainda não existem (Pastas, Busca, Configurações...).
+    property Pastas pastas
+
+    // "tela" abre uma tela do próprio Terminus; itens sem comando nem tela ainda não existem (Busca, Configurações...).
     readonly property var itens: [
-        { nome: qsTr("Pastas"), icone: Icones.pasta, comando: [], appId: "" },
+        { nome: qsTr("Pastas"), icone: Icones.pasta, comando: [], appId: "", tela: "pastas" },
         { nome: qsTr("Busca"), icone: Icones.busca, comando: [], appId: "" },
         { nome: qsTr("Navegador web"), icone: Icones.navegador, comando: ["firefox-esr"], appId: "firefox-esr" },
         { nome: qsTr("Terminal"), icone: Icones.terminal, comando: ["foot"], appId: "foot" },
@@ -17,7 +19,7 @@ PanelWindow {
         { nome: qsTr("Configurações"), icone: Icones.configuracoes, comando: [], appId: "" }
     ]
     readonly property var atalhos: [
-        { nome: qsTr("Pasta Downloads"), icone: Icones.downloads, comando: [], appId: "" },
+        { nome: qsTr("Pasta Downloads"), icone: Icones.downloads, comando: [], appId: "", tela: "downloads" },
         { nome: qsTr("Lixeira"), icone: Icones.lixeira, comando: [], appId: "" }
     ]
     // Espaço acima da barra para o ícone ampliado pela lupa não ser cortado.
@@ -28,7 +30,13 @@ PanelWindow {
         return ToplevelManager.toplevels.values.find(t => t.appId.toLowerCase() === appId) ?? null
     }
 
+    function disponivel(entrada) {
+        return entrada.comando.length > 0 || (entrada.tela !== undefined && pastas !== null)
+    }
+
     function acionar(entrada) {
+        if (entrada.tela === "pastas") return pastas.abrir("")
+        if (entrada.tela === "downloads") return pastas.abrir(pastas.pastasUsuario.DOWNLOAD)
         const janela = janelaDo(entrada.appId)
         if (janela !== null) janela.activate()
         else Quickshell.execDetached(entrada.comando)
@@ -69,8 +77,9 @@ PanelWindow {
                     required property var modelData
                     nome: modelData.nome
                     icone: modelData.icone
-                    disponivel: modelData.comando.length > 0
-                    aberto: ToplevelManager.toplevels.values.some(t => t.appId.toLowerCase() === modelData.appId)
+                    disponivel: dock.disponivel(modelData)
+                    aberto: modelData.tela === "pastas" ? dock.pastas !== null && dock.pastas.aberta
+                          : ToplevelManager.toplevels.values.some(t => t.appId.toLowerCase() === modelData.appId)
                     onAcionado: dock.acionar(modelData)
                 }
             }
@@ -90,7 +99,7 @@ PanelWindow {
                     nome: modelData.nome
                     icone: modelData.icone
                     neutro: true
-                    disponivel: modelData.comando.length > 0
+                    disponivel: dock.disponivel(modelData)
                     onAcionado: dock.acionar(modelData)
                 }
             }

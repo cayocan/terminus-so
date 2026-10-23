@@ -12,7 +12,7 @@ DEPS_BUILD="build-essential cmake ninja-build pkg-config spirv-tools \
 
 DEPS_RUNTIME="qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts \
 	qml6-module-qtquick-shapes qml6-module-qtquick-particles qml6-module-qtquick-effects \
-	qml6-module-qtquick-window libqt6svg6 libjemalloc2"
+	qml6-module-qtquick-window qml6-module-qt-labs-folderlistmodel libqt6svg6 libjemalloc2"
 
 # O Hyprland dos backports atualiza o libxkbcommon; os -dev precisam vir da mesma versão,
 # senão o apt tenta rebaixar a biblioteca e a instalação falha.
