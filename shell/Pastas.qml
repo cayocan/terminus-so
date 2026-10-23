@@ -11,6 +11,10 @@ Item {
     property Areas areas
     readonly property bool aberta: carregador.active
     readonly property string inicio: Quickshell.env("HOME")
+    // Lixeira padrão do freedesktop (a mesma que o gio usa).
+    readonly property string lixeira: inicio + "/.local/share/Trash/files"
+    // Copiar/recortar vale entre navegações: { recortar: bool, itens: [{ caminho, pasta }] }
+    property var areaTransferencia: null
 
     // Pastas do usuário lidas de ~/.config/user-dirs.dirs (nomes já traduzidos pelo xdg-user-dirs).
     property var pastasUsuario: ({
@@ -32,6 +36,12 @@ Item {
     }
 
     function fechar() { carregador.active = false }
+
+    // A pasta da lixeira precisa existir: com uma pasta inexistente, a lista mostraria outra no lugar.
+    Process {
+        running: true
+        command: ["mkdir", "-p", controle.lixeira]
+    }
 
     FileView {
         path: controle.inicio + "/.config/user-dirs.dirs"

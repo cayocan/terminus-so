@@ -20,7 +20,7 @@ PanelWindow {
     ]
     readonly property var atalhos: [
         { nome: qsTr("Pasta Downloads"), icone: Icones.downloads, comando: [], appId: "", tela: "downloads" },
-        { nome: qsTr("Lixeira"), icone: Icones.lixeira, comando: [], appId: "" }
+        { nome: qsTr("Lixeira"), icone: Icones.lixeira, comando: [], appId: "", tela: "lixeira" }
     ]
     // Espaço acima da barra para o ícone ampliado pela lupa não ser cortado.
     readonly property int folgaLupa: Math.ceil(Tema.dockIcone * (Tema.dockLupa - 1)) + Tema.dockLupaSubida
@@ -37,6 +37,7 @@ PanelWindow {
     function acionar(entrada) {
         if (entrada.tela === "pastas") return pastas.abrir("")
         if (entrada.tela === "downloads") return pastas.abrir(pastas.pastasUsuario.DOWNLOAD)
+        if (entrada.tela === "lixeira") return pastas.abrir(pastas.lixeira)
         const janela = janelaDo(entrada.appId)
         if (janela !== null) janela.activate()
         else Quickshell.execDetached(entrada.comando)

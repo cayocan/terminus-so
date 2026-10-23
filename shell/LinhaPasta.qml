@@ -9,7 +9,9 @@ Rectangle {
     required property var entrada
     property bool selecionado: false
 
-    signal selecionar()
+    // somar: Ctrl apertado, adiciona ou tira da seleção em vez de trocar.
+    signal selecionar(bool somar)
+    signal menuPedido(real x, real y)
     signal abrir()
 
     implicitHeight: Tema.alturaLinhaPasta
@@ -61,7 +63,11 @@ Rectangle {
         id: toque
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: linha.selecionar()
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton) linha.menuPedido(mouse.x, mouse.y)
+            else linha.selecionar(mouse.modifiers & Qt.ControlModifier)
+        }
         onDoubleClicked: linha.abrir()
     }
 }

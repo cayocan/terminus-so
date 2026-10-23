@@ -19,13 +19,18 @@ FloatingWindow {
     property var futuro: []
     property string modo: "icones"
     property string busca: ""
-    property int selecionado: -1
+    // Índices selecionados em itens.
+    property var selecao: []
     property var itens: []
+    property string mensagem
+    property bool mensagemErro: false
     property string livreAqui
     property string livreSistema
 
     readonly property var localidade: Qt.locale("pt_BR")
+    readonly property bool naLixeira: caminho === pastas.lixeira || caminho.startsWith(pastas.lixeira + "/")
     readonly property string nomeAtual: caminho === pastas.inicio ? qsTr("Início")
+                                      : caminho === pastas.lixeira ? qsTr("Lixeira")
                                       : caminho === "/" ? qsTr("Disco do sistema")
                                       : caminho.substring(caminho.lastIndexOf("/") + 1)
 
@@ -38,7 +43,7 @@ FloatingWindow {
         caminho = destino
         busca = ""
         campoBusca.text = ""
-        selecionado = -1
+        selecao = []
     }
     function voltar() {
         if (historico.length === 0) return
@@ -61,8 +66,18 @@ FloatingWindow {
         else Quickshell.execDetached(["xdg-open", item.caminho])
     }
 
-    // Partes do caminho para a barra de navegação: dentro da pasta pessoal começa em "Início".
+    // Partes do caminho para a barra de navegação: dentro da pasta pessoal começa em "Início",
+    // dentro da lixeira em "Lixeira".
     function partesCaminho() {
+        if (naLixeira) {
+            const partes = [{ nome: qsTr("Lixeira"), caminho: pastas.lixeira }]
+            let atual = pastas.lixeira
+            for (const nome of caminho.substring(pastas.lixeira.length).split("/").filter(p => p !== "")) {
+                atual += "/" + nome
+                partes.push({ nome: nome, caminho: atual })
+            }
+            return partes
+        }
         const naPessoal = caminho === pastas.inicio || caminho.startsWith(pastas.inicio + "/")
         const base = naPessoal ? pastas.inicio : ""
         const partes = [{ nome: naPessoal ? qsTr("Início") : qsTr("Disco do sistema"), caminho: naPessoal ? base : "/" }]
@@ -72,6 +87,94 @@ FloatingWindow {
             partes.push({ nome: nome, caminho: atual })
         }
         return partes
+    }
+
+    function selecionar(indice, somar) {
+        if (!somar) selecao = [indice]
+        else if (selecao.includes(indice)) selecao = selecao.filter(i => i !== indice)
+        else selecao = selecao.concat([indice])
+        moldura.forceActiveFocus()
+    }
+    function selecionados() { return selecao.map(i => itens[i]).filter(i => i !== undefined) }
+    function nomesAqui() { return itens.map(i => i.nome) }
+
+    function avisar(texto, erro) {
+        mensagem = texto
+        mensagemErro = erro
+        limpaMensagem.restart()
+    }
+
+    function copiar(recortar) {
+        const lista = selecionados()
+        if (lista.length === 0 || naLixeira) return
+        pastas.areaTransferencia = { recortar: recortar, itens: lista.map(i => ({ caminho: i.caminho, pasta: i.pasta })) }
+        const n = lista.length
+        avisar(recortar ? (n === 1 ? qsTr("1 item recortado") : qsTr("%1 itens recortados").arg(n))
+                        : (n === 1 ? qsTr("1 item copiado") : qsTr("%1 itens copiados").arg(n)), false)
+    }
+    function colar() {
+        const transferencia = pastas.areaTransferencia
+        if (!transferencia || naLixeira) return
+        operacoes.colar(transferencia.itens, caminho, transferencia.recortar, nomesAqui())
+        // O que foi recortado só pode ser colado uma vez.
+        if (transferencia.recortar) pastas.areaTransferencia = null
+    }
+    function pedirNovaPasta() {
+        if (naLixeira) return
+        dialogo.pedirNome(qsTr("Nova pasta"), operacoes.nomeLivre(qsTr("Nova pasta"), nomesAqui(), true), qsTr("Criar"),
+                          nome => {
+                              if (nomesAqui().includes(nome)) avisar(qsTr("Já existe um item chamado “%1” aqui.").arg(nome), true)
+                              else operacoes.novaPasta(caminho, nome)
+                          })
+    }
+    function pedirRenomear() {
+        const lista = selecionados()
+        if (lista.length !== 1 || naLixeira) return
+        const item = lista[0]
+        dialogo.pedirNome(qsTr("Renomear"), item.nome, qsTr("Renomear"), nome => {
+            if (nome === item.nome) return
+            if (nome.includes("/")) avisar(qsTr("O nome não pode ter “/”."), true)
+            else if (nomesAqui().includes(nome)) avisar(qsTr("Já existe um item chamado “%1” aqui.").arg(nome), true)
+            else operacoes.renomear(item.caminho, nome)
+        })
+    }
+    function paraLixeira() {
+        const lista = selecionados()
+        if (lista.length === 0 || naLixeira) return
+        operacoes.moverParaLixeira(lista.map(i => i.caminho))
+    }
+    function restaurar() {
+        const lista = selecionados()
+        if (lista.length === 0 || caminho !== pastas.lixeira) return
+        operacoes.restaurar(lista.map(i => i.nome))
+    }
+    function pedirEsvaziar() {
+        if (itens.length === 0) return
+        dialogo.confirmar(qsTr("Esvaziar lixeira"),
+                          qsTr("Os itens da lixeira serão apagados para sempre. Não dá para desfazer."),
+                          qsTr("Esvaziar"), () => operacoes.esvaziarLixeira())
+    }
+
+    function menuItem(indice, x, y) {
+        if (!selecao.includes(indice)) selecao = [indice]
+        const itensMenu = naLixeira ? [
+            { texto: qsTr("Restaurar"), acao: () => restaurar() }
+        ] : [
+            { texto: qsTr("Abrir"), acao: () => abrirItem(indice) },
+            { texto: qsTr("Copiar"), acao: () => copiar(false) },
+            { texto: qsTr("Recortar"), acao: () => copiar(true) }
+        ].concat(selecao.length === 1 ? [{ texto: qsTr("Renomear"), acao: () => pedirRenomear() }] : [])
+         .concat([{ texto: qsTr("Mover para a Lixeira"), perigo: true, acao: () => paraLixeira() }])
+        menu.abrir(x, y, itensMenu)
+    }
+    function menuFundo(x, y) {
+        selecao = []
+        const itensMenu = naLixeira ? [
+            { texto: qsTr("Esvaziar lixeira"), perigo: true, acao: () => pedirEsvaziar() }
+        ] : [
+            { texto: qsTr("Nova pasta"), acao: () => pedirNovaPasta() }
+        ].concat(pastas.areaTransferencia ? [{ texto: qsTr("Colar"), acao: () => colar() }] : [])
+        menu.abrir(x, y, itensMenu)
     }
 
     function tamanhoLegivel(bytes) {
@@ -110,7 +213,7 @@ FloatingWindow {
             })
         }
         itens = lista
-        selecionado = -1
+        selecao = []
     }
 
     title: nomeAtual + " — Pastas"
@@ -124,6 +227,19 @@ FloatingWindow {
     onCaminhoChanged: {
         espacoLivre.running = false
         espacoLivre.running = true
+    }
+
+    OperacoesArquivo {
+        id: operacoes
+        onConcluido: erros => {
+            if (erros.length > 0) janela.avisar(erros[0], true)
+        }
+    }
+
+    Timer {
+        id: limpaMensagem
+        interval: 6000
+        onTriggered: janela.mensagem = ""
     }
 
     FolderListModel {
@@ -163,8 +279,16 @@ FloatingWindow {
         Keys.onPressed: evento => {
             if (evento.key === Qt.Key_Backspace || (evento.key === Qt.Key_Left && evento.modifiers & Qt.AltModifier)) janela.voltar()
             else if (evento.key === Qt.Key_Right && evento.modifiers & Qt.AltModifier) janela.avancar()
-            else if (evento.key === Qt.Key_Return || evento.key === Qt.Key_Enter) janela.abrirItem(janela.selecionado)
+            else if (evento.key === Qt.Key_Return || evento.key === Qt.Key_Enter) { if (janela.selecao.length === 1) janela.abrirItem(janela.selecao[0]) }
             else if (evento.key === Qt.Key_F && evento.modifiers & Qt.ControlModifier) campoBusca.forceActiveFocus()
+            else if (evento.key === Qt.Key_C && evento.modifiers & Qt.ControlModifier) janela.copiar(false)
+            else if (evento.key === Qt.Key_X && evento.modifiers & Qt.ControlModifier) janela.copiar(true)
+            else if (evento.key === Qt.Key_V && evento.modifiers & Qt.ControlModifier) janela.colar()
+            else if (evento.key === Qt.Key_A && evento.modifiers & Qt.ControlModifier) janela.selecao = janela.itens.map((_, i) => i)
+            else if (evento.key === Qt.Key_N && evento.modifiers & Qt.ControlModifier && evento.modifiers & Qt.ShiftModifier) janela.pedirNovaPasta()
+            else if (evento.key === Qt.Key_F2) janela.pedirRenomear()
+            else if (evento.key === Qt.Key_Delete) janela.paraLixeira()
+            else if (evento.key === Qt.Key_Escape) janela.selecao = []
             else return
             evento.accepted = true
         }
@@ -336,6 +460,14 @@ FloatingWindow {
                     }
                 }
 
+                BotaoTexto {
+                    visible: janela.caminho === janela.pastas.lixeira
+                    texto: qsTr("Esvaziar lixeira")
+                    perigo: true
+                    principal: janela.itens.length > 0
+                    onAcionado: janela.pedirEsvaziar()
+                }
+
                 TextField {
                     id: campoBusca
                     Layout.preferredWidth: Tema.larguraBuscaPasta
@@ -391,6 +523,19 @@ FloatingWindow {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
+                        // Clique no vazio: o esquerdo limpa a seleção, o direito abre o menu da pasta.
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onClicked: mouse => {
+                                moldura.forceActiveFocus()
+                                if (mouse.button === Qt.RightButton) {
+                                    const p = mapToItem(moldura, mouse.x, mouse.y)
+                                    janela.menuFundo(p.x, p.y)
+                                } else janela.selecao = []
+                            }
+                        }
+
                         GridView {
                             id: grade
                             anchors.fill: parent
@@ -414,8 +559,12 @@ FloatingWindow {
                                     anchors.rightMargin: Tema.espacoAtalhos
                                     anchors.bottomMargin: Tema.espacoAtalhos
                                     entrada: modelData
-                                    selecionado: janela.selecionado === index
-                                    onSelecionar: { janela.selecionado = index; moldura.forceActiveFocus() }
+                                    selecionado: janela.selecao.includes(index)
+                                    onSelecionar: somar => janela.selecionar(index, somar)
+                                    onMenuPedido: (mx, my) => {
+                                        const p = mapToItem(moldura, mx, my)
+                                        janela.menuItem(index, p.x, p.y)
+                                    }
                                     onAbrir: janela.abrirItem(index)
                                 }
                             }
@@ -434,8 +583,12 @@ FloatingWindow {
                                 required property int index
                                 width: ListView.view.width
                                 entrada: modelData
-                                selecionado: janela.selecionado === index
-                                onSelecionar: { janela.selecionado = index; moldura.forceActiveFocus() }
+                                selecionado: janela.selecao.includes(index)
+                                onSelecionar: somar => janela.selecionar(index, somar)
+                                onMenuPedido: (mx, my) => {
+                                    const p = mapToItem(moldura, mx, my)
+                                    janela.menuItem(index, p.x, p.y)
+                                }
                                 onAbrir: janela.abrirItem(index)
                             }
                         }
@@ -458,9 +611,13 @@ FloatingWindow {
                         Layout.rightMargin: 24
                         Text {
                             Layout.fillWidth: true
-                            text: (janela.itens.length === 1 ? qsTr("1 item") : qsTr("%1 itens").arg(janela.itens.length))
-                                  + (janela.selecionado >= 0 ? qsTr(" · 1 selecionado") : "")
-                            color: Tema.textoDiscreto
+                            elide: Text.ElideRight
+                            text: janela.mensagem !== "" ? janela.mensagem
+                                  : (janela.itens.length === 1 ? qsTr("1 item") : qsTr("%1 itens").arg(janela.itens.length))
+                                    + (janela.selecao.length === 1 ? qsTr(" · 1 selecionado")
+                                       : janela.selecao.length > 1 ? qsTr(" · %1 selecionados").arg(janela.selecao.length) : "")
+                                    + (operacoes.ocupado ? qsTr(" · trabalhando…") : "")
+                            color: janela.mensagem !== "" && janela.mensagemErro ? Tema.erroTexto : Tema.textoDiscreto
                             font.family: Tema.fonteTexto
                             font.pixelSize: Tema.tamanhoRotulo
                         }
@@ -474,6 +631,17 @@ FloatingWindow {
                     }
                 }
             }
+        }
+
+        MenuContexto {
+            id: menu
+            anchors.fill: parent
+        }
+
+        DialogoPasta {
+            id: dialogo
+            anchors.fill: parent
+            onFechado: moldura.forceActiveFocus()
         }
     }
 

@@ -9,7 +9,9 @@ Rectangle {
     required property var entrada
     property bool selecionado: false
 
-    signal selecionar()
+    // somar: Ctrl apertado, adiciona ou tira da seleção em vez de trocar.
+    signal selecionar(bool somar)
+    signal menuPedido(real x, real y)
     signal abrir()
 
     radius: Tema.raioItemPasta
@@ -65,7 +67,11 @@ Rectangle {
         id: toque
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: item.selecionar()
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton) item.menuPedido(mouse.x, mouse.y)
+            else item.selecionar(mouse.modifiers & Qt.ControlModifier)
+        }
         onDoubleClicked: item.abrir()
     }
 }

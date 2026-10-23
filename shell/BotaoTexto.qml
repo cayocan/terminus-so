@@ -7,15 +7,18 @@ Rectangle {
 
     property string texto
     property bool principal: false
+    // Ações que apagam algo para sempre.
+    property bool perigo: false
+    readonly property color corPrincipal: perigo ? Tema.erro : Tema.principal
 
     signal acionado()
 
     implicitWidth: rotulo.implicitWidth + 36
     implicitHeight: Tema.alvoMinimo
     radius: height / 2
-    color: principal ? (toque.containsMouse ? Qt.lighter(Tema.principal, 1.1) : Tema.principal)
+    color: principal ? (toque.containsMouse ? Qt.lighter(corPrincipal, 1.1) : corPrincipal)
                      : (toque.containsMouse ? Tema.hover : "transparent")
-    border.color: principal ? Tema.principal : Tema.bordaDestaque
+    border.color: principal ? corPrincipal : Tema.bordaDestaque
     activeFocusOnTab: true
     Accessible.role: Accessible.Button
     Accessible.name: texto
@@ -26,7 +29,7 @@ Rectangle {
         id: rotulo
         anchors.centerIn: parent
         text: botao.texto
-        color: botao.principal ? Tema.fundo : Tema.textoSecundario
+        color: botao.principal ? (botao.perigo ? "white" : Tema.fundo) : Tema.textoSecundario
         font.family: Tema.fonteTexto
         font.weight: botao.principal ? Font.DemiBold : Font.Normal
         font.pixelSize: Tema.tamanhoTextoMenor

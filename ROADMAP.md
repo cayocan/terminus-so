@@ -25,7 +25,9 @@
 - [ ] Ícone escolhido por área (hoje todas minimizadas usam a maleta)
 - [ ] Busca global
 - [x] Navegador de pastas: janela com barra de título própria (mover, redimensionar, minimizar, maximizar, fechar), histórico, caminho clicável, busca, modos ícones e lista, Favoritos/Locais/Áreas, espaço livre; abre pela dock (Pastas e Downloads)
-- [ ] Navegador de pastas: copiar, mover, renomear, excluir (Lixeira), nova pasta, arrastar e soltar, modo colunas
+- [x] Navegador de pastas: copiar, recortar e colar, renomear, nova pasta, mover para a Lixeira (menus e atalhos), seleção com Ctrl
+- [x] Lixeira (padrão freedesktop): abre pela dock, restaurar e esvaziar com confirmação
+- [ ] Navegador de pastas: arrastar e soltar, seleção com Shift, modo colunas, progresso de cópias grandes
 - [ ] Minimizar janelas de outros apps (o Hyprland não tem minimizar; hoje só as janelas do Terminus escondem)
 - [ ] Central de notificações
 - [ ] Configurações e painel de conectores

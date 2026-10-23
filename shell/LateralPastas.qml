@@ -21,7 +21,8 @@ Flickable {
         { nome: qsTr("Downloads"), icone: Icones.downloads, caminho: pastas.pastasUsuario.DOWNLOAD },
         { nome: qsTr("Imagens"), icone: Icones.imagem, caminho: pastas.pastasUsuario.PICTURES },
         { nome: qsTr("Música"), icone: Icones.audio, caminho: pastas.pastasUsuario.MUSIC },
-        { nome: qsTr("Vídeos"), icone: Icones.video, caminho: pastas.pastasUsuario.VIDEOS }
+        { nome: qsTr("Vídeos"), icone: Icones.video, caminho: pastas.pastasUsuario.VIDEOS },
+        { nome: qsTr("Lixeira"), icone: Icones.lixeira, caminho: pastas.lixeira }
     ]
 
     contentHeight: coluna.implicitHeight + 36
