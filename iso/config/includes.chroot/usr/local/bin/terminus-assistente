@@ -1,0 +1,7 @@
+#!/bin/sh
+# Assistente local do Terminus (código em /usr/lib/terminus/assistente, vindo de assistente/ no repositório).
+#   terminus-assistente servidor            o serviço (systemctl --user start terminus-assistente)
+#   terminus-assistente perguntar "texto"   pergunta pela linha de comando (a resposta também aparece na tela)
+#   terminus-assistente modelos             modelos disponíveis e qual está em uso
+#   terminus-assistente baixar [id]         baixa um modelo sem esperar o primeiro uso
+exec env PYTHONPATH=/usr/lib/terminus/assistente python3 -m terminus_assistente "$@"

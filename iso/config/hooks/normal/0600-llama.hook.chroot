@@ -1,0 +1,32 @@
+#!/bin/sh
+# llama.cpp com Vulkan para o assistente local. O Debian 13 não empacota o llama.cpp; usa o binário
+# oficial para Linux (compilar os shaders Vulkan na build levaria muito tempo), com versão e sha256 fixos.
+# O modelo não vem na ISO: o terminus-assistente baixa no primeiro uso.
+set -e
+
+# Versão fixa; para atualizar, troque as duas linhas testando o assistente (assistente/avaliacao).
+LLAMA_VERSAO=b11838
+LLAMA_SHA256=e9c3062066c718859c2b7c982fef8aa451dfc218d19730db1b99885d1aa58253
+
+apt-get update
+# libgomp1: o binário oficial usa OpenMP. Os drivers Vulkan da AMD (mesa-vulkan-drivers) vêm da lista graficos.
+DEBIAN_FRONTEND=noninteractive apt-get install -y libgomp1 libvulkan1
+
+cd /tmp
+curl -fsSL -o llama.tar.gz \
+	"https://github.com/ggml-org/llama.cpp/releases/download/$LLAMA_VERSAO/llama-$LLAMA_VERSAO-bin-ubuntu-vulkan-x64.tar.gz"
+echo "$LLAMA_SHA256  llama.tar.gz" | sha256sum -c
+tar xzf llama.tar.gz
+
+rm -rf /opt/llama.cpp
+mv "llama-$LLAMA_VERSAO" /opt/llama.cpp
+# Fica só o que o assistente usa (servidor) e o medidor de velocidade; as bibliotecas ficam todas.
+find /opt/llama.cpp -maxdepth 1 -type f -executable ! -name "*.so*" \
+	! -name llama-server ! -name llama-bench -delete
+ln -sf /opt/llama.cpp/llama-server /usr/local/bin/llama-server
+ln -sf /opt/llama.cpp/llama-bench /usr/local/bin/llama-bench
+echo "$LLAMA_VERSAO" > /opt/llama.cpp/VERSAO
+rm -f llama.tar.gz
+
+# Confere que o binário acha as bibliotecas.
+llama-server --version

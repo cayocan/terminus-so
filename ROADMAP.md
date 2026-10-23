@@ -50,8 +50,11 @@
 
 ## Fase 4 — Assistente local
 - [x] Escolha do modelo: Qwen3 8B Q4_K_M, testado na RX 5500 XT com llama.cpp Vulkan (24 tokens/s, 10/10 nas ferramentas do MCP; detalhes em `assistente/README.md`)
-- [ ] llama.cpp com Vulkan na ISO e download do modelo no primeiro uso
-- [ ] Laço do assistente: modelo ↔ ferramentas do MCP, com aquecimento do cache ao subir
+- [x] llama.cpp com Vulkan na ISO (binário oficial b11838) e download do modelo no primeiro uso, pela caixa de conversa (Qwen3 8B com placa de 6 GB+, Qwen3 1.7B sem)
+- [x] Laço do assistente: modelo ↔ ferramentas do MCP, com confirmações e senha na tela, aquecimento do cache ao subir; 3 a 6 s por pergunta na RX 5500 XT
+- [x] Conversa digitada: clique na esfera ou Super + A; esfera pensando/falando e resposta embaixo dela
+- [ ] Testar o assistente no PC de referência com a ISO (até agora: laço com a GPU do host e fluxo completo na VM, no processador)
+- [ ] Respostas sem oferecer o que as ferramentas não fazem (o 8B às vezes termina com "Deseja instalar?")
 - [ ] Whisper (whisper.cpp) para ouvir
 - [ ] Piper para falar; XTTS v2 / F5-TTS opcional
 - [ ] openWakeWord com palavra escolhida pelo usuário

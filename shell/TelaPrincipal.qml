@@ -8,10 +8,17 @@ Item {
 
     property string estadoAssistente: "repouso"
     property string nomeAssistente: "Terminus"
+    // Estado e última resposta do assistente local (Assistente.qml); quando ele está em repouso, vale o estado
+    // pedido pelo servidor do sistema (estadoAssistente).
+    property string esferaAssistente: "repouso"
+    property var respostaAssistente: null
+    readonly property string estadoAtual: esferaAssistente !== "repouso" ? esferaAssistente : estadoAssistente
+    signal conversaPedida()
     property Notificacoes notificacoes
     property Areas areas
     property CentralNotificacoes painelNotificacoes
     readonly property var resumo: notificacoes ? notificacoes.resumo : null
+    readonly property bool mostrandoResposta: resumo !== null || respostaAssistente !== null
     // As áreas de atalho aparecem só na tela principal (a primeira), para não se repetirem.
     property bool mostrarAreas: true
     property string areaRedimensionando: ""
@@ -93,7 +100,16 @@ Item {
         y: tela.height * 150 / 1080
         width: Math.min(tela.width, tela.height) * 0.48
         height: width
-        estado: tela.resumo !== null ? "falando" : tela.estadoAssistente
+        estado: tela.resumo !== null ? "falando" : tela.estadoAtual
+
+        // Clicar na esfera abre a conversa com o assistente.
+        MouseArea {
+            anchors.centerIn: parent
+            width: parent.width * 0.6
+            height: width
+            cursorShape: Qt.PointingHandCursor
+            onClicked: tela.conversaPedida()
+        }
     }
 
     Column {
@@ -101,7 +117,7 @@ Item {
         anchors.topMargin: 18
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 18
-        visible: tela.resumo === null
+        visible: !tela.mostrandoResposta
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -114,27 +130,32 @@ Item {
         }
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: tela.rotulosEstado[tela.estadoAssistente] ?? tela.rotulosEstado.repouso
+            text: tela.rotulosEstado[tela.estadoAtual] ?? tela.rotulosEstado.repouso
             color: Tema.textoCorpo
             font.family: Tema.fonteTexto
             font.pixelSize: Tema.tamanhoTextoGrande
         }
     }
 
-    // Resposta do "O que eu perdi?" no lugar do nome e do estado, por 20 segundos.
+    // Resposta do assistente ou do "O que eu perdi?" no lugar do nome e do estado, por alguns segundos.
     Column {
         anchors.top: esfera.bottom
         anchors.topMargin: 18
         anchors.horizontalCenter: parent.horizontalCenter
         width: Math.min(Tema.larguraResumo, tela.width - 2 * Tema.margemTela)
         spacing: 12
-        visible: tela.resumo !== null
+        visible: tela.mostrandoResposta
         Accessible.role: Accessible.StaticText
         Accessible.name: resposta.text
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Você perguntou: “O que eu perdi?”")
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            textFormat: Text.PlainText
+            text: qsTr("Você perguntou: “%1”").arg(tela.respostaAssistente ? tela.respostaAssistente.pergunta
+                                                                           : qsTr("O que eu perdi?"))
             color: Tema.textoTerciario
             font.family: Tema.fonteTexto
             font.pixelSize: Tema.tamanhoTextoGrande
@@ -144,9 +165,10 @@ Item {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
-            textFormat: Text.StyledText
+            // O resumo das notificações vem com negrito; a resposta do modelo é texto puro.
+            textFormat: tela.respostaAssistente ? Text.PlainText : Text.StyledText
             lineHeight: 1.5
-            text: tela.resumo ? tela.resumo.texto : ""
+            text: tela.respostaAssistente ? tela.respostaAssistente.texto : tela.resumo ? tela.resumo.texto : ""
             color: Tema.texto
             font.family: Tema.fonteTexto
             font.pixelSize: Tema.tamanhoResumo

@@ -26,6 +26,11 @@ ShellRoot {
         areas: areasAtalho
     }
 
+    // Assistente local (modelo no llama.cpp agindo pelo servidor do sistema).
+    Assistente {
+        id: assistenteLocal
+    }
+
     Pastas {
         id: navegadorPastas
         areas: areasAtalho
@@ -51,6 +56,9 @@ ShellRoot {
                 painelNotificacoes: centralPainel
                 nomeAssistente: preferencias.nomeAssistente
                 estadoAssistente: servidorSistema.estadoEsfera
+                esferaAssistente: assistenteLocal.esfera
+                respostaAssistente: assistenteLocal.resposta
+                onConversaPedida: conversaAssistente.abrir()
                 mostrarAreas: modelData === Quickshell.screens[0]
                 tamanhoTela: Qt.size(modelData.width, modelData.height)
             }
@@ -85,6 +93,14 @@ ShellRoot {
         id: buscaGlobal
         pastas: navegadorPastas
         configuracoes: preferencias
+        screen: Quickshell.screens[0]
+    }
+
+    PerguntaAssistente {
+        id: conversaAssistente
+        assistente: assistenteLocal
+        nomeAssistente: preferencias.nomeAssistente
+        cederTeclado: servidorSistema.fila.length > 0
         screen: Quickshell.screens[0]
     }
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Assistente local do Terminus SO (modelo no llama.cpp agindo pelo servidor MCP)
+# Usa o servidor MCP para agir no sistema; o hyprland.conf inicia os dois depois de importar o ambiente.
+After=terminus-mcp.service
+Wants=terminus-mcp.service
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/terminus-assistente servidor
+Restart=on-failure
+RestartSec=5

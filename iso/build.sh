@@ -15,6 +15,8 @@ mkdir -p config/includes.chroot/usr/share/terminus
 cp -r ../shell config/includes.chroot/usr/share/terminus/shell
 mkdir -p config/includes.chroot/usr/lib/terminus/mcp
 cp -r ../mcp/terminus_mcp config/includes.chroot/usr/lib/terminus/mcp/terminus_mcp
+mkdir -p config/includes.chroot/usr/lib/terminus/assistente
+cp -r ../assistente/terminus_assistente config/includes.chroot/usr/lib/terminus/assistente/terminus_assistente
 
 lb config
 # O tee esconde o código de saída do lb build; guarda-o num arquivo para o set -e não deixar passar falha.

@@ -1,0 +1,161 @@
+{
+ "rotulo": "qwen3-1.7b-q8_0-pensando",
+ "pensar": true,
+ "ferramentas": [
+  {
+   "pedido": "abre o firefox pra mim",
+   "ok": true,
+   "chamadas": [
+    [
+     "app_abrir",
+     {
+      "id": "firefox-esr"
+     }
+    ]
+   ],
+   "segundos": 7.16,
+   "texto": ""
+  },
+  {
+   "pedido": "quanto de memória livre eu tenho?",
+   "ok": true,
+   "chamadas": [
+    [
+     "sistema_info",
+     {}
+    ]
+   ],
+   "segundos": 1.92,
+   "texto": ""
+  },
+  {
+   "pedido": "minimiza a área de trabalho",
+   "ok": false,
+   "chamadas": [
+    [
+     "area_minimizar",
+     {
+      "area": "area",
+      "minimizada": true
+     }
+    ]
+   ],
+   "segundos": 2.89,
+   "texto": ""
+  },
+  {
+   "pedido": "cria uma área chamada Estudos",
+   "ok": true,
+   "chamadas": [
+    [
+     "area_criar",
+     {
+      "nome": "Estudos"
+     }
+    ]
+   ],
+   "segundos": 3.15,
+   "texto": ""
+  },
+  {
+   "pedido": "baixa o volume pra trinta por cento",
+   "ok": true,
+   "chamadas": [
+    [
+     "volume_definir",
+     {
+      "volume": 30,
+      "mudo": false
+     }
+    ]
+   ],
+   "segundos": 4.12,
+   "texto": ""
+  },
+  {
+   "pedido": "muda as cores pro modo stealth",
+   "ok": true,
+   "chamadas": [
+    [
+     "cores_definir",
+     {
+      "preset": "Stealth"
+     }
+    ]
+   ],
+   "segundos": 2.24,
+   "texto": ""
+  },
+  {
+   "pedido": "desliga o computador",
+   "ok": true,
+   "chamadas": [
+    [
+     "energia_desligar",
+     {}
+    ]
+   ],
+   "segundos": 1.82,
+   "texto": ""
+  },
+  {
+   "pedido": "manda o arquivo ~/Downloads/velho.zip pra lixeira",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivo_lixeira",
+     {
+      "caminho": "~/Downloads/velho.zip"
+     }
+    ]
+   ],
+   "segundos": 3.45,
+   "texto": ""
+  },
+  {
+   "pedido": "o que tem na minha pasta Documentos?",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivos_listar",
+     {
+      "pasta": "~/Documentos"
+     }
+    ]
+   ],
+   "segundos": 5.48,
+   "texto": ""
+  },
+  {
+   "pedido": "me conta uma curiosidade sobre o espaço",
+   "ok": true,
+   "chamadas": [],
+   "segundos": 8.98,
+   "texto": "A curiosidade é que o espaço é o maior lugar do universo, ocupando mais de 90% do espaço disponível, e sua densidade é menor que a da Terra. O universo é vasto, com galáxias, estrelas e planetas distr"
+  }
+ ],
+ "texto": [
+  {
+   "pedido": "Resuma em duas frases faladas estas notificações não lidas: 3 e-mails do banco sobre a fatura, 1 mensagem da Ana perguntando do almoço de sábado, atualização do Steam concluída.",
+   "resposta": "Há 3 e-mails do banco sobre a fatura e uma mensagem da Ana perguntando sobre o almoço de sábado. A atualização do Steam foi concluída.",
+   "segundos": 7.81,
+   "tok_s": 58.0,
+   "prompt_tok_s": 28.0
+  },
+  {
+   "pedido": "Explique em poucas frases, para alguém leigo, o que é uma partição de disco.",
+   "resposta": "Uma partição de disco é uma divisão do HD (disco rígido) em partes distintas, cada uma com sua própria estrutura de arquivos. Ela permite organizar dados, instalarmos sistemas operacionais separados ou armazenar informações de forma organizada. Partições são essenciais para gerenciar o espaço e a função do sistema.",
+   "segundos": 9.33,
+   "tok_s": 56.2,
+   "prompt_tok_s": 46.7
+  },
+  {
+   "pedido": "Bom dia! Como você pode me ajudar hoje?",
+   "resposta": "Bom dia! Estou aqui para ajudar você com qualquer coisa que precisar. Como posso ser útil hoje?",
+   "segundos": 8.1,
+   "tok_s": 59.8,
+   "prompt_tok_s": 44.6
+  }
+ ],
+ "acertos": 9
+}

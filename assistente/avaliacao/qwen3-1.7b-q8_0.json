@@ -1,0 +1,164 @@
+{
+ "rotulo": "qwen3-1.7b-q8_0",
+ "pensar": false,
+ "ferramentas": [
+  {
+   "pedido": "abre o firefox pra mim",
+   "ok": true,
+   "chamadas": [
+    [
+     "app_abrir",
+     {
+      "id": "firefox-esr"
+     }
+    ]
+   ],
+   "segundos": 5.23,
+   "texto": ""
+  },
+  {
+   "pedido": "quanto de memória livre eu tenho?",
+   "ok": true,
+   "chamadas": [
+    [
+     "sistema_info",
+     {}
+    ]
+   ],
+   "segundos": 0.97,
+   "texto": ""
+  },
+  {
+   "pedido": "minimiza a área de trabalho",
+   "ok": false,
+   "chamadas": [
+    [
+     "janelas_listar",
+     {}
+    ],
+    [
+     "janela_focar",
+     {
+      "endereco": "area de trabalho"
+     }
+    ]
+   ],
+   "segundos": 1.07,
+   "texto": ""
+  },
+  {
+   "pedido": "cria uma área chamada Estudos",
+   "ok": true,
+   "chamadas": [
+    [
+     "area_criar",
+     {
+      "nome": "Estudos"
+     }
+    ]
+   ],
+   "segundos": 0.63,
+   "texto": ""
+  },
+  {
+   "pedido": "baixa o volume pra trinta por cento",
+   "ok": true,
+   "chamadas": [
+    [
+     "volume_definir",
+     {
+      "volume": 30,
+      "mudo": false
+     }
+    ]
+   ],
+   "segundos": 0.82,
+   "texto": ""
+  },
+  {
+   "pedido": "muda as cores pro modo stealth",
+   "ok": true,
+   "chamadas": [
+    [
+     "cores_definir",
+     {
+      "preset": "Stealth"
+     }
+    ]
+   ],
+   "segundos": 0.64,
+   "texto": ""
+  },
+  {
+   "pedido": "desliga o computador",
+   "ok": true,
+   "chamadas": [
+    [
+     "energia_desligar",
+     {}
+    ]
+   ],
+   "segundos": 0.49,
+   "texto": ""
+  },
+  {
+   "pedido": "manda o arquivo ~/Downloads/velho.zip pra lixeira",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivo_lixeira",
+     {
+      "caminho": "~/Downloads/velho.zip"
+     }
+    ]
+   ],
+   "segundos": 0.83,
+   "texto": ""
+  },
+  {
+   "pedido": "o que tem na minha pasta Documentos?",
+   "ok": true,
+   "chamadas": [
+    [
+     "arquivos_listar",
+     {
+      "pasta": "~/Documentos"
+     }
+    ]
+   ],
+   "segundos": 0.71,
+   "texto": ""
+  },
+  {
+   "pedido": "me conta uma curiosidade sobre o espaço",
+   "ok": true,
+   "chamadas": [],
+   "segundos": 2.33,
+   "texto": "A curiosidade é que o espaço interestelar é o espaço que existe entre as galáxias, e ele é muito grande, mas não há nada lá. O que há é a própria galáxia, e a própria matéria que a compõe. O espaço in"
+  }
+ ],
+ "texto": [
+  {
+   "pedido": "Resuma em duas frases faladas estas notificações não lidas: 3 e-mails do banco sobre a fatura, 1 mensagem da Ana perguntando do almoço de sábado, atualização do Steam concluída.",
+   "resposta": "Há 3 e-mails do banco sobre a fatura. A Ana perguntou sobre o almoço de sábado. A atualização do Steam foi concluída.",
+   "segundos": 3.94,
+   "tok_s": 59.1,
+   "prompt_tok_s": 160.0
+  },
+  {
+   "pedido": "Explique em poucas frases, para alguém leigo, o que é uma partição de disco.",
+   "resposta": "Uma partição de disco é como um \"caminho\" no disco do seu computador. Ela divide o espaço do disco em partes diferentes, onde você pode colocar diferentes arquivos, sistemas operacionais ou programas. Por exemplo, você pode ter uma partição para o sistema operacional (como Windows, macOS ou Linux) e outra para armazenar dados pessoais.",
+   "segundos": 4.39,
+   "tok_s": 51.1,
+   "prompt_tok_s": 154.4
+  },
+  {
+   "pedido": "Bom dia! Como você pode me ajudar hoje?",
+   "resposta": "Bom dia! Eu sou o Jarvis, o assistente de voz do Terminus SO. Posso te ajudar com o que precisar. O que você precisa?",
+   "segundos": 3.32,
+   "tok_s": 57.6,
+   "prompt_tok_s": 170.2
+  }
+ ],
+ "acertos": 9
+}

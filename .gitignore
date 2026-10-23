@@ -5,6 +5,7 @@ iso/chroot/
 iso/binary/
 iso/config/includes.chroot/usr/share/terminus/shell/
 iso/config/includes.chroot/usr/lib/terminus/mcp/
+iso/config/includes.chroot/usr/lib/terminus/assistente/
 iso/*.iso
 iso/baixada/
 iso/*.log

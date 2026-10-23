@@ -5,4 +5,5 @@ lb clean noauto "${@}"
 rm -f config/binary config/bootstrap config/chroot config/common config/source
 rm -rf config/includes.chroot/usr/share/terminus/shell
 rm -rf config/includes.chroot/usr/lib/terminus/mcp
+rm -rf config/includes.chroot/usr/lib/terminus/assistente
 rm -f build.status

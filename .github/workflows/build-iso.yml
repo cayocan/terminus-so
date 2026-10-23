@@ -8,6 +8,8 @@ on:
       - "!iso/testar-vm.ps1"
       - "shell/**"
       - "mcp/**"
+      - "assistente/terminus_assistente/**"
+      - "assistente/testes/**"
       - ".github/workflows/build-iso.yml"
   workflow_dispatch:
 
@@ -32,6 +34,12 @@ jobs:
           echo "testes:senha-de-teste" | chpasswd
           cp -r mcp /tmp/mcp && chown -R testes /tmp/mcp
           su testes -c "cd /tmp/mcp && SENHA_TESTE=senha-de-teste PATH=/usr/bin:/bin python3 -W ignore -m unittest discover -s testes -v"
+
+      - name: Testar o assistente
+        # Modelo falso e servidor MCP de verdade: confere o laço pergunta → ferramenta → resposta.
+        run: |
+          cp -r assistente /tmp/assistente && chown -R testes /tmp/assistente
+          su testes -c "cd /tmp/assistente && python3 -W ignore -m unittest discover -s testes -v"
 
       - name: Gerar ISO
         run: |
