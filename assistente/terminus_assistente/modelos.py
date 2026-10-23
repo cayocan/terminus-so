@@ -57,6 +57,11 @@ class ErroDownload(Exception):
     pass
 
 
+def gigas(bytes, casas=1):
+    """Tamanho em GB com vírgula, como se escreve em português ("1,8")."""
+    return f"{bytes / 1e9:.{casas}f}".replace(".", ",")
+
+
 def memoria_de_video_mib():
     """Maior memória livre entre as placas que o llama.cpp enxerga pelo Vulkan (0 se nenhuma)."""
     try:
@@ -107,8 +112,8 @@ def baixar(modelo, progresso=lambda baixado, total: None, cancelado=lambda: Fals
     falta = modelo.tamanho - inicio + FOLGA
     livre = shutil.disk_usage(caminhos.MODELOS).free
     if livre < falta:
-        aviso = (f"faltam {(falta - livre) / 1e9:.1f} GB livres em {caminhos.MODELOS} "
-                 f"(precisa de {falta / 1e9:.1f} GB, tem {livre / 1e9:.1f} GB)")
+        aviso = (f"faltam {gigas(falta - livre)} GB livres em {caminhos.MODELOS} "
+                 f"(precisa de {gigas(falta)} GB, tem {gigas(livre)} GB)")
         if Path("/run/live/medium").exists():
             aviso += ". No pendrive (modo live), os arquivos ficam na memória RAM: instale o Terminus para usar o assistente"
         raise ErroDownload(aviso)

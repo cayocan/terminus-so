@@ -39,7 +39,7 @@ def principal(argumentos):
             return 1
 
         def progresso(baixado, total):
-            print(f"\r{modelo.nome}: {baixado / 1e9:.2f} de {total / 1e9:.2f} GB", end="", file=sys.stderr)
+            print(f"\r{modelo.nome}: {modelos.gigas(baixado, 2)} de {modelos.gigas(total, 2)} GB", end="", file=sys.stderr)
         try:
             modelos.baixar(modelo, progresso)
         except modelos.ErroDownload as erro:

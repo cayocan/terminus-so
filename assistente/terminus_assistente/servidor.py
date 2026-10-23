@@ -132,7 +132,7 @@ class Servico:
         if self.estado_modelo != "pronto":
             if self.estado_modelo == "ausente":
                 aviso = (f"Para conversar, preciso baixar o modelo {self.modelo.nome} "
-                         f"({self.modelo.tamanho / 1e9:.1f} GB). É só uma vez.")
+                         f"({modelos.gigas(self.modelo.tamanho)} GB). É só uma vez.")
             elif self.estado_modelo in ("carregando", "verificando"):
                 aviso = "Ainda estou carregando o modelo. Tenta de novo em alguns segundos."
             elif self.estado_modelo == "baixando":
