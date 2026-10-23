@@ -109,4 +109,30 @@ QtObject {
     readonly property int preenchimentoPainel: 24
     readonly property int alturaBarra: 6
     readonly property int iconeNotificacao: 40
+
+    // Áreas de atalho (Main.dc.html e AreasDock.dc.html)
+    readonly property int larguraArea: 420
+    readonly property int alturaArea: 236
+    readonly property int larguraMinimaArea: 240
+    readonly property int alturaMinimaArea: 160
+    readonly property int preenchimentoAreaH: 22
+    readonly property int preenchimentoAreaV: 20
+    readonly property int espacoAtalhos: 12
+    readonly property int iconeAtalho: 64
+    readonly property int raioAtalho: 18
+    readonly property int raioBotaoArea: 12
+    readonly property int areaMinimizada: 72
+    readonly property int alcaArea: 14
+    readonly property int raioAlca: 4
+    readonly property int passoEncaixe: 8
+    readonly property color bordaTracejada: Qt.alpha(principal, 0.6)
+    readonly property color brilhoSelecao: Qt.alpha(principal, 0.18)
+    readonly property color etiquetaMedida: Qt.alpha(principal, 0.16)
+
+    // Menus e diálogos
+    readonly property int raioMenu: 14
+    readonly property int alturaItemMenu: 40
+    readonly property int larguraMenu: 220
+    readonly property int larguraDialogo: 460
+    readonly property color sombraFundo: Qt.rgba(0, 0, 0, 0.45)
 }

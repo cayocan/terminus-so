@@ -20,7 +20,9 @@
 - [ ] Linha de cidade e clima embaixo da data (precisa de um conector de clima)
 - [x] Dock estilo macOS: lupa, indicador de app aberto, foca o app se já estiver aberto
 - [ ] Dock: pastas em leque, atalhos de Pastas/Busca/Configurações/Downloads/Lixeira (dependem dessas telas)
-- [ ] Áreas de atalho (criar, mover, redimensionar, minimizar)
+- [x] Áreas de atalho: criar (clique direito no fundo), mover, redimensionar com alças, minimizar, renomear, excluir, adicionar e remover atalhos; salvas na camada pessoal
+- [ ] Áreas de atalho por voz ("cria uma área de estudos", "minimiza a área de trabalho", "organiza as áreas"), depende do MCP (fase 3)
+- [ ] Ícone escolhido por área (hoje todas minimizadas usam a maleta)
 - [ ] Busca global
 - [ ] Navegador de pastas
 - [ ] Central de notificações

@@ -7,6 +7,10 @@ ShellRoot {
         id: centralNotificacoes
     }
 
+    Areas {
+        id: areasAtalho
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -23,6 +27,9 @@ ShellRoot {
             TelaPrincipal {
                 anchors.fill: parent
                 notificacoes: centralNotificacoes
+                areas: areasAtalho
+                mostrarAreas: modelData === Quickshell.screens[0]
+                tamanhoTela: Qt.size(modelData.width, modelData.height)
             }
         }
     }
@@ -34,5 +41,10 @@ ShellRoot {
             required property var modelData
             screen: modelData
         }
+    }
+
+    Dialogos {
+        areas: areasAtalho
+        screen: Quickshell.screens[0]
     }
 }

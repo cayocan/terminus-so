@@ -27,5 +27,16 @@ QtObject {
     readonly property var downloads: ["M12 4v11M7 10l5 5 5-5", "M4 19h16"]
     readonly property var lixeira: ["M4 7h16M10 11v6M14 11v6", "M6 7l1 13h10l1-13M9 7V4h6v3"]
     readonly property var lua: ["M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"]
-    readonly property var sino: ["M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9", "M10.3 21a1.94 1.94 0 0 0 3.4 0"]
+    readonly property var expandir: ["M15 3h6v6", "M9 21H3v-6", "M21 3l-7 7", "M3 21l7-7"]
+    readonly property var minimizar: ["M5 12h14"]
+    readonly property var mais: ["M12 5v14M5 12h14"]
+    readonly property var maleta: [
+        "M5 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z",
+        "M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2", "M3 13h18"
+    ]
+    readonly property var grade: [
+        "M4 4h6v6H4z", "M14 4h6v6h-6z", "M4 14h6v6H4z", "M14 14h6v6h-6z"
+    ]
+    readonly property var aplicativo: ["M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z", "M3 8h18"]
+    readonly property var sino:["M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9", "M10.3 21a1.94 1.94 0 0 0 3.4 0"]
 }
