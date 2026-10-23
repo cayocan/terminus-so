@@ -46,7 +46,14 @@ ShellRoot {
             required property var modelData
             screen: modelData
             pastas: navegadorPastas
+            busca: buscaGlobal
         }
+    }
+
+    Busca {
+        id: buscaGlobal
+        pastas: navegadorPastas
+        screen: Quickshell.screens[0]
     }
 
     Dialogos {

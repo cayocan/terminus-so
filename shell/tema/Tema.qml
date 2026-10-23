@@ -157,6 +157,24 @@ QtObject {
     readonly property color bordaSelecionado: Qt.alpha(principal, 0.6)
     readonly property color modoAtivo: Qt.alpha(principal, 0.18)
 
+    // Busca global (Busca.dc.html)
+    readonly property color veuBusca: Qt.rgba(2 / 255, 5 / 255, 10 / 255, 0.72)
+    readonly property int topoBusca: 110
+    readonly property int esferaBusca: 150
+    readonly property int larguraBusca: 880
+    readonly property int raioBusca: 26
+    readonly property color bordaBusca: Qt.alpha(principal, 0.45)
+    readonly property int alturaCampoBusca: 76
+    readonly property int tamanhoCampoBusca: 24
+    readonly property int alturaMaximaResultados: 560
+    readonly property int alturaResultado: 60
+    readonly property int raioResultado: 14
+    readonly property int tamanhoResultado: 16
+    readonly property int alturaRodapeBusca: 48
+    readonly property color textoMeta: "#9FBACB"
+    readonly property color corApp: "#5B9BFF"
+    readonly property color fundoIconeResultado: Qt.alpha(principal, 0.10)
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

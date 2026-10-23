@@ -23,7 +23,8 @@
 - [x] Áreas de atalho: criar (clique direito no fundo), mover, redimensionar com alças, minimizar, renomear, excluir, adicionar e remover atalhos; salvas na camada pessoal
 - [ ] Áreas de atalho por voz ("cria uma área de estudos", "minimiza a área de trabalho", "organiza as áreas"), depende do MCP (fase 3)
 - [ ] Ícone escolhido por área (hoje todas minimizadas usam a maleta)
-- [ ] Busca global
+- [x] Busca global: apps e arquivos da pasta pessoal, ação "Mostrar na pasta", teclado (↑ ↓ Enter Esc), pela dock ou Super + Espaço
+- [ ] Busca global: configurações e ações do assistente (dependem das telas de configuração e do MCP), busca por voz, nomes de arquivo sem acento casando com acentuados
 - [x] Navegador de pastas: janela com barra de título própria (mover, redimensionar, minimizar, maximizar, fechar), histórico, caminho clicável, busca, modos ícones e lista, Favoritos/Locais/Áreas, espaço livre; abre pela dock (Pastas e Downloads)
 - [x] Navegador de pastas: copiar, recortar e colar, renomear, nova pasta, mover para a Lixeira (menus e atalhos), seleção com Ctrl
 - [x] Lixeira (padrão freedesktop): abre pela dock, restaurar e esvaziar com confirmação

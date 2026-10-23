@@ -8,11 +8,12 @@ PanelWindow {
     id: dock
 
     property Pastas pastas
+    property var busca
 
     // "tela" abre uma tela do próprio Terminus; itens sem comando nem tela ainda não existem (Busca, Configurações...).
     readonly property var itens: [
         { nome: qsTr("Pastas"), icone: Icones.pasta, comando: [], appId: "", tela: "pastas" },
-        { nome: qsTr("Busca"), icone: Icones.busca, comando: [], appId: "" },
+        { nome: qsTr("Busca"), icone: Icones.busca, comando: [], appId: "", tela: "busca" },
         { nome: qsTr("Navegador web"), icone: Icones.navegador, comando: ["firefox-esr"], appId: "firefox-esr" },
         { nome: qsTr("Terminal"), icone: Icones.terminal, comando: ["foot"], appId: "foot" },
         { nome: qsTr("Steam"), icone: Icones.controle, comando: ["steam"], appId: "steam" },
@@ -35,6 +36,7 @@ PanelWindow {
     }
 
     function acionar(entrada) {
+        if (entrada.tela === "busca") return busca.abrir()
         if (entrada.tela === "pastas") return pastas.abrir("")
         if (entrada.tela === "downloads") return pastas.abrir(pastas.pastasUsuario.DOWNLOAD)
         if (entrada.tela === "lixeira") return pastas.abrir(pastas.lixeira)
