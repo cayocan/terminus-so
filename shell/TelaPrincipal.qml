@@ -10,6 +10,8 @@ Item {
     property string nomeAssistente: "Terminus"
     property Notificacoes notificacoes
     property Areas areas
+    property CentralNotificacoes painelNotificacoes
+    readonly property var resumo: notificacoes ? notificacoes.resumo : null
     // As áreas de atalho aparecem só na tela principal (a primeira), para não se repetirem.
     property bool mostrarAreas: true
     property string areaRedimensionando: ""
@@ -82,6 +84,7 @@ Item {
         anchors.topMargin: Tema.margemTopo
         width: Tema.larguraColuna
         central: tela.notificacoes
+        onCentralPedida: tela.painelNotificacoes.abrir()
     }
 
     Esfera {
@@ -90,7 +93,7 @@ Item {
         y: tela.height * 150 / 1080
         width: Math.min(tela.width, tela.height) * 0.48
         height: width
-        estado: tela.estadoAssistente
+        estado: tela.resumo !== null ? "falando" : tela.estadoAssistente
     }
 
     Column {
@@ -98,6 +101,7 @@ Item {
         anchors.topMargin: 18
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 18
+        visible: tela.resumo === null
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -114,6 +118,38 @@ Item {
             color: Tema.textoCorpo
             font.family: Tema.fonteTexto
             font.pixelSize: Tema.tamanhoTextoGrande
+        }
+    }
+
+    // Resposta do "O que eu perdi?" no lugar do nome e do estado, por 20 segundos.
+    Column {
+        anchors.top: esfera.bottom
+        anchors.topMargin: 18
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: Math.min(Tema.larguraResumo, tela.width - 2 * Tema.margemTela)
+        spacing: 12
+        visible: tela.resumo !== null
+        Accessible.role: Accessible.StaticText
+        Accessible.name: resposta.text
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Você perguntou: “O que eu perdi?”")
+            color: Tema.textoTerciario
+            font.family: Tema.fonteTexto
+            font.pixelSize: Tema.tamanhoTextoGrande
+        }
+        Text {
+            id: resposta
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            textFormat: Text.StyledText
+            lineHeight: 1.5
+            text: tela.resumo ? tela.resumo.texto : ""
+            color: Tema.texto
+            font.family: Tema.fonteTexto
+            font.pixelSize: Tema.tamanhoResumo
         }
     }
 

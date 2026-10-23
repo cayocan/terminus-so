@@ -30,7 +30,10 @@
 - [x] Lixeira (padrão freedesktop): abre pela dock, restaurar e esvaziar com confirmação
 - [ ] Navegador de pastas: arrastar e soltar, seleção com Shift, modo colunas, progresso de cópias grandes
 - [ ] Minimizar janelas de outros apps (o Hyprland não tem minimizar; hoje só as janelas do Terminus escondem)
-- [ ] Central de notificações
+- [x] Central de notificações: histórico de 7 dias agrupado por dia, Limpar, Não perturbe, aviso flutuante (urgentes passam pelo Não perturbe), Super + N
+- [x] "O que eu perdi?": resumo em texto das não lidas sob a esfera, que fica em "falando"
+- [ ] "O que eu perdi?" falado (Piper) e por voz; resumo escrito pelo modelo local em vez do texto fixo
+- [ ] Ações das notificações (botões), lembrar o Não perturbe entre reinícios
 - [ ] Configurações e painel de conectores
 - [ ] Presets de cor (Jarvis clássico, Mark, Stealth) e cores livres
 

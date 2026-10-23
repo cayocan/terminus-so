@@ -175,6 +175,30 @@ QtObject {
     readonly property color corApp: "#5B9BFF"
     readonly property color fundoIconeResultado: Qt.alpha(principal, 0.10)
 
+    // Central de notificações e "O que eu perdi?" (Notificacoes.dc.html)
+    readonly property int larguraCentral: 480
+    readonly property color fundoCentral: Qt.rgba(8 / 255, 16 / 255, 28 / 255, 0.94)
+    readonly property color bordaCentral: Qt.alpha(principal, 0.3)
+    readonly property int preenchimentoCentralV: 32
+    readonly property int preenchimentoCentralH: 26
+    readonly property int tamanhoTituloCentral: 20
+    readonly property int alturaBotaoCentral: 48
+    readonly property int raioBotaoCentral: 14
+    readonly property color bordaBotaoNeutro: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.22)
+    readonly property color fundoCartaoHistorico: Qt.rgba(12 / 255, 24 / 255, 40 / 255, 0.75)
+    readonly property color bordaCartaoHistorico: Qt.rgba(156 / 255, 201 / 255, 224 / 255, 0.14)
+    readonly property int raioCartaoHistorico: 16
+    readonly property int iconeHistorico: 36
+    readonly property int raioIconeHistorico: 10
+    readonly property color atencaoBorda: Qt.rgba(245 / 255, 165 / 255, 74 / 255, 0.4)
+    readonly property color fundoAviso: Qt.rgba(12 / 255, 28 / 255, 46 / 255, 0.95)
+    readonly property color bordaAviso: Qt.alpha(principal, 0.5)
+    readonly property int larguraAviso: 440
+    readonly property int topoAviso: 40
+    readonly property int tempoAviso: 6000
+    readonly property int tamanhoResumo: 24
+    readonly property int larguraResumo: 800
+
     // Menus e diálogos
     readonly property int raioMenu: 14
     readonly property int alturaItemMenu: 40

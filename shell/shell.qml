@@ -33,6 +33,7 @@ ShellRoot {
                 anchors.fill: parent
                 notificacoes: centralNotificacoes
                 areas: areasAtalho
+                painelNotificacoes: centralPainel
                 mostrarAreas: modelData === Quickshell.screens[0]
                 tamanhoTela: Qt.size(modelData.width, modelData.height)
             }
@@ -48,6 +49,18 @@ ShellRoot {
             pastas: navegadorPastas
             busca: buscaGlobal
         }
+    }
+
+    CentralNotificacoes {
+        id: centralPainel
+        central: centralNotificacoes
+        screen: Quickshell.screens[0]
+    }
+
+    AvisoNotificacao {
+        central: centralNotificacoes
+        painel: centralPainel
+        screen: Quickshell.screens[0]
     }
 
     Busca {

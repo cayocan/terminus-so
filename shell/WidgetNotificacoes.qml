@@ -10,6 +10,9 @@ ColumnLayout {
     required property Notificacoes central
     property int maximo: 3
 
+    // Pede a central de notificações (título e "Ver todas").
+    signal centralPedida()
+
     spacing: 12
 
     SystemClock {
@@ -37,6 +40,13 @@ ColumnLayout {
             font.weight: Font.DemiBold
             font.pixelSize: Tema.tamanhoSecao
             font.letterSpacing: Tema.espacamentoSecao
+            Accessible.role: Accessible.Button
+            Accessible.name: qsTr("Abrir a central de notificações")
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: widget.centralPedida()
+            }
         }
 
         Rectangle {
@@ -102,5 +112,24 @@ ColumnLayout {
         color: Tema.textoDiscreto
         font.family: Tema.fonteTexto
         font.pixelSize: Tema.tamanhoTextoMenor
+    }
+
+    Text {
+        Layout.leftMargin: 4
+        visible: widget.central.historico.length > 0
+        text: widget.central.naoLidas > 0 ? qsTr("Ver todas · %1 não lidas").arg(widget.central.naoLidas) : qsTr("Ver todas")
+        color: toqueVer.containsMouse ? Tema.linkHover : Tema.link
+        font.family: Tema.fonteTexto
+        font.pixelSize: Tema.tamanhoRotulo
+        Accessible.role: Accessible.Button
+        Accessible.name: text
+        MouseArea {
+            id: toqueVer
+            anchors.fill: parent
+            anchors.margins: -8
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: widget.centralPedida()
+        }
     }
 }
