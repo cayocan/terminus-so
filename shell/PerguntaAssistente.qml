@@ -6,8 +6,9 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import "tema"
 
-// Conversa digitada com o assistente, até a voz chegar: abre pelo clique na esfera ou por Super + A, no mesmo
-// visual da busca global. No primeiro uso, oferece baixar o modelo e mostra o progresso.
+// Conversa com o assistente, falada ou digitada: abre pelo clique na esfera ou por Super + A, no mesmo visual da
+// busca global, e já começa a escutar (digitar cancela a escuta). No primeiro uso, oferece baixar o modelo e a
+// voz e mostra o progresso. A palavra de ativação chega depois; por enquanto, a escuta começa por aqui.
 PanelWindow {
     id: janela
 
@@ -20,6 +21,7 @@ PanelWindow {
     readonly property var modelo: assistente.modelo
     readonly property bool pronto: modelo.estado === "pronto"
     readonly property bool esperando: assistente.perguntaPendente !== ""
+    readonly property var voz: assistente.voz
     // Na tela principal a resposta some depois de um tempo; aqui fica até a próxima pergunta.
     property var ultima: null
     Connections {
@@ -31,8 +33,12 @@ PanelWindow {
     function abrir() {
         aberta = true
         campo.forceActiveFocus()
+        if (pronto && voz.pronta && !esperando && !voz.ouvindo) assistente.ouvir()
     }
-    function fechar() { aberta = false }
+    function fechar() {
+        assistente.cancelarOuvir()
+        aberta = false
+    }
     function alternar() { aberta ? fechar() : abrir() }
     function enviar() {
         if (campo.text.trim() === "" || esperando) return
@@ -127,8 +133,9 @@ PanelWindow {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 56
                         enabled: janela.pronto
-                        placeholderText: janela.pronto ? qsTr("Pergunte ou peça algo a %1").arg(janela.nomeAssistente)
-                                                       : qsTr("O assistente ainda não está pronto")
+                        placeholderText: !janela.pronto ? qsTr("O assistente ainda não está pronto")
+                                       : janela.voz.ouvindo ? qsTr("Escutando… pode falar (ou digite)")
+                                       : qsTr("Pergunte ou peça algo a %1").arg(janela.nomeAssistente)
                         placeholderTextColor: Tema.textoMarcador
                         color: Tema.textoTitulo
                         font.family: Tema.fonteTexto
@@ -136,7 +143,22 @@ PanelWindow {
                         background: null
                         Accessible.name: qsTr("Pergunta para o assistente")
                         onAccepted: janela.enviar()
+                        onTextEdited: janela.assistente.cancelarOuvir()
                         Keys.onEscapePressed: janela.fechar()
+                    }
+                    BotaoIcone {
+                        visible: janela.pronto && janela.voz.pronta
+                        nome: janela.voz.ouvindo ? qsTr("Parar de escutar") : qsTr("Falar")
+                        icone: Icones.microfone
+                        marcado: janela.voz.ouvindo
+                        onAcionado: janela.voz.ouvindo ? janela.assistente.pararOuvir() : janela.assistente.ouvir()
+                    }
+                    BotaoIcone {
+                        visible: janela.pronto && janela.voz.pronta
+                        nome: janela.voz.falar ? qsTr("Responder só por escrito") : qsTr("Responder falando")
+                        icone: janela.voz.falar ? Icones.altoFalante : Icones.altoFalanteMudo
+                        marcado: janela.voz.falar
+                        onAcionado: janela.assistente.definirFalar(!janela.voz.falar)
                     }
                 }
 
@@ -144,7 +166,7 @@ PanelWindow {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 1
                     color: Tema.linhaDivisoria
-                    visible: conversa.visible || estadoModelo.visible
+                    visible: conversa.visible || estadoModelo.visible || avisosVoz.visible
                 }
 
                 // Modelo ainda não está pronto: download no primeiro uso, carregando ou erro.
@@ -164,11 +186,11 @@ PanelWindow {
                         text: {
                             const m = janela.modelo
                             if (m.estado === "ausente")
-                                return qsTr("Para conversar, preciso baixar o modelo %1 (%2 GB). É só uma vez, e depois tudo roda neste computador, sem internet.")
-                                    .arg(m.nome).arg(janela.gigas(m.tamanho))
+                                return qsTr("Para conversar, preciso baixar o modelo %1 e a voz (%2 GB). É só uma vez, e depois tudo roda neste computador, sem internet.")
+                                    .arg(m.nome).arg(janela.gigas(m.pendente ?? m.tamanho))
                             if (m.estado === "baixando")
-                                return qsTr("Baixando %1… %2% (%3 de %4 GB)").arg(m.nome).arg(Math.floor(m.progresso * 100))
-                                    .arg(janela.gigas(m.progresso * m.tamanho)).arg(janela.gigas(m.tamanho))
+                                return qsTr("Baixando %1 e a voz… %2% (%3 de %4 GB)").arg(m.nome).arg(Math.floor(m.progresso * 100))
+                                    .arg(janela.gigas(m.progresso * m.total)).arg(janela.gigas(m.total))
                             if (m.estado === "erro") return qsTr("O modelo não subiu: %1").arg(m.erro)
                             if (!janela.assistente.conectado) return qsTr("O assistente não está rodando.")
                             return qsTr("Carregando o modelo %1…").arg(m.nome ?? "")
@@ -244,6 +266,49 @@ PanelWindow {
                         color: janela.esperando ? Tema.textoDiscreto : Tema.texto
                         font.family: Tema.fonteTexto
                         font.pixelSize: Tema.tamanhoTextoGrande
+                    }
+                }
+
+                // Escuta sem resultado ("Não ouvi nada") e a voz que ainda falta baixar (modelo já pronto).
+                ColumnLayout {
+                    id: avisosVoz
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 24
+                    Layout.rightMargin: 24
+                    Layout.bottomMargin: 18
+                    spacing: 12
+                    readonly property bool faltaVoz: janela.pronto && !janela.voz.pronta && (janela.modelo.pendente ?? 0) > 0
+                    visible: (janela.assistente.avisoVoz !== "" && !janela.esperando) || faltaVoz
+
+                    Text {
+                        Layout.fillWidth: true
+                        visible: janela.assistente.avisoVoz !== "" && !janela.esperando
+                        wrapMode: Text.Wrap
+                        text: janela.assistente.avisoVoz
+                        color: Tema.textoDiscreto
+                        font.family: Tema.fonteTexto
+                        font.pixelSize: Tema.tamanhoTexto
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        visible: avisosVoz.faltaVoz
+                        spacing: 16
+                        Text {
+                            Layout.fillWidth: true
+                            wrapMode: Text.Wrap
+                            text: janela.voz.baixando
+                                ? qsTr("Baixando a voz… %1%").arg(Math.floor(janela.modelo.progresso * 100))
+                                : janela.voz.erro !== "" ? qsTr("A voz não baixou: %1").arg(janela.voz.erro)
+                                : qsTr("Baixe a voz (%1 GB) para conversar falando.").arg(janela.gigas(janela.modelo.pendente))
+                            color: janela.voz.erro !== "" && !janela.voz.baixando ? Tema.erroTexto : Tema.textoDiscreto
+                            font.family: Tema.fonteTexto
+                            font.pixelSize: Tema.tamanhoTexto
+                        }
+                        BotaoTexto {
+                            visible: !janela.voz.baixando
+                            texto: qsTr("Baixar voz")
+                            onAcionado: janela.assistente.baixar()
+                        }
                     }
                 }
 

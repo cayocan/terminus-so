@@ -16,6 +16,46 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ / "assistente"))
+from terminus_assistente import modelos, voz  # noqa: E402  (só nomes, tamanhos e funções puras)
+
+# Programas falsos para a voz: o gravador manda silêncio, 1 s de som alto e silêncio de novo (ou só silêncio);
+# o Piper devolve meio segundo de áudio; o tocador grava o que receberia num arquivo.
+GRAVADOR = """import math, sys, time
+saida = sys.stdout.buffer
+def tocar(segundos, alto):
+    for i in range(int(16000 * segundos)):
+        v = int(8000 * math.sin(i / 5)) if alto else 0
+        saida.write(v.to_bytes(2, "little", signed=True))
+    saida.flush()
+if sys.argv[1] == "fala":
+    tocar(0.5, False); tocar(1.0, True)
+tocar(8, False)
+time.sleep(30)
+"""
+PIPER = "import sys; sys.stdin.read(); sys.stdout.buffer.write(bytes(22050))"
+TOCADOR = "import sys; open(sys.argv[1], 'wb').write(sys.stdin.buffer.read())"
+
+
+class WhisperFalso(BaseHTTPRequestHandler):
+    pedidos = []
+
+    def log_message(self, *args):
+        pass
+
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+
+    def do_POST(self):
+        corpo = self.rfile.read(int(self.headers["Content-Length"]))
+        WhisperFalso.pedidos.append((self.headers["Content-Type"], corpo))
+        dados = json.dumps({"text": " Cria uma pasta Nova."}).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(dados)))
+        self.end_headers()
+        self.wfile.write(dados)
 
 
 class LlamaFalso(BaseHTTPRequestHandler):
@@ -162,11 +202,81 @@ class TesteAssistente(unittest.TestCase):
         self.assertEqual(len(ferramentas), 1)
         self.assertIn("Jarvis", sistemas.pop())
 
+    def preparar_voz(self, gravacao="fala"):
+        """Voz e ouvido "baixados" (arquivos do tamanho certo) e programas falsos no lugar dos de verdade."""
+        WhisperFalso.pedidos = []
+        self.whisper = ThreadingHTTPServer(("127.0.0.1", 0), WhisperFalso)
+        threading.Thread(target=self.whisper.serve_forever, daemon=True).start()
+        base = Path(self.temp.name)
+        pasta = base / "dados/terminus/modelos"
+        pasta.mkdir(parents=True)
+        for arquivo in (modelos.VOZ, modelos.OUVIDO):
+            with open(pasta / arquivo.arquivo, "wb") as f:
+                f.truncate(arquivo.tamanho)
+        config = json.dumps({"audio": {"sample_rate": 22050}})
+        (pasta / modelos.VOZ_CONFIG.arquivo).write_text(config.ljust(modelos.VOZ_CONFIG.tamanho))
+        for nome, codigo in (("gravador.py", GRAVADOR), ("piper.py", PIPER), ("tocador.py", TOCADOR)):
+            (base / nome).write_text(codigo)
+        self.falado = base / "falado.raw"
+        self.ambiente.update(
+            TERMINUS_WHISPER_URL=f"http://127.0.0.1:{self.whisper.server_port}",
+            TERMINUS_GRAVADOR=f"{sys.executable} {base / 'gravador.py'} {gravacao}",
+            TERMINUS_PIPER=f"{sys.executable} {base / 'piper.py'}",
+            TERMINUS_TOCADOR=f"{sys.executable} {base / 'tocador.py'} {self.falado}")
+
+    def comando(self, *argumentos):
+        return subprocess.run([sys.executable, "-m", "terminus_assistente", *argumentos],
+                              env=dict(self.ambiente, PYTHONPATH=str(RAIZ / "assistente")),
+                              capture_output=True, text=True, timeout=60)
+
+    def test_fala_vira_pergunta_e_resposta_falada(self):
+        self.preparar_voz()
+        self.subir_assistente()
+        saida = self.comando("ouvir")
+        self.assertIn("ouvi: Cria uma pasta Nova.", saida.stderr)
+        self.assertIn("pronta", saida.stdout)
+        self.assertTrue((self.casa / "Nova").is_dir())
+        # O whisper recebeu um WAV de 16 kHz pelo formulário, e a resposta foi falada.
+        tipo, corpo = WhisperFalso.pedidos[0]
+        self.assertTrue(tipo.startswith("multipart/form-data"))
+        self.assertIn(b"RIFF", corpo)
+        for _ in range(50):
+            if self.falado.exists() and self.falado.stat().st_size > 0:
+                break
+            time.sleep(0.1)
+        self.assertEqual(self.falado.stat().st_size, 22050)
+        self.whisper.shutdown()
+
+    def test_silencio_nao_vira_pergunta(self):
+        self.preparar_voz("silencio")
+        self.subir_assistente()
+        saida = self.comando("ouvir")
+        self.assertIn("ouvi: (nada)", saida.stderr)
+        self.assertEqual(WhisperFalso.pedidos, [])
+        self.whisper.shutdown()
+
+    def test_respostas_so_escritas(self):
+        # Com a fala desligada (preferência guardada na camada pessoal), nada vai para o tocador.
+        self.preparar_voz()
+        (Path(self.temp.name) / "config/terminus/pessoal/assistente.json").write_text(json.dumps({"falar": False}))
+        self.subir_assistente()
+        self.assertIn("Oi!", self.perguntar("bom dia"))
+        time.sleep(1)
+        self.assertFalse(self.falado.exists())
+        self.whisper.shutdown()
+
+    def test_transcricao_vazia_e_volume(self):
+        self.assertEqual(voz.limpar_transcricao(" [BLANK_AUDIO] "), "")
+        self.assertEqual(voz.limpar_transcricao(" abre  o firefox "), "abre o firefox")
+        self.assertEqual(voz.volume(bytes(3200)), 0.0)
+        self.assertGreater(voz.volume((8000).to_bytes(2, "little", signed=True) * 1600), 7000)
+        self.assertEqual(voz.para_wav(bytes(32000))[:4], b"RIFF")
+
     def test_sem_modelo_pede_download(self):
         ambiente = {k: v for k, v in self.ambiente.items() if k != "TERMINUS_LLAMA_URL"}
         self.subir_assistente(ambiente)
         resposta = self.perguntar("bom dia", ambiente)
-        self.assertIn("preciso baixar o modelo Qwen3 1.7B", resposta)
+        self.assertIn("preciso baixar o modelo Qwen3 1.7B e a voz", resposta)
         self.assertEqual(LlamaFalso.pedidos, [])
 
 

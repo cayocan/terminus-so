@@ -1,6 +1,6 @@
 # Assistente local
 
-Modelo local (llama.cpp com Vulkan) que age no sistema só pelas ferramentas do servidor MCP (`mcp/`), com os níveis de permissão e o histórico de lá. Fase 4 do roadmap. Ainda faltam a voz (whisper.cpp para ouvir, Piper para falar) e a palavra de ativação (openWakeWord); até lá, a conversa é digitada.
+Modelo local (llama.cpp com Vulkan) que age no sistema só pelas ferramentas do servidor MCP (`mcp/`), com os níveis de permissão e o histórico de lá; ouve pelo whisper.cpp e fala pelo Piper. Fase 4 do roadmap. Ainda falta a palavra de ativação (openWakeWord): por enquanto a escuta começa ao abrir a conversa (clique na esfera ou Super + A).
 
 Python 3 puro, sem dependências, como o MCP.
 
@@ -23,6 +23,8 @@ Comandos:
 
 ```bash
 terminus-assistente perguntar "quanto de memória livre eu tenho?"   # a resposta também aparece na tela
+terminus-assistente ouvir                                         # escuta o microfone e responde
+terminus-assistente dizer "teste da voz"                          # fala um texto
 terminus-assistente modelos                                       # modelos e qual está em uso
 terminus-assistente escolher qwen3-1.7b                           # troca o modelo (reinicie o serviço)
 terminus-assistente baixar                                        # baixa sem esperar o primeiro uso
@@ -56,6 +58,31 @@ Ryzen 7 1800X, Radeon RX 5500 XT 8 GB, llama.cpp b11838 Vulkan, 23/10/2026.
 
 9 de 10 nos pedidos isolados, com ou sem o modo de raciocínio ([avaliacao/qwen3-1.7b-q8_0.json](avaliacao/qwen3-1.7b-q8_0.json)), então fica sem. Na conversa de verdade erra mais: escolhe a ferramenta errada em continuações, monta caminhos errados e às vezes escreve o nome da ferramenta em vez de chamá-la (o laço trata isso como a chamada, quando a ferramenta não tem argumentos obrigatórios). O português é fraco para fatos. Serve para PCs sem placa de vídeo; na VM de teste, sem Vulkan, rodou no processador.
 
+## Voz
+
+```
+microfone ─pw-record─► detecção de fala ─WAV─► whisper-server (127.0.0.1:8092) ─texto─► laço
+laço ─resposta─► piper ─áudio─► pw-play ─► alto-falante
+```
+
+- **Ouvir**: ao abrir a conversa (clique na esfera ou Super + A) o assistente já escuta; digitar cancela a escuta, e o botão de microfone escuta de novo. A gravação para sozinha depois de 1,2 s de silêncio (o volume do ambiente é medido no começo), em no máximo 20 s, ou desiste se ninguém falar em 6 s. O whisper-server fica com o modelo carregado.
+- **Falar**: a resposta vai do Piper direto para o PipeWire, frase por frase; a esfera fica "falando" até acabar. Uma pergunta nova interrompe a fala. O botão de alto-falante deixa as respostas só escritas (preferência guardada em `~/.config/terminus/pessoal/assistente.json`).
+- **Binários na ISO**: `iso/config/hooks/normal/0700-voz.hook.chroot` instala os oficiais do whisper.cpp (b5454, só processador) e do Piper (2023.11.14-2), com sha256 conferido, em `/opt/whisper.cpp` e `/opt/piper` (74 MB juntos).
+- **Arquivos baixados no primeiro uso**, junto com o modelo de linguagem: voz cadu (63 MB) e whisper small (190 MB). Com o modelo já baixado e a voz não, a conversa funciona por texto e oferece "Baixar voz".
+
+Escolhas, testadas em 23/10/2026 no Ryzen 7 1800X (as frases foram geradas pelo próprio Piper, nas 4 vozes):
+
+| whisper | Acerto | Tempo por frase (processador) |
+|---|---|---|
+| base q5_1 | 92% ("e-mails" vira "e meios") | 2,6 s |
+| **small q5_1** | **97%** | 4,5 s com 16 threads (5,9 s com 8) |
+| large-v3-turbo q5_0 | 95% | 33 s |
+
+- Voz **cadu** (`pt_BR-cadu-medium`), escolhida pelo dono do projeto entre as quatro vozes brasileiras do Piper (cadu, faber, jeff, edresson). Cada usuário vai poder trocar.
+- whisper com todos os threads e busca gulosa (`-bs 1 -bo 1`), sem perder acerto. Janela de áudio menor (`-ac 768`) deixa 40% mais rápido, mas o acerto cai para 92%.
+
+**Ponta a ponta** (num Debian 13 com os hooks da ISO, fala gravada pela voz cadu no lugar do microfone, Qwen3 8B na RX 5500 XT): "Cria uma pasta chamada Receitas na minha pasta pessoal" virou a pasta criada e a resposta escrita em 8,6 s, falada em 9,6 s. O whisper responde pela maior parte (7 s dentro do Docker, 4,5 s no Windows nativo); o modelo com a ferramenta, 1,4 s; o Piper, 1,2 s por frase. Rodar o whisper na placa de vídeo (compilar com Vulkan) deve tirar quase todo esse tempo; fica para depois.
+
 ## Ajustes que vieram dos testes
 
 - **Sem flash attention** (`-fa off`). O llama-server liga sozinho, e na RX 5500 XT a leitura da pergunta depois das ~2200 tokens das ferramentas cai de 85 para 24 tokens/s (`llama-bench -d 2300 -fa 0,1`). Com isso, cada pergunta ficou duas a três vezes mais rápida.
@@ -78,4 +105,4 @@ O roteiro manda pedidos falados com a lista real de ferramentas do MCP (não exe
 cd assistente && python3 -m unittest discover -s testes -v
 ```
 
-Um llama-server falso (que responde por roteiro) e o servidor MCP de verdade, num diretório temporário: ferramenta executada e resultado de volta ao modelo, resposta sem ferramenta, ação negada contada ao usuário, modelo andando em círculo, nome de ferramenta escrito como texto, começo do prompt fixo para o cache e o pedido de download quando não há modelo. Rodam no GitHub Actions antes da ISO.
+Um llama-server falso (que responde por roteiro) e o servidor MCP de verdade, num diretório temporário: ferramenta executada e resultado de volta ao modelo, resposta sem ferramenta, ação negada contada ao usuário, modelo andando em círculo, nome de ferramenta escrito como texto, começo do prompt fixo para o cache e o pedido de download quando não há modelo. Para a voz, gravador, whisper e Piper falsos: fala vira pergunta e resposta falada, silêncio não vira pergunta, respostas só escritas quando a fala está desligada. Rodam no GitHub Actions antes da ISO.

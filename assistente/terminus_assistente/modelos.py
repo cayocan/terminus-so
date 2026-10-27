@@ -49,6 +49,26 @@ CATALOGO = {m.id: m for m in [
 ]}
 PADRAO = "qwen3-8b"
 LEVE = "qwen3-1.7b"
+
+# Voz (Piper) e ouvido (whisper.cpp): baixados junto com o modelo de linguagem. Escolhidos em 23/10/2026:
+# voz cadu (escolha do dono do projeto entre as 4 pt_BR) e whisper small, 97% de acerto em português
+# contra 92% do base e 95% do large-v3-turbo, que é 5x mais lento no processador (assistente/README.md).
+VOZ = Modelo("voz-cadu", "voz Cadu", "pt_BR-cadu-medium.onnx",
+             "https://huggingface.co/rhasspy/piper-voices/resolve/main/pt/pt_BR/cadu/medium/pt_BR-cadu-medium.onnx",
+             62950044, "765f0809a6ea9035d4a6d0d008dbf8876e68b2dd32029312672fa8f405bdb535", "Voz do assistente.")
+VOZ_CONFIG = Modelo("voz-cadu-config", "configuração da voz", "pt_BR-cadu-medium.onnx.json",
+                    VOZ.url + ".json", 5040, "5fe03aa3d4901880554905b12075713cd552598c8a350455a1ec73f8b4e6be19",
+                    "Configuração da voz do assistente.")
+OUVIDO = Modelo("whisper-small", "reconhecimento de fala", "ggml-small-q5_1.bin",
+                "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small-q5_1.bin",
+                190085487, "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb",
+                "Entende o que o usuário fala (whisper small).")
+VOZ_E_OUVIDO = [VOZ, VOZ_CONFIG, OUVIDO]
+
+
+def pendentes(modelo):
+    """Arquivos que ainda faltam para conversar por voz: o modelo de linguagem e os de voz e ouvido."""
+    return [m for m in [modelo] + VOZ_E_OUVIDO if not m.presente]
 VRAM_MINIMA_MIB = 6000
 FOLGA = 300 * 1000 * 1000  # espaço que sobra no disco depois do download
 

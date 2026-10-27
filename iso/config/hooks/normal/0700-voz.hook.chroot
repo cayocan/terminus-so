@@ -1,0 +1,41 @@
+#!/bin/sh
+# Voz do assistente: whisper.cpp para ouvir e Piper para falar. Nenhum dos dois está no Debian 13;
+# usa os binários oficiais para Linux, com versão e sha256 fixos. As vozes e o modelo do whisper não vêm
+# na ISO: o terminus-assistente baixa no primeiro uso, junto com o modelo de linguagem.
+set -e
+
+# Versões fixas; para atualizar, troque as linhas testando (assistente/README.md).
+WHISPER_VERSAO=b5454
+WHISPER_SHA256=a72becf15d7917f990f6313867a52638b82b7f9ef237fb0c980dac56a135781c
+PIPER_VERSAO=2023.11.14-2
+PIPER_SHA256=a50cb45f355b7af1f6d758c1b360717877ba0a398cc8cbe6d2a7a3a26e225992
+
+cd /tmp
+
+curl -fsSL -o whisper.tar.gz \
+	"https://github.com/ggml-org/whisper.cpp/releases/download/$WHISPER_VERSAO/whisper-bin-ubuntu-x64.tar.gz"
+echo "$WHISPER_SHA256  whisper.tar.gz" | sha256sum -c
+tar xzf whisper.tar.gz
+rm -rf /opt/whisper.cpp
+mv whisper-bin-ubuntu-x64 /opt/whisper.cpp
+# Fica só o servidor (o assistente mantém o modelo carregado) e a linha de comando; as bibliotecas ficam todas.
+find /opt/whisper.cpp -maxdepth 1 -type f -executable ! -name "*.so*" \
+	! -name whisper-server ! -name whisper-cli -delete
+ln -sf /opt/whisper.cpp/whisper-server /usr/local/bin/whisper-server
+ln -sf /opt/whisper.cpp/whisper-cli /usr/local/bin/whisper-cli
+echo "$WHISPER_VERSAO" > /opt/whisper.cpp/VERSAO
+
+curl -fsSL -o piper.tar.gz \
+	"https://github.com/rhasspy/piper/releases/download/$PIPER_VERSAO/piper_linux_x86_64.tar.gz"
+echo "$PIPER_SHA256  piper.tar.gz" | sha256sum -c
+tar xzf piper.tar.gz
+rm -rf /opt/piper
+mv piper /opt/piper
+ln -sf /opt/piper/piper /usr/local/bin/piper
+echo "$PIPER_VERSAO" > /opt/piper/VERSAO
+
+rm -f whisper.tar.gz piper.tar.gz
+
+# Confere que os binários acham as bibliotecas.
+whisper-cli --help > /dev/null 2>&1 || { echo "whisper-cli não roda" >&2; exit 1; }
+echo "teste" | piper --help > /dev/null 2>&1 || { echo "piper não roda" >&2; exit 1; }

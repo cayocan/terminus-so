@@ -55,8 +55,11 @@
 - [x] Conversa digitada: clique na esfera ou Super + A; esfera pensando/falando e resposta embaixo dela
 - [ ] Testar o assistente no PC de referência com a ISO (até agora: laço com a GPU do host e fluxo completo na VM, no processador)
 - [ ] Respostas sem oferecer o que as ferramentas não fazem (o 8B às vezes termina com "Deseja instalar?")
-- [ ] Whisper (whisper.cpp) para ouvir
-- [ ] Piper para falar; XTTS v2 / F5-TTS opcional
+- [x] Whisper (whisper.cpp, modelo small) para ouvir, com fim da fala por silêncio; escuta ao abrir a conversa
+- [x] Piper para falar (voz cadu), direto no PipeWire; respostas só escritas como opção
+- [ ] whisper.cpp na placa de vídeo (Vulkan): hoje 4,5 s por frase no processador
+- [ ] Testar microfone e alto-falante de verdade no PC de referência
+- [ ] Escolher a voz no onboarding e nas Configurações; XTTS v2 / F5-TTS opcional
 - [ ] openWakeWord com palavra escolhida pelo usuário
 - [ ] Manual do sistema para consulta do modelo
 

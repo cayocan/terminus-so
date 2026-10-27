@@ -2,8 +2,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
-// Ligação do shell com o assistente local (assistente/terminus_assistente): manda perguntas, recebe o estado
-// da esfera, o do modelo (baixando, carregando, pronto) e as respostas. Reconecta sozinho se o serviço reiniciar.
+// Ligação do shell com o assistente local (assistente/terminus_assistente): manda perguntas (digitadas ou
+// faladas), recebe o estado da esfera, do modelo (baixando, carregando, pronto), da voz e as respostas.
+// Reconecta sozinho se o serviço reiniciar.
 Item {
     id: assistente
 
@@ -15,6 +16,10 @@ Item {
     property var resposta: null
     property string perguntaPendente: ""
     property string agindo: ""
+    // { pronta, falar, ouvindo, baixando, erro }: pronta quando a voz e o ouvido foram baixados e subiram.
+    property var voz: ({ pronta: false, falar: true, ouvindo: false, baixando: false, erro: "" })
+    // Aviso curto sobre a última escuta ("Não ouvi nada"), some na próxima pergunta.
+    property string avisoVoz: ""
 
     readonly property string caminhoSocket: Quickshell.env("XDG_RUNTIME_DIR") + "/terminus/assistente.sock"
 
@@ -34,8 +39,17 @@ Item {
         perguntaPendente = texto
         resposta = null
         agindo = ""
+        avisoVoz = ""
     }
     function baixar() { enviar({ tipo: "baixar" }) }
+    function ouvir() {
+        avisoVoz = ""
+        enviar({ tipo: "ouvir" })
+    }
+    function pararOuvir() { enviar({ tipo: "parar_ouvir" }) }
+    function cancelarOuvir() { if (voz.ouvindo) enviar({ tipo: "cancelar_ouvir" }) }
+    function calar() { enviar({ tipo: "calar" }) }
+    function definirFalar(ligado) { enviar({ tipo: "falar", ligado: ligado }) }
     function cancelarDownload() { enviar({ tipo: "cancelar_download" }) }
 
     function receber(linha) {
@@ -44,6 +58,15 @@ Item {
         if (mensagem.tipo === "estado") {
             esfera = mensagem.esfera
             modelo = mensagem.modelo
+            if (mensagem.voz) voz = mensagem.voz
+        } else if (mensagem.tipo === "ouvido") {
+            if (mensagem.texto) {
+                perguntaPendente = mensagem.texto
+                resposta = null
+                agindo = ""
+            } else {
+                avisoVoz = mensagem.erro ? qsTr("Não consegui ouvir: %1").arg(mensagem.erro) : qsTr("Não ouvi nada.")
+            }
         } else if (mensagem.tipo === "agindo") {
             agindo = mensagem.ferramenta
         } else if (mensagem.tipo === "resposta") {

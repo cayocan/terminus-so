@@ -59,6 +59,8 @@ QtObject {
     readonly property var fechar: ["M6 6l12 12M18 6L6 18"]
     readonly property var abrirPasta: ["M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z", "M10 13h6M13 10l3 3-3 3"]
     readonly property var altoFalante: ["M4 9h4l5-4v14l-5-4H4z", "M17 9a4 4 0 0 1 0 6"]
+    readonly property var altoFalanteMudo: ["M4 9h4l5-4v14l-5-4H4z", "M16 9l5 6", "M21 9l-5 6"]
+    readonly property var microfone: ["M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z", "M5 11a7 7 0 0 0 14 0", "M12 18v3"]
     // Configurações e conectores (Config.dc.html)
     readonly property var aparencia: ["M20 12a8 8 0 1 1-16 0a8 8 0 1 1 16 0z", "M12 4v16M4 12h16"]
     readonly property var esfera: ["M20 12a8 8 0 1 1-16 0a8 8 0 1 1 16 0z", "M8 12c1.5-2 2.5 2 4 0s2.5 2 4 0"]
